@@ -2,7 +2,7 @@
 hydra is my build of [dwm](https://dwm.suckless.org/).
 
 # patches
-here's a list of the patches applied in this build\
+here's a list of the patches applied in this build
 
 -[actualfullscreen](https://dwm.suckless.org/patches/actualfullscreen/)\
 -[alpha](https://dwm.suckless.org/patches/alpha/)\
@@ -23,7 +23,7 @@ here's a list of the patches applied in this build\
 -[swallow & riodraw](https://github.com/bakkeby/patches/wiki/riodraw)\
 -[vanitygaps](https://dwm.suckless.org/patches/vanitygaps/)\
 -[statusallmons](https://dwm.suckless.org/patches/statusallmons/)\
--[netclientliststacking](https://github.com/bakkeby/patches/wiki/netclientliststacking)\
+-[netclientliststacking](https://github.com/bakkeby/patches/wiki/netclientliststacking)
 
 # installation
 ```sh
