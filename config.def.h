@@ -106,6 +106,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_t,      spawn,          SHCMD("$TERMINAL -e htop")},
 	{ MODKEY,                       XK_c,      spawn,          SHCMD("$TERMINAL -e calcurse")},
 	{ MODKEY,                       XK_x,      spawn,          SHCMD("xkill")},
+	{ MODKEY,                       XK_Tab,    spawn,          SHCMD("skippy-xd")},
     /* rio */
 	{ MODKEY,                       XK_r,      rioresize,      {0} },
 	{ MODKEY|ControlMask,           XK_Return, riospawn,       {.v = termcmd } },
@@ -124,7 +125,7 @@ static Key keys[] = {
     { Mod1Mask|ControlMask,         XK_l,      spawn,          SHCMD("mpc next")},
     { Mod1Mask|ControlMask,         XK_space,  spawn,          SHCMD("mpc toggle")},
     /* picom */
-	{ MODKEY|ShiftMask,             XK_c,      spawn,          SHCMD("picom")},
+	{ MODKEY|ShiftMask,             XK_c,      spawn,          SHCMD("picom --experimental-backends")},
 	{ MODKEY|ShiftMask,             XK_x,      spawn,          SHCMD("killall picom")},
     /* take screenshots */
 	{ MODKEY,                       XK_p,      spawn,          SHCMD("scrot $HOME/pics/screenshots/$(date +%d-%m-%G-%T).png && screenshotnotify")},
@@ -145,7 +146,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_j,      movestack,      {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_k,      movestack,      {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_Return, zoom,           {0} },
-	{ MODKEY,                       XK_Tab,    view,           {0} },
+	{ MODKEY|ShiftMask,             XK_Tab,    view,           {0} },
 	{ MODKEY,                       XK_a,      killclient,     {0} }, /* a = q on qwerty */
 	{ MODKEY,           		    XK_w,      cyclelayout,    {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_w,      cyclelayout,    {.i = +1 } },
