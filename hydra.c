@@ -192,6 +192,7 @@ static void dragcfact(const Arg *arg);
 static void dragmfact(const Arg *arg);
 static void drawbar(Monitor *m);
 static void drawbars(void);
+static void enternotify(XEvent *e);
 static void expose(XEvent *e);
 static void focus(Client *c);
 static void focusin(XEvent *e);
@@ -311,6 +312,7 @@ static void (*handler[LASTEvent]) (XEvent *) = {
 	[ConfigureRequest] = configurerequest,
 	[ConfigureNotify] = configurenotify,
 	[DestroyNotify] = destroynotify,
+    [EnterNotify] = enternotify,
 	[Expose] = expose,
 	[FocusIn] = focusin,
 	[KeyPress] = keypress,
@@ -1156,6 +1158,25 @@ drawbars(void)
 	for (m = mons; m; m = m->next)
 		drawbar(m);
 }
+
+void
+enternotify(XEvent *e)
+    {
+        Client *c;
+        Monitor *m;
+        XCrossingEvent *ev = &e->xcrossing;
+    
+        if ((ev->mode != NotifyNormal || ev->detail == NotifyInferior) && ev->window != root)
+            return;
+        c = wintoclient(ev->window);
+        m = c ? c->mon : wintomon(ev->window);
+        if (m != selmon) {
+        unfocus(selmon->sel, 1);
+        selmon = m;
+        } else if (!c || c == selmon->sel)
+        return;
+        focus(c);
+    }
 
 void
 expose(XEvent *e)
