@@ -702,7 +702,7 @@ configurerequest(XEvent *e)
 				return;
 
 			m = c->mon;
-			if (c->ignorecfgreqpos) {
+			if (!c->ignorecfgreqpos) {
 				if (ev->value_mask & CWX) {
 					c->oldx = c->x;
 					c->x = m->mx + ev->x;
@@ -712,7 +712,7 @@ configurerequest(XEvent *e)
 					c->y = m->my + ev->y;
 				}
 			}
-			if (c->ignorecfgreqsize) {
+			if (!c->ignorecfgreqsize) {
 				if (ev->value_mask & CWWidth) {
 					c->oldw = c->w;
 					c->w = ev->width;
@@ -1621,7 +1621,7 @@ motionnotify(XEvent *e)
 
 void
 moveorplace(const Arg *arg) {
-	if ((!selmon->lt[selmon->sellt]->arrange || selmon->sel->isfloating))
+	if ((!selmon->lt[selmon->sellt]->arrange || (selmon->sel && selmon->sel->isfloating)))
 		movemouse(arg);
 	else
 		placemouse(arg);
@@ -1663,9 +1663,9 @@ movemouse(const Arg *arg)
 
 			nx = ocx + (ev.xmotion.x - x);
 			ny = ocy + (ev.xmotion.y - y);
-			if (abs(selmon->wx - nx) < snap)
+            if (abs(selmon->wx - nx) < snap)
 				nx = selmon->wx;
-			else if (abs((selmon->wx + selmon->ww) - (nx + WIDTH(c))) < snap)
+            else if (abs((selmon->wx + selmon->ww) - (nx + WIDTH(c))) < snap)
 				nx = selmon->wx + selmon->ww - WIDTH(c);
 			if (abs(selmon->wy - ny) < snap)
 				ny = selmon->wy;
@@ -1861,6 +1861,7 @@ placemouse(const Arg *arg)
 		detach(c);
 		detachstack(c);
 		arrangemon(c->mon);
+		c->tags = m->tagset[m->seltags];
 		c->mon = m;
 		attach(c);
 		attachstack(c);
@@ -2914,7 +2915,7 @@ updateclientlist()
 void updatecurrentdesktop(void){
 	long rawdata[] = { selmon->tagset[selmon->seltags] };
 	int i=0;
-	while(*rawdata >> i+1){
+	while(*rawdata >> (i+1)){
 		i++;
 	}
 	long data[] = { i };
