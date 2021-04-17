@@ -11,7 +11,7 @@ static const unsigned int gappov    = 16;       /* vert outer gap between window
 static const int smartgaps          = 1;        /* 1 means no outer gap when there is only one window */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const int user_bh            = 24;        /* 0 means that dwm will calculate bar height, >= 1 means dwm will user_bh as bar height */
+static const int user_bh            = 24;       /* 0 means that dwm will calculate bar height, >= 1 means dwm will user_bh as bar height */
 static const int pertag             = 1;
 static const char slopspawnstyle[]  = "-t 0 -b 2 -c 0.7,0.6,0.9"; /* do NOT define -f (format) here "-t 0 -b 2 -c 0.7,0.6,0.9,0.1 -l" for alternate, hope the highlight thing gets fixed or maybe i should do it myself but im lazy */
 static const char slopresizestyle[] = "-t 0 -b 2 -c 0.7,0.6,0.9"; /* do NOT define -f (format) here */
@@ -50,7 +50,6 @@ static const Rule rules[] = {
 	 */
 	/* class      instance    title       tags mask     isfloating   isterminal noswallow   monitor */
 	{ "discord",  NULL,       NULL,       1<<4,         0,           0,         0,          -1 },
-	{ NULL, "BakkesModInjectorCpp",  NULL,       0,            1,           0,         0,          -1 }, /* floating doesnt work for bakkesmod and i cant figure out why */
 	{ "Firefox",  NULL,       NULL,       0,            0,           0,         -1,         -1 },
 	{ "Carla2-Plugin","carla-plugin",NULL,    0,        1,           0,         0,          -1 },
 	{ "Blueberry.py",NULL,    NULL,       0,            1,           0,         0,          -1 },
@@ -106,7 +105,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_t,      spawn,          SHCMD("$TERMINAL -e htop")},
 	{ MODKEY,                       XK_c,      spawn,          SHCMD("$TERMINAL -e calcurse")},
 	{ MODKEY,                       XK_x,      spawn,          SHCMD("xkill")},
-	{ MODKEY,                       XK_Tab,    spawn,          SHCMD("skippy-xd")},
+	{ MODKEY,                       XK_Tab,    spawn,          SHCMD("killall -q ; skippy-xd")}, // avoid spawning a billion instances of skippy
     /* rio */
 	{ MODKEY,                       XK_r,      rioresize,      {0} },
 	{ MODKEY|ControlMask,           XK_Return, riospawn,       {.v = termcmd } },
