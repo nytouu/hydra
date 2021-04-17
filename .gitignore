@@ -3,3 +3,5 @@ drw.o
 util.o
 hydra.o
 hydra
+hydra.c.rej
+hydra.c.orig

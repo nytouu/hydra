@@ -64,6 +64,7 @@
 #define WIDTH(X)                ((X)->w + 2 * (X)->bw)
 #define HEIGHT(X)               ((X)->h + 2 * (X)->bw)
 #define TAGMASK                 ((1 << LENGTH(tags)) - 1)
+#define TAGSLENGTH              (LENGTH(tags))
 #define TEXTW(X)                (drw_fontset_getwidth(drw, (X)) + lrpad)
 
 #define OPAQUE                  0xffU
@@ -200,6 +201,7 @@ static void focusmon(const Arg *arg);
 static void focusstack(const Arg *arg);
 static int gethydrablockspid();
 static Atom getatomprop(Client *c, Atom prop);
+static Client *getclientundermouse(void);
 static int getrootptr(int *x, int *y);
 static long getstate(Window w);
 static int gettextprop(Window w, Atom atom, char *text, unsigned int size);
@@ -261,6 +263,7 @@ static void toggleview(const Arg *arg);
 static void unfocus(Client *c, int setfocus);
 static void unmanage(Client *c, int destroyed);
 static void unmapnotify(XEvent *e);
+static void updatecurrentdesktop(void);
 static void updatebarpos(Monitor *m);
 static void updatebars(void);
 static void updateclientlist(void);
@@ -814,6 +817,8 @@ destroynotify(XEvent *e)
 		unmanage(c, 1);
 	else if ((c = swallowingclient(ev->window)))
 		unmanage(c->swallowing, 1);
+
+	focus(getclientundermouse());
 }
 
 void
@@ -1289,6 +1294,20 @@ gethydrablockspid()
 	pclose(fp);
 	hydrablockspid = pid;
 	return pid != 0 ? 0 : -1;
+}
+
+Client *
+getclientundermouse(void)
+{
+	int ret, di;
+	unsigned int dui;
+	Window child, dummy;
+
+	ret = XQueryPointer(dpy, root, &dummy, &child, &di, &di, &di, &di, &dui);
+	if (!ret)
+		return NULL;
+
+	return wintoclient(child);
 }
 
 int
@@ -2326,6 +2345,16 @@ setclientstate(Client *c, long state)
 	XChangeProperty(dpy, c->win, wmatom[WMState], wmatom[WMState], 32,
 		PropModeReplace, (unsigned char *)data, 2);
 }
+void
+setcurrentdesktop(void){
+	long data[] = { 0 };
+	XChangeProperty(dpy, root, netatom[NetCurrentDesktop], XA_CARDINAL, 32, PropModeReplace, (unsigned char *)data, 1);
+}
+void setdesktopnames(void){
+	XTextProperty text;
+	Xutf8TextListToTextProperty(dpy, tags, TAGSLENGTH, XUTF8StringStyle, &text);
+	XSetTextProperty(dpy, root, &text, netatom[NetDesktopNames]);
+}
 
 int
 sendevent(Client *c, Atom proto)
@@ -2350,6 +2379,12 @@ sendevent(Client *c, Atom proto)
 		XSendEvent(dpy, c->win, False, NoEventMask, &ev);
 	}
 	return exists;
+}
+
+void
+setnumdesktops(void){
+	long data[] = { TAGSLENGTH };
+	XChangeProperty(dpy, root, netatom[NetNumberOfDesktops], XA_CARDINAL, 32, PropModeReplace, (unsigned char *)data, 1);
 }
 
 void
@@ -2507,6 +2542,10 @@ setup(void)
 	/* EWMH support per view */
 	XChangeProperty(dpy, root, netatom[NetSupported], XA_ATOM, 32,
 		PropModeReplace, (unsigned char *) netatom, NetLast);
+	setnumdesktops();
+	setcurrentdesktop();
+	setdesktopnames();
+	setviewport();
 	XDeleteProperty(dpy, root, netatom[NetClientList]);
 	XDeleteProperty(dpy, root, netatom[NetClientListStacking]);
 	/* select events */
@@ -2518,6 +2557,11 @@ setup(void)
 	XSelectInput(dpy, root, wa.event_mask);
 	grabkeys();
 	focus(NULL);
+}
+void
+setviewport(void){
+	long data[] = { 0, 0 };
+	XChangeProperty(dpy, root, netatom[NetDesktopViewport], XA_CARDINAL, 32, PropModeReplace, (unsigned char *)data, 2);
 }
 
 
@@ -2631,6 +2675,7 @@ tag(const Arg *arg)
 		focus(NULL);
 		arrange(selmon);
 	}
+	updatecurrentdesktop();
 }
 
 void
@@ -2702,6 +2747,7 @@ toggletag(const Arg *arg)
 		focus(NULL);
 		arrange(selmon);
 	}
+	updatecurrentdesktop();
 }
 
 void
@@ -2856,6 +2902,15 @@ updateclientlist()
 			XChangeProperty(dpy, root, netatom[NetClientListStacking],
 				XA_WINDOW, 32, PropModeAppend,
 				(unsigned char *) &(c->win), 1);
+}
+void updatecurrentdesktop(void){
+	long rawdata[] = { selmon->tagset[selmon->seltags] };
+	int i=0;
+	while(*rawdata >> i+1){
+		i++;
+	}
+	long data[] = { i };
+	XChangeProperty(dpy, root, netatom[NetCurrentDesktop], XA_CARDINAL, 32, PropModeReplace, (unsigned char *)data, 1);
 }
 
 int
@@ -3083,6 +3138,7 @@ view(const Arg *arg)
 
 	focus(NULL);
 	arrange(selmon);
+	updatecurrentdesktop();
 }
 
 pid_t
