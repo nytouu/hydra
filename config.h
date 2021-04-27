@@ -18,8 +18,8 @@ static const char slopresizestyle[] = "-t 0 -b 2 -c 0.7,0.6,0.9"; /* do NOT defi
 static const int riodraw_borders    = 0;        /* 0 or 1, indicates whether the area drawn using slop includes the window borders */
 static const int riodraw_matchpid   = 1;        /* 0 or 1, indicates whether to match the PID of the client that was spawned with riospawn */
 static const int riodraw_spawnasync = 0;        /* 0 spawns after successful sel, 1 spawn during selection */
-static const char *fonts[]          = { "Terminus:size=12","Siji:size=11"};
-static const char dmenufont[]       = "Terminus:size=12";
+static const char *fonts[]          = { "CaskaydiaCove Nerd Font Mono:size=12","Siji:size=11"};
+static const char dmenufont[]       = "CaskaydiaCove Nerd Font Mono:size=12";
 static const char col_gray1[]       = "#181621";
 static const char col_gray2[]       = "#554499";
 static const char col_gray3[]       = "#eaddee";
