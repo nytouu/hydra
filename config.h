@@ -20,11 +20,11 @@ static const int riodraw_matchpid   = 1;        /* 0 or 1, indicates whether to 
 static const int riodraw_spawnasync = 0;        /* 0 spawns after successful sel, 1 spawn during selection */
 static const char *fonts[]          = { "CaskaydiaCove Nerd Font Mono:size=12","Siji:size=11"};
 static const char dmenufont[]       = "CaskaydiaCove Nerd Font Mono:size=12";
-static const char col_gray1[]       = "#181621";
-static const char col_gray2[]       = "#554499";
-static const char col_gray3[]       = "#eaddee";
+static const char col_gray1[]       = "#1a1b26";
+static const char col_gray2[]       = "#414868";
+static const char col_gray3[]       = "#a9b1d6";
 static const char col_gray4[]       = "#ffffff";
-static const char col_cyan[]        = "#ccaaff";
+static const char col_cyan[]        = "#7aa2f7";
 /* static const unsigned int baralpha = 0xf3; */
 static const unsigned int baralpha = OPAQUE;
 static const unsigned int borderalpha = OPAQUE;
