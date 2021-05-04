@@ -44,7 +44,8 @@ static const XPoint stickyicon[]    = { {0,0}, {4,0}, {4,8}, {2,6}, {0,8}, {0,0}
 static const XPoint stickyiconbb    = {4,8};	/* defines the bottom right corner of the polygon's bounding box (speeds up scaling) */
 
 /* tagging */
-static const char *tags[] = { "home", "tty", "www", "game", "chat", "misc"};
+static const char *tags[] = { "", "","", "", "", "ﭮ", ""};
+/* static const char *tags[] = { "home", "tty", "www", "game", "chat", "misc"}; */
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -52,7 +53,7 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class      instance    title       tags mask     isfloating   isterminal noswallow   monitor */
-	{ "discord",  NULL,       NULL,       1<<4,         0,           0,         0,          -1 },
+	{ "discord",  NULL,       NULL,       1<<5,         0,           0,         0,          -1 },
 	{ "Firefox",  NULL,       NULL,       0,            0,           0,         -1,         -1 },
 	{ "Carla2-Plugin","carla-plugin",NULL,    0,        1,           0,         0,          -1 },
 	{ "Blueberry.py",NULL,    NULL,       0,            1,           0,         0,          -1 },
@@ -101,8 +102,8 @@ static Key keys[] = {
 	{ MODKEY,                       XK_d,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
     /* binds for quickly opening apps i use often */
-    { MODKEY,                       XK_n,      spawn,          SHCMD("$TERMINAL -e lf-ueberzug")},
-	{ MODKEY|ShiftMask,             XK_n,      spawn,          SHCMD("$FILEBROWSER")},
+	{ MODKEY,             			XK_n,      spawn,          SHCMD("$FILEBROWSER")},
+    { MODKEY|ShiftMask,             XK_n,      spawn,          SHCMD("$TERMINAL -e lf-ueberzug")},
 	{ MODKEY,                       XK_b,      spawn,          SHCMD("$BROWSER")},
 	{ MODKEY,                       XK_t,      spawn,          SHCMD("$TERMINAL -e gotop")},
 	{ MODKEY|ShiftMask,             XK_t,      spawn,          SHCMD("$TERMINAL -e htop")},
@@ -112,10 +113,10 @@ static Key keys[] = {
     /* rio */
 	{ MODKEY,                       XK_r,      rioresize,      {0} },
 	{ MODKEY|ControlMask,           XK_Return, riospawn,       {.v = termcmd } },
-    { MODKEY|ControlMask,           XK_n,      riospawn,       SHCMD("$TERMINAL -e lf-ueberzug")},
-    { MODKEY|ShiftMask|ControlMask, XK_n,      riospawn,       SHCMD("$FILEBROWSER")},
+    { MODKEY|ControlMask,           XK_n,      riospawn,       SHCMD("$FILEBROWSER")},
+    { MODKEY|ShiftMask|ControlMask, XK_n,      riospawn,       SHCMD("$TERMINAL -e ranger")},
     { MODKEY|ControlMask,           XK_b,      riospawn,       SHCMD("$BROWSER")},
-    { MODKEY|ControlMask,           XK_t,      riospawn,       SHCMD("$TERMINAL -e gotop")},
+    { MODKEY|ControlMask,           XK_t,      riospawn,       SHCMD("$TERMINAL -e btm")},
     { MODKEY|ShiftMask|ControlMask, XK_t,      riospawn,       SHCMD("$TERMINAL -e htop")},
     { MODKEY|ControlMask,           XK_c,      riospawn,       SHCMD("$TERMINAL -e calcurse")},
     { MODKEY|ControlMask,           XK_m,      riospawn,       SHCMD("$TERMINAL -e ncmpcpp")},
