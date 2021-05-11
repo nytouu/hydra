@@ -103,9 +103,9 @@ static Key keys[] = {
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
     /* binds for quickly opening apps i use often */
 	{ MODKEY,             			XK_n,      spawn,          SHCMD("$FILEBROWSER")},
-    { MODKEY|ShiftMask,             XK_n,      spawn,          SHCMD("$TERMINAL -e lf-ueberzug")},
+    { MODKEY|ShiftMask,             XK_n,      spawn,          SHCMD("$TERMINAL -e ranger")},
 	{ MODKEY,                       XK_b,      spawn,          SHCMD("$BROWSER")},
-	{ MODKEY,                       XK_t,      spawn,          SHCMD("$TERMINAL -e gotop")},
+	{ MODKEY,                       XK_t,      spawn,          SHCMD("$TERMINAL -e btm")},
 	{ MODKEY|ShiftMask,             XK_t,      spawn,          SHCMD("$TERMINAL -e htop")},
 	{ MODKEY,                       XK_c,      spawn,          SHCMD("$TERMINAL -e calcurse")},
 	{ MODKEY,                       XK_x,      spawn,          SHCMD("xkill")},
