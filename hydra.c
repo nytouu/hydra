@@ -199,7 +199,6 @@ static void focusmon(const Arg *arg);
 static void focusstack(const Arg *arg);
 static int gethydrablockspid();
 static Atom getatomprop(Client *c, Atom prop);
-static Client *getclientundermouse(void);
 static int getrootptr(int *x, int *y);
 static long getstate(Window w);
 static int gettextprop(Window w, Atom atom, char *text, unsigned int size);
@@ -816,8 +815,6 @@ destroynotify(XEvent *e)
 		unmanage(c, 1);
 	else if ((c = swallowingclient(ev->window)))
 		unmanage(c->swallowing, 1);
-
-	focus(getclientundermouse());
 }
 
 void
@@ -1293,20 +1290,6 @@ gethydrablockspid()
 	pclose(fp);
 	hydrablockspid = pid;
 	return pid != 0 ? 0 : -1;
-}
-
-Client *
-getclientundermouse(void)
-{
-	int ret, di;
-	unsigned int dui;
-	Window child, dummy;
-
-	ret = XQueryPointer(dpy, root, &dummy, &child, &di, &di, &di, &di, &dui);
-	if (!ret)
-		return NULL;
-
-	return wintoclient(child);
 }
 
 int
