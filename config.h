@@ -186,11 +186,11 @@ static Button buttons[] = {
 	/* click                event mask      button          function        argument */
 	{ ClkLtSymbol,          0,              Button3,        layoutmenu,     {0} },
 	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },
-	{ ClkStatusText,        0,              Button1,        sighydrablocks, {.i = 1} },
-	{ ClkStatusText,        0,              Button2,        sighydrablocks, {.i = 2} },
-	{ ClkStatusText,        0,              Button3,        sighydrablocks, {.i = 3} },
-	{ ClkStatusText,        0,              Button4,        sighydrablocks, {.i = 4} },
-	{ ClkStatusText,        0,              Button5,        sighydrablocks, {.i = 5} },
+	/* { ClkStatusText,        0,              Button1,        sighydrablocks, {.i = 1} }, */
+	/* { ClkStatusText,        0,              Button2,        sighydrablocks, {.i = 2} }, */
+	/* { ClkStatusText,        0,              Button3,        sighydrablocks, {.i = 3} }, */
+	/* { ClkStatusText,        0,              Button4,        sighydrablocks, {.i = 4} }, */
+	/* { ClkStatusText,        0,              Button5,        sighydrablocks, {.i = 5} }, */
     /* placemouse : 0=tiled pos rel to m cur 1=tiled pos rel to win center 2=m cur warps to win center */
 	{ ClkClientWin,         MODKEY,         Button1,        moveorplace,    {.i = 1} },
 	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
