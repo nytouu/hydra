@@ -103,7 +103,6 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_t,      spawn,          SHCMD("$TERMINAL -e htop")},
 	{ MODKEY,                       XK_c,      spawn,          SHCMD("$TERMINAL -e calcurse")},
 	{ MODKEY,                       XK_x,      spawn,          SHCMD("xkill")},
-	{ Mod1Mask,                     XK_Escape, spawn,          SHCMD("killall -q skippy-xd ; skippy-xd")}, // avoid spawning a billion instances of skippy
     /* rio */
 	{ MODKEY,                       XK_r,      rioresize,      {0} },
 	{ MODKEY|ControlMask,           XK_Return, riospawn,       {.v = termcmd } },
