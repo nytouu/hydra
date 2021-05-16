@@ -29,7 +29,7 @@ static const char col_cyan[]        = "#7aa2f7";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
-	[SchemeSel]  = { col_gray4, col_cyan,  col_cyan  }
+	[SchemeSel]  = { col_cyan,  col_gray1, col_cyan  }
 };
 static const XPoint stickyicon[]    = { {0,0}, {4,0}, {4,8}, {2,6}, {0,8}, {0,0} }; /* represents the icon as an array of vertices */
 static const XPoint stickyiconbb    = {4,8};	/* defines the bottom right corner of the polygon's bounding box (speeds up scaling) */
@@ -177,9 +177,7 @@ static Key keys[] = {
 	TAGKEYS(                        XK_8,					   7)
 	TAGKEYS(                        XK_9,					   8)
     /* killsesh kills process that stay even when quitting dwm */
-	/* { MODKEY|ShiftMask,             XK_e,      spawn,          SHCMD("dwmquit")}, */
 	{ MODKEY|ShiftMask,             XK_e,      quit,           {0} },
-    /* { Mod1Mask|ShiftMask|ControlMask,XK_e,     spawn,          SHCMD("menupow")}, */
 };
 
 /* button definitions */

@@ -2697,7 +2697,21 @@ sigstatusbar(const Arg *arg)
 	if ((statuspid = getstatusbarpid()) <= 0)
 		return;
 
-	sigqueue(statuspid, SIGRTMIN+statussig, sv);
+	sigqueue(statuspid, SIGUSR1, sv);
+	/* sigqueue(statuspid, SIGRTMIN+statussig, sv); */
+	/* union sigval sv; */
+
+	/* sv.sival_int = (statuspid << 8) | arg->i; */
+	/* if (!statuspid) */
+	/* 	if (getstatusbarpid() == 1 ) */
+	/* 		return; */
+
+	/* if (sigqueue(statuspid, SIGUSR1, sv) == 1){ */
+	/* 	if (errno == ESRCH){ */
+	/* 		if (!getstatusbarpid()) */
+	/* 			sigqueue(statuspid, SIGUSR1, sv); */
+	/* 	} */
+	/* } */
 }
 
 void
