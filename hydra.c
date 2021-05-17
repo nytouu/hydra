@@ -199,7 +199,7 @@ static void focusstack(const Arg *arg);
 static Atom getatomprop(Client *c, Atom prop);
 static int getrootptr(int *x, int *y);
 static long getstate(Window w);
-static pid_t getstatusbarpid();
+static pid_t gethydrablockspid();
 static int gettextprop(Window w, Atom atom, char *text, unsigned int size);
 static void grabbuttons(Client *c, int focused);
 static void grabkeys(void);
@@ -249,7 +249,7 @@ static void setviewport(void);
 static void seturgent(Client *c, int urg);
 static void showhide(Client *c);
 static void sigchld(int unused);
-static void sigstatusbar(const Arg *arg);
+static void sighydrablocks(const Arg *arg);
 static void spawn(const Arg *arg);
 static pid_t spawncmd(const Arg *arg);
 static void tag(const Arg *arg);
@@ -297,9 +297,9 @@ static const char broken[] = "broken";
 static const char hydradir[] = "hydra";
 static const char localshare[] = "$HOME/.local/share";
 static char stext[1024];
-static int statussig;
+static int hydrablockssig;
 static int statusw;
-static pid_t statuspid = -1;
+static pid_t hydrablockspid = -1;
 static int screen;
 static int sw, sh;           /* X display screen geometry width, height */
 static int bh, blw = 0;      /* bar geometry */
@@ -520,7 +520,7 @@ buttonpress(XEvent *e)
 			click = ClkStatusText;
 
 			char *text, *s, ch;
-			statussig = 0;
+			hydrablockssig = 0;
 			for (text = s = stext; *s && x <= ev->x; s++) {
 				if ((unsigned char)(*s) < ' ') {
 					ch = *s;
@@ -530,7 +530,7 @@ buttonpress(XEvent *e)
 					text = s + 1;
 					if (x >= ev->x)
 						break;
-					statussig = ch;
+					hydrablockssig = ch;
 				} else if (*s == '^') {
 					*s = '\0';
 					x += TEXTW(text) - lrpad;
@@ -1356,27 +1356,15 @@ getatomprop(Client *c, Atom prop)
 }
 
 pid_t
-getstatusbarpid()
+gethydrablockspid()
 {
-	char buf[32], *str = buf, *c;
-	FILE *fp;
-
-	if (statuspid > 0) {
-		snprintf(buf, sizeof(buf), "/proc/%u/cmdline", statuspid);
-		if ((fp = fopen(buf, "r"))) {
-			fgets(buf, sizeof(buf), fp);
-			while ((c = strchr(str, '/')))
-				str = c + 1;
-			fclose(fp);
-			if (!strcmp(str, STATUSBAR))
-				return statuspid;
-		}
-	}
-	if (!(fp = popen("pidof -s "STATUSBAR, "r")))
-		return -1;
+	char buf[16];
+	FILE *fp = popen("pidof -s hydrablocks", "r");
 	fgets(buf, sizeof(buf), fp);
+	pid_t pid = strtoul(buf, NULL, 10);
 	pclose(fp);
-	return strtoul(buf, NULL, 10);
+	hydrablockspid = pid;
+	return pid != 0 ? 0 : -1;
 }
 
 int
@@ -2687,31 +2675,30 @@ sigchld(int unused)
 }
 
 void
-sigstatusbar(const Arg *arg)
+sighydrablocks(const Arg *arg)
 {
-	union sigval sv;
-
-	if (!statussig)
-		return;
-	sv.sival_int = arg->i;
-	if ((statuspid = getstatusbarpid()) <= 0)
-		return;
-
-	sigqueue(statuspid, SIGUSR1, sv);
-	/* sigqueue(statuspid, SIGRTMIN+statussig, sv); */
 	/* union sigval sv; */
 
-	/* sv.sival_int = (statuspid << 8) | arg->i; */
-	/* if (!statuspid) */
-	/* 	if (getstatusbarpid() == 1 ) */
-	/* 		return; */
+	/* if (!statussig) */
+	/* 	return; */
+	/* sv.sival_int = arg->i; */
+	/* if ((statuspid = getstatusbarpid()) <= 0) */
+	/* 	return; */
 
-	/* if (sigqueue(statuspid, SIGUSR1, sv) == 1){ */
-	/* 	if (errno == ESRCH){ */
-	/* 		if (!getstatusbarpid()) */
-	/* 			sigqueue(statuspid, SIGUSR1, sv); */
-	/* 	} */
-	/* } */
+	/* sigqueue(statuspid, SIGUSR1, sv); */
+	/* sigqueue(statuspid, SIGRTMIN+statussig, sv); */
+	union sigval sv;
+	sv.sival_int = (hydrablockssig << 8) | arg->i;
+	if (!hydrablockspid)
+		if (gethydrablockspid() == -1)
+			return;
+
+	if (sigqueue(hydrablockspid, SIGUSR1, sv) == -1) {
+		if (errno == ESRCH) {
+			if (!gethydrablockspid())
+				sigqueue(hydrablockspid, SIGUSR1, sv);
+		}
+	}
 }
 
 void
