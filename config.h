@@ -27,9 +27,13 @@ static const char col_gray3[]       = "#a9b1d6";
 static const char col_gray4[]       = "#ffffff";
 static const char col_cyan[]        = "#7aa2f7";
 static const char *colors[][3]      = {
-	/*               fg         bg         border   */
-	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
-	[SchemeSel]  = { col_cyan,  col_gray1, col_cyan  }
+	/*               	fg         bg         border   */
+	[SchemeNorm]      = { col_gray3, col_gray1, col_gray2 },
+	[SchemeSel]       = { col_gray4, col_cyan,  col_cyan  },
+	[SchemeTagsSel]   = { col_gray4, col_cyan,  col_cyan  }, // Tagbar left selected {text,background,not used but cannot be empty}
+    [SchemeTagsNorm]  = { col_gray3, col_gray1, col_gray2 }, // Tagbar left unselected {text,background,not used but cannot be empty}
+    [SchemeInfoSel]   = { col_gray3, col_gray1, col_cyan  }, // infobar middle  selected {text,background,not used but cannot be empty}
+    [SchemeInfoNorm]  = { col_gray2, col_gray1, col_gray2 }  // infobar middle  unselected {text,background,not used but cannot be empty}
 };
 static const XPoint stickyicon[]    = { {0,0}, {4,0}, {4,8}, {2,6}, {0,8}, {0,0} }; /* represents the icon as an array of vertices */
 static const XPoint stickyiconbb    = {4,8};	/* defines the bottom right corner of the polygon's bounding box (speeds up scaling) */
