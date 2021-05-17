@@ -21,18 +21,21 @@ static const int riodraw_matchpid   = 1;        /* 0 or 1, indicates whether to 
 static const int riodraw_spawnasync = 0;        /* 0 spawns after successful sel, 1 spawn during selection */
 static const char *fonts[]          = { "Cascadia Code:size=12", "CaskaydiaCove Nerd Font:size=13" };
 static const char dmenufont[]       = "CaskaydiaCove Nerd Font Mono:size=13";
-static const char col_gray1[]       = "#1a1b26";
-static const char col_gray2[]       = "#414868";
-static const char col_gray3[]       = "#a9b1d6";
-static const char col_gray4[]       = "#ffffff";
-static const char col_cyan[]        = "#7aa2f7";
+static const char col_gray1[]       = "#1a1b26"; // default bg color
+static const char col_gray2[]       = "#414868"; // unsel win border
+static const char col_gray3[]       = "#a9b1d6"; // unsel fg color
+static const char col_gray4[]       = "#c0caf5"; // for win titles
+static const char col_gray5[]       = "#ffffff"; // sel fg
+static const char col_cyan[]        = "#7aa2f7"; // sel bg
+static const char col_red[]         = "#f7768e"; // urgent color
 static const char *colors[][3]      = {
 	/*               	fg         bg         border   */
 	[SchemeNorm]      = { col_gray3, col_gray1, col_gray2 },
-	[SchemeSel]       = { col_gray4, col_cyan,  col_cyan  },
-	[SchemeTagsSel]   = { col_gray4, col_cyan,  col_cyan  }, // Tagbar left selected {text,background,not used but cannot be empty}
+	[SchemeSel]       = { col_gray5, col_cyan,  col_cyan  },
+	[SchemeUrg]       = { col_gray1, col_red,   col_red   }, // idk why fg and bg colors are inverted but it works so who cares
+	[SchemeTagsSel]   = { col_gray5, col_cyan,  col_cyan  }, // Tagbar left selected {text,background,not used but cannot be empty}
     [SchemeTagsNorm]  = { col_gray3, col_gray1, col_gray2 }, // Tagbar left unselected {text,background,not used but cannot be empty}
-    [SchemeInfoSel]   = { col_gray3, col_gray1, col_cyan  }, // infobar middle  selected {text,background,not used but cannot be empty}
+    [SchemeInfoSel]   = { col_gray4, col_gray1, col_cyan  }, // infobar middle  selected {text,background,not used but cannot be empty}
     [SchemeInfoNorm]  = { col_gray2, col_gray1, col_gray2 }  // infobar middle  unselected {text,background,not used but cannot be empty}
 };
 static const XPoint stickyicon[]    = { {0,0}, {4,0}, {4,8}, {2,6}, {0,8}, {0,0} }; /* represents the icon as an array of vertices */
