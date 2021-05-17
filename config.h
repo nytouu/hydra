@@ -57,6 +57,7 @@ static const Rule rules[] = {
 	{ "Blueberry.py",NULL,    NULL,       0,            1,           0,         0,          -1 },
 	{ "Connman-gtk", NULL,    NULL,       0,            1,           0,         0,          -1 },
 	{ "Engrampa",    NULL,    NULL,       0,            1,           0,         0,          -1 },
+	{ NULL, 	  NULL,    	  "nmtui",    0,            1,           0,         0,          -1 },
 	{ "st",       NULL,       NULL,       0,            0,           1,         0,          -1 },
 	{ NULL,      NULL,     "Event Tester", 0,           0,           0,         1,          -1 }, /* xev */
 };
