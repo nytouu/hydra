@@ -68,14 +68,11 @@ static const float mfact     = 0.50; /* factor of master area size [0.05..0.95] 
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
 
-#define FORCE_VSPLIT 1  /* nrowgrid layout: force two clients to always split vertically */
 #include "gaps.c"
-
 static const Layout layouts[] = {
 	/* symbol     arrange function */
 	{ "[]=",      tile },    /* first entry is default */
 	{ "><>",      NULL },    /* no layout function means floating behavior */
-	/* { "[M]",      monocle }, */
 	{ "|M|",      centeredmaster },
 	{ "[@]",      spiral },
 	{ NULL,       NULL },
@@ -108,8 +105,7 @@ static Key keys[] = {
 	{ MODKEY,             			XK_n,      spawn,          SHCMD("$FILEBROWSER")},
     { MODKEY|ShiftMask,             XK_n,      spawn,          SHCMD("$TERMINAL -e ranger")},
 	{ MODKEY,                       XK_b,      spawn,          SHCMD("$BROWSER")},
-	{ MODKEY,                       XK_t,      spawn,          SHCMD("$TERMINAL -e btm")},
-	{ MODKEY|ShiftMask,             XK_t,      spawn,          SHCMD("$TERMINAL -e htop")},
+	{ MODKEY,                       XK_t,      spawn,          SHCMD("$TERMINAL -e htop")},
 	{ MODKEY,                       XK_c,      spawn,          SHCMD("$TERMINAL -e calcurse")},
 	{ MODKEY,                       XK_x,      spawn,          SHCMD("xkill")},
     /* rio */
@@ -118,8 +114,7 @@ static Key keys[] = {
     { MODKEY|ControlMask,           XK_n,      riospawn,       SHCMD("$FILEBROWSER")},
     { MODKEY|ShiftMask|ControlMask, XK_n,      riospawn,       SHCMD("$TERMINAL -e ranger")},
     { MODKEY|ControlMask,           XK_b,      riospawn,       SHCMD("$BROWSER")},
-    { MODKEY|ControlMask,           XK_t,      riospawn,       SHCMD("$TERMINAL -e btm")},
-    { MODKEY|ShiftMask|ControlMask, XK_t,      riospawn,       SHCMD("$TERMINAL -e htop")},
+    { MODKEY|ControlMask,           XK_t,      riospawn,       SHCMD("$TERMINAL -e htop")},
     { MODKEY|ControlMask,           XK_c,      riospawn,       SHCMD("$TERMINAL -e calcurse")},
     { MODKEY|ControlMask,           XK_m,      riospawn,       SHCMD("$TERMINAL -e ncmpcpp")},
     /* ncmpcpp/mpd stuff */
@@ -151,7 +146,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_j,      movestack,      {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_k,      movestack,      {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_Return, zoom,           {0} },
-	{ MODKEY|ShiftMask,             XK_Tab,    view,           {0} },
+	{ MODKEY,             			XK_Tab,    view,           {0} },
 	{ MODKEY,                       XK_a,      killclient,     {0} }, /* a = q on qwerty */
 	{ MODKEY,           		    XK_w,      cyclelayout,    {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_w,      cyclelayout,    {.i = +1 } },
