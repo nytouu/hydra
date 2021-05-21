@@ -160,6 +160,11 @@ static Key keys[] = {
     /* TODO need to find a way to reset both mfact and cfact */
     { MODKEY|ShiftMask,             XK_f,      setmfact,       {.f =  0.50} },
 	{ MODKEY|ShiftMask,             XK_f,      setcfact,       {.f =  0.00} },
+	/* gaps */
+	{ MODKEY,             			XK_g,      togglegaps,     {0} },
+	{ MODKEY|ShiftMask,    			XK_g,      defaultgaps,    {0} },
+	{ MODKEY|ControlMask,           XK_KP_Add, incrgaps,       {.i = +1 } },
+	{ MODKEY|ControlMask,    		XK_KP_Subtract, incrgaps,  {.i = -1 } },
     /* for azerty */
 	TAGKEYS(                        XK_ampersand,              0)
 	TAGKEYS(                        XK_eacute,                 1)

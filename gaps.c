@@ -1,3 +1,7 @@
+/* Key binding functions */
+static void defaultgaps(const Arg *arg);
+static void togglegaps(const Arg *arg);
+static void incrgaps(const Arg *arg);
 /* Layouts (delete the ones you do not need) */
 static void centeredmaster(Monitor *m);
 static void fibonacci(Monitor *m, int s);
@@ -6,11 +10,27 @@ static void tile(Monitor *m);
 /* Internals */
 static void getgaps(Monitor *m, int *oh, int *ov, int *ih, int *iv, unsigned int *nc);
 static void getfacts(Monitor *m, int msize, int ssize, float *mf, float *sf, int *mr, int *sr);
+static void setgaps(int oh, int ov, int ih, int iv);
 
 /* Settings */
 #if !PERTAG_PATCH
 static int enablegaps = 1;
 #endif // PERTAG_PATCH
+
+void
+setgaps(int oh, int ov, int ih, int iv)
+{
+	if (oh < 0) oh = 0;
+	if (ov < 0) ov = 0;
+	if (ih < 0) ih = 0;
+	if (iv < 0) iv = 0;
+
+	selmon->gappoh = oh;
+	selmon->gappov = ov;
+	selmon->gappih = ih;
+	selmon->gappiv = iv;
+	arrange(selmon);
+}
 
 void
 getgaps(Monitor *m, int *oh, int *ov, int *ih, int *iv, unsigned int *nc)
@@ -59,6 +79,34 @@ getfacts(Monitor *m, int msize, int ssize, float *mf, float *sf, int *mr, int *s
 	*sf = sfacts; // total factor of stack area
 	*mr = msize - mtotal; // the remainder (rest) of pixels after a cfacts master split
 	*sr = ssize - stotal; // the remainder (rest) of pixels after a cfacts stack split
+}
+
+void
+incrgaps(const Arg *arg)
+{
+	setgaps(
+		selmon->gappoh + arg->i,
+		selmon->gappov + arg->i,
+		selmon->gappih + arg->i,
+		selmon->gappiv + arg->i
+	);
+}
+
+void
+togglegaps(const Arg *arg)
+{
+	#if PERTAG_PATCH
+	selmon->pertag->enablegaps[selmon->pertag->curtag] = !selmon->pertag->enablegaps[selmon->pertag->curtag];
+	#else
+	enablegaps = !enablegaps;
+	#endif // PERTAG_PATCH
+	arrange(NULL);
+}
+
+void
+defaultgaps(const Arg *arg)
+{
+	setgaps(gappoh, gappov, gappih, gappiv);
 }
 
 /***
