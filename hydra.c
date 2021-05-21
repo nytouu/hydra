@@ -587,6 +587,7 @@ cleanup(void)
 		drw_cur_free(drw, cursor[i]);
 	for (i = 0; i < LENGTH(colors) + 1; i++)
 		free(scheme[i]);
+	free(scheme);
 	XDestroyWindow(dpy, wmcheckwin);
 	drw_free(drw);
 	XSync(dpy, False);
@@ -607,6 +608,7 @@ cleanupmon(Monitor *mon)
 	}
 	XUnmapWindow(dpy, mon->barwin);
 	XDestroyWindow(dpy, mon->barwin);
+	free(mon->pertag);
 	free(mon);
 }
 
@@ -2171,8 +2173,8 @@ int
 riodraw(Client *c, const char slopstyle[])
 {
 	int i;
-	char str[100];
-	char strout[100];
+	char str[100] = {0};
+	char strout[100] = {0};
 	char tmpstring[30] = {0};
 	char slopcmd[100] = "slop -f x%xx%yx%wx%hx ";
 	int firstchar = 0;
