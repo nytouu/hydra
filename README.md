@@ -1,6 +1,8 @@
 # hydra
-hydra is my personal build of [dwm](https://dwm.suckless.org/).\
-![here's a screenshot](https://raw.githubusercontent.com/nytouu/hydra/master/screenshot.png "a")
+hydra is my personal build of [dwm](https://dwm.suckless.org/).
+
+here's a screenshot :\
+![screenshot](https://raw.githubusercontent.com/nytouu/hydra/master/screenshot.png)
 
 # patches
 here's a list of the patches applied in this build
