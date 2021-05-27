@@ -69,7 +69,7 @@
 
 /* enums */
 enum { CurNormal, CurResize, CurMove, CurResizeHorzArrow, CurResizeVertArrow, CurLast }; /* cursor */
-enum { SchemeNorm, SchemeSel, SchemeUrg, SchemeTagsSel, SchemeTagsNorm, SchemeInfoSel, SchemeInfoNorm }; /* color schemes */
+enum { SchemeNorm, SchemeSel, SchemeUrg, SchemeTagsSel, SchemeTagsNorm, SchemeInfo }; /* color schemes */
 enum { NetSupported, NetWMName, NetWMState, NetWMCheck,
        NetWMFullscreen, NetActiveWindow, NetWMWindowType,
        NetWMWindowTypeDialog, NetClientList, NetClientListStacking, NetDesktopNames, NetDesktopViewport, NetNumberOfDesktops, NetCurrentDesktop, NetLast }; /* EWMH atoms */
@@ -491,7 +491,7 @@ attachstack(Client *c)
 void
 buttonpress(XEvent *e)
 {
-	unsigned int i, x, click;
+	unsigned int i, x, click,tsize, occ = 0;
 	Arg arg = {0};
 	Client *c;
 	Monitor *m;
@@ -506,16 +506,29 @@ buttonpress(XEvent *e)
 		focus(NULL);
 	}
 	if (ev->window == selmon->barwin) {
-		i = x = 0;
-		do
+		i = x = tsize = 0;
+		for (c = m->clients; c; c = c->next)
+			occ |= c->tags == 255 ? 0 : c->tags;
+		for (i = 0; i < LENGTH(tags); i++) {
+			/* if (!(occ & 1 << i || m->tagset[m->seltags] & 1 << i)) */
+			/* 	continue; */
+			tsize += TEXTW(tags[i]);
+		}
+
+		x = (m->ww - tsize) / 2;
+		i = 0;
+		do {
+			/* do not reserve space for vacant tags */
+			/* if (!(occ & 1 << i || m->tagset[m->seltags] & 1 << i)) */
+			/* 	continue; */
 			x += TEXTW(tags[i]);
-		while (ev->x >= x && ++i < LENGTH(tags));
-		if (i < LENGTH(tags)) {
+		} while (ev->x >= x && ++i < LENGTH(tags));
+		if (ev->x < TEXTW(m->ltsymbol))
+			click = ClkLtSymbol;
+		else if (i < LENGTH(tags) && ev->x >= (m->ww - tsize) / 2) {
 			click = ClkTagBar;
 			arg.ui = 1 << i;
-		} else if (ev->x < x + blw)
-			click = ClkLtSymbol;
-		else if (ev->x > selmon->ww - statusw) {
+		} else if (ev->x > selmon->ww - TEXTW(stext)) {
 			x = selmon->ww - statusw;
 			click = ClkStatusText;
 
@@ -1200,7 +1213,7 @@ drawstatusbar(Monitor *m, int bh, char* stext) {
 void
 drawbar(Monitor *m)
 {
-	int x, w, tw = 0;
+	int x, w, tsize = 0, tw = 0;
 	int boxs = drw->fonts->h / 9;
 	int boxw = drw->fonts->h / 6 + 2;
 	unsigned int i, occ = 0, urg = 0;
@@ -1212,12 +1225,22 @@ drawbar(Monitor *m)
 	}
 
 	for (c = m->clients; c; c = c->next) {
-		occ |= c->tags;
+		occ |= c->tags == 255 ? 0 : c->tags;
 		if (c->isurgent)
 			urg |= c->tags;
 	}
-	x = 0;
 	for (i = 0; i < LENGTH(tags); i++) {
+		/* if (!(occ & 1 << i || m->tagset[m->seltags] & 1 << i)) */
+			/* continue; */
+		tsize += TEXTW(tags[i]);
+	}
+
+	x = (m->ww - tsize) / 2;
+	for (i = 0; i < LENGTH(tags); i++) {
+		/* do not draw vacant tags */
+		/* if (!(occ & 1 << i || m->tagset[m->seltags] & 1 << i)) */
+			/* continue; */
+
 		w = TEXTW(tags[i]);
 		drw_setscheme(drw, scheme[m->tagset[m->seltags] & 1 << i ? SchemeTagsSel : urg & 1 << i ? SchemeUrg : SchemeTagsNorm]);
 		drw_text(drw, x, 0, w, bh, lrpad / 2, tags[i], urg & 1 << i);
@@ -1227,21 +1250,26 @@ drawbar(Monitor *m)
 				urg & 1 << i);
 		x += w;
 	}
+	x = 0;
 	w = blw = TEXTW(m->ltsymbol);
 	drw_setscheme(drw, scheme[SchemeTagsNorm]);
 	x = drw_text(drw, x, 0, w, bh, lrpad / 2, m->ltsymbol, 0);
 
-	if ((w = m->ww - tw - x) > bh) {
+	if ((w = (m->ww / 2) - x - (tsize / 2))  > bh) {
 		if (m->sel) {
-			drw_setscheme(drw, scheme[m == selmon ? SchemeInfoSel : SchemeInfoNorm]);
-			drw_text(drw, x, 0, w, bh, lrpad / 2, m->sel->name, 0);
+			drw_setscheme(drw, scheme[SchemeInfo]);
+			x = drw_text(drw, x, 0, w, bh, lrpad / 2, m->sel->name, 0);
+			drw_setscheme(drw, scheme[SchemeInfo]);
+			drw_rect(drw, x + tsize, 0, (m->ww / 2) - (tsize / 2) - tw, bh, 1, 1);
 			if (m->sel->isfloating)
 				drw_rect(drw, x + boxs, boxs, boxw, boxw, m->sel->isfixed, 0);
 			if (m->sel->issticky)
 				drw_polygon(drw, x + boxs, m->sel->isfloating ? boxs * 2 + boxw : boxs, stickyiconbb.x, stickyiconbb.y, boxw, boxw * stickyiconbb.y / stickyiconbb.x, stickyicon, LENGTH(stickyicon), Nonconvex, m->sel->tags & m->tagset[m->seltags]);
 		} else {
-			drw_setscheme(drw, scheme[SchemeInfoNorm]);
+			drw_setscheme(drw, scheme[SchemeInfo]);
 			drw_rect(drw, x, 0, w, bh, 1, 1);
+			drw_setscheme(drw, scheme[SchemeInfo]);
+			drw_rect(drw, x + w + tsize, 0, (m->ww / 2) - (tsize / 2) - tw, bh, 1, 1);
 		}
 	}
 	drw_map(drw, m->barwin, 0, 0, m->ww, bh);
