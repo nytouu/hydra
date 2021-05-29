@@ -20,22 +20,22 @@ static const char slopresizestyle[] = "-t 0 -b 2 -c 0.7,0.6,0.9"; /* do NOT defi
 static const int riodraw_borders    = 0;        /* 0 or 1, indicates whether the area drawn using slop includes the window borders */
 static const int riodraw_matchpid   = 1;        /* 0 or 1, indicates whether to match the PID of the client that was spawned with riospawn */
 static const int riodraw_spawnasync = 0;        /* 0 spawns after successful sel, 1 spawn during selection */
-static const char *fonts[]          = { "Fira Mono:size=12", "FiraMono Nerd Font:size=13" };
-static const char dmenufont[]       = "FiraMono Nerd Font Mono:size=13";
+static const char *fonts[]          = { "UW Ttyp0:size=12", "TerminessTTF Nerd Font:size=13", "Siji:size=13" };
+static const char dmenufont[]       = "UW Ttyp0:size=12";
 static const char col_gray1[]       = "#1a1b26"; // default bg color
-static const char col_gray3[]       = "#414868"; // unsel win border
-static const char col_gray4[]       = "#a9b1d6"; // unsel fg color
-static const char col_gray5[]       = "#c0caf5"; // for win titles
-static const char col_gray6[]       = "#ffffff"; // sel fg
+static const char col_gray2[]       = "#414868"; // unsel win border
+static const char col_gray3[]       = "#a9b1d6"; // unsel fg color
+static const char col_gray4[]       = "#c0caf5"; // for win titles
+static const char col_gray5[]       = "#ffffff"; // sel fg
 static const char col_cyan[]        = "#7aa2f7"; // sel bg
 static const char col_red[]         = "#f7768e"; // urgent color
 static const char *colors[][3]      = {
 	/*               	fg         bg         border   */
-	[SchemeNorm]      = { col_gray4, col_gray1, col_gray3 },
-	[SchemeSel]       = { col_gray6, col_cyan,  col_cyan  },
+	[SchemeNorm]      = { col_gray3, col_gray1, col_gray2 },
+	[SchemeSel]       = { col_gray5, col_cyan,  col_cyan  },
 	[SchemeUrg]       = { col_gray1, col_red,   col_red   }, // idk why fg and bg colors are inverted but it works so who cares
-    [SchemeTagsNorm]  = { col_gray4, col_gray1, col_gray3 }, // tags in the middle of the bar
-	[SchemeTagsSel]   = { col_gray6, col_cyan,  col_cyan  }, // selected tags
+    [SchemeTagsNorm]  = { col_gray3, col_gray1, col_gray2 }, // tags in the middle of the bar
+	[SchemeTagsSel]   = { col_gray5, col_cyan,  col_cyan  }, // selected tags
     [SchemeInfo]   	  = { col_cyan,  col_gray1, col_cyan  }, // focused window name text
 };
 static const XPoint stickyicon[]    = { {0,0}, {4,0}, {4,8}, {2,6}, {0,8}, {0,0} }; /* represents the icon as an array of vertices */
@@ -71,10 +71,10 @@ static const int resizehints = 0;    /* 1 means respect size hints in tiled resi
 #include "gaps.c"
 static const Layout layouts[] = {
 	/* symbol     arrange function */
-	{ "[]=",      tile },    /* first entry is default */
-	{ "><>",      NULL },    /* no layout function means floating behavior */
-	{ "|M|",      centeredmaster },
-	{ "[@]",      spiral },
+	{ "",      tile },    /* first entry is default */
+	{ "",      NULL },    /* no layout function means floating behavior */
+	{ "",      centeredmaster },
+	{ "",      spiral },
 	{ NULL,       NULL },
 };
 
