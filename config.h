@@ -11,6 +11,7 @@ static const unsigned int gappov    = 24;       /* vert outer gap between window
 static const int smartgaps          = 1;        /* 1 means no outer gap when there is only one window */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
+static       int linepx             = 2;        /* 0 means no underline */
 static const int focusonwheel       = 0;
 static const int user_bh            = 24;       /* 0 means that dwm will calculate bar height, >= 1 means dwm will user_bh as bar height */
 static const int pertag             = 1;
@@ -41,7 +42,8 @@ static const XPoint stickyicon[]    = { {0,0}, {4,0}, {4,8}, {2,6}, {0,8}, {0,0}
 static const XPoint stickyiconbb    = {4,8};	/* defines the bottom right corner of the polygon's bounding box (speeds up scaling) */
 
 /* tagging */
-static const char *tags[] = { "", "","", "", "", "ﭮ", ""};
+static const char *tags[] = { "I", "II","III", "IV", "V", "VI", "VII"};
+/* static const char *tags[] = { "", "","", "", "", "ﭮ", ""}; */
 /* static const char *tags[] = { "home", "tty", "www", "game", "chat", "misc"}; */
 
 static const Rule rules[] = {
