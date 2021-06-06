@@ -1,7 +1,7 @@
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
-static const unsigned int borderpx  = 2;        /* border pixel of windows */
+static const unsigned int borderpx  = 3;        /* border pixel of windows */
 static const unsigned int snap      = 10;       /* snap pixel */
 static const int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
 static const unsigned int gappih    = 16;       /* horiz inner gap between windows */
@@ -15,13 +15,13 @@ static       int linepx             = 2;        /* 0 means no underline */
 static const int focusonwheel       = 0;
 static const int user_bh            = 24;       /* 0 means that dwm will calculate bar height, >= 1 means dwm will user_bh as bar height */
 static const int pertag             = 1;
-static const char slopspawnstyle[]  = "-t 0 -b 2 -c 0.7,0.6,0.9"; /* do NOT define -f (format) here "-t 0 -b 2 -c 0.7,0.6,0.9,0.1 -l" for alternate, hope the highlight thing gets fixed or maybe i should do it myself but im lazy */
-static const char slopresizestyle[] = "-t 0 -b 2 -c 0.7,0.6,0.9"; /* do NOT define -f (format) here */
+static const char slopspawnstyle[]  = "-t 0 -b 3 -c 0.5,0.6,1.0"; /* do NOT define -f (format) here "-t 0 -b 2 -c 0.7,0.6,0.9,0.1 -l" for alternate, hope the highlight thing gets fixed or maybe i should do it myself but im lazy */
+static const char slopresizestyle[] = "-t 0 -b 3 -c 0.5,0.6,1.0"; /* do NOT define -f (format) here */
 static const int riodraw_borders    = 0;        /* 0 or 1, indicates whether the area drawn using slop includes the window borders */
 static const int riodraw_matchpid   = 1;        /* 0 or 1, indicates whether to match the PID of the client that was spawned with riospawn */
 static const int riodraw_spawnasync = 0;        /* 0 spawns after successful sel, 1 spawn during selection */
-static const char *fonts[]          = { "UW Ttyp0:size=12", "TerminessTTF Nerd Font:size=13", "Siji:size=13" };
-static const char dmenufont[]       = "UW Ttyp0:size=12";
+static const char *fonts[]          = { "Roboto Mono:size=11:style=Medium", "RobotoMono Nerd Font:size=12:style=Medium", "Siji:size=12" };
+static const char dmenufont[]       = "Roboto Mono:size=11:style=Medium";
 static const char col_gray1[]       = "#1a1b26"; // default bg color
 static const char col_gray2[]       = "#414868"; // unsel win border
 static const char col_gray3[]       = "#a9b1d6"; // unsel fg color
@@ -72,7 +72,7 @@ static const int resizehints = 0;    /* 1 means respect size hints in tiled resi
 static const Layout layouts[] = {
 	/* symbol     arrange function */
 	{ "",      tile },    /* first entry is default */
-	{ "",      NULL },    /* no layout function means floating behavior */
+	{ "",      NULL },    /* no layout function means floating behavior */
 	{ "",      centeredmaster },
 	{ "",      spiral },
 	{ NULL,       NULL },
