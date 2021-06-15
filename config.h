@@ -12,6 +12,8 @@ static const int smartgaps          = 0;        /* 1 means no outer gap when the
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static       int linepx             = 2;        /* 0 means no underline */
+static const int vertpad            = 6;       /* vertical padding of bar */
+static const int sidepad            = 6;       /* horizontal padding of bar */
 static const int focusonwheel       = 0;
 static const int user_bh            = 24;       /* 0 means that dwm will calculate bar height, >= 1 means dwm will user_bh as bar height */
 static const int pertag             = 1;
