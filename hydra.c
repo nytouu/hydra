@@ -1260,7 +1260,7 @@ drawbar(Monitor *m)
 			drw_setscheme(drw, scheme[SchemeInfo]);
 			x = drw_text(drw, x, 0, w, bh, 0, m->sel->name, 0);
 			drw_setscheme(drw, scheme[SchemeInfo]);
-			drw_rect(drw, x + tsize, 0, (m->ww / 2) - (tsize / 2) - tw, bh, 1, 1);
+			drw_rect(drw, x + tsize, 0, (m->ww / 2) - (tsize / 2) - tw - 2 * sp, bh, 1, 1);
 			if (m->sel->isfloating)
 				drw_rect(drw, x + boxs - w - 8, boxs, boxw, boxw, m->sel->isfixed, 0);
 			if (m->sel->issticky)
@@ -1269,7 +1269,7 @@ drawbar(Monitor *m)
 			drw_setscheme(drw, scheme[SchemeInfo]);
 			drw_rect(drw, x, 0, w, bh, 1, 1);
 			drw_setscheme(drw, scheme[SchemeInfo]);
-			drw_rect(drw, x + w + tsize, 0, (m->ww / 2) - (tsize / 2) - tw, bh, 1, 1);
+			drw_rect(drw, x + w + tsize, 0, (m->ww / 2) - (tsize / 2) - tw - 2 * sp, bh, 1, 1);
 		}
 	}
 	drw_map(drw, m->barwin, 0, 0, m->ww, bh);
