@@ -539,7 +539,7 @@ buttonpress(XEvent *e)
 			click = ClkTagBar;
 			arg.ui = 1 << i;
 		} else if (ev->x > selmon->ww - TEXTW(stext)) {
-			x = selmon->ww - statusw;
+			x = selmon->ww - statusw - sp * 2;
 			click = ClkStatusText;
 
 			char *text, *s, ch;
