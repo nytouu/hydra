@@ -31,6 +31,8 @@ static const char col_gray4[]       = "#c0caf5"; // for win titles
 static const char col_gray5[]       = "#ffffff"; // sel fg
 static const char col_cyan[]        = "#7aa2f7"; // sel bg
 static const char col_red[]         = "#f7768e"; // urgent color
+static const unsigned int baralpha = 0x70;
+static const unsigned int borderalpha = OPAQUE;
 static const char *colors[][3]      = {
 	/*               	fg         bg         border   */
 	[SchemeNorm]      = { col_gray3, col_gray1, col_gray2 },
@@ -39,6 +41,15 @@ static const char *colors[][3]      = {
     [SchemeTagsNorm]  = { col_gray3, col_gray1, col_gray2 }, // tags in the middle of the bar
 	[SchemeTagsSel]   = { col_gray5, col_cyan,  col_cyan  }, // selected tags
     [SchemeInfo]   	  = { col_cyan,  col_gray1, col_cyan  }, // focused window name text
+};
+static const unsigned int alphas[][3]      = {
+	/*               fg      bg        border     */
+	[SchemeNorm]      = { OPAQUE, baralpha, borderalpha },
+	[SchemeSel]       = { OPAQUE, baralpha, borderalpha },
+	[SchemeUrg]       = { baralpha, OPAQUE, borderalpha }, // idk why fg and bg colors are inverted but it works so who cares
+    [SchemeTagsNorm]  = { OPAQUE, baralpha, borderalpha },
+	[SchemeTagsSel]   = { OPAQUE, baralpha, borderalpha },
+    [SchemeInfo]   	  = { OPAQUE, baralpha, borderalpha  }
 };
 static const XPoint stickyicon[]    = { {0,0}, {4,0}, {4,8}, {2,6}, {0,8}, {0,0} }; /* represents the icon as an array of vertices */
 static const XPoint stickyiconbb    = {4,8};	/* defines the bottom right corner of the polygon's bounding box (speeds up scaling) */
