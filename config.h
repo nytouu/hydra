@@ -1,7 +1,7 @@
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
-static const unsigned int borderpx  = 3;        /* border pixel of windows */
+static const unsigned int borderpx  = 2;        /* border pixel of windows */
 static const unsigned int snap      = 10;       /* snap pixel */
 static const int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
 static const unsigned int gappih    = 12;       /* horiz inner gap between windows */
@@ -13,17 +13,17 @@ static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static       int linepx             = 2;        /* 0 means no underline */
 static const int vertpad            = 6;       /* vertical padding of bar */
-static const int sidepad            = 6;       /* horizontal padding of bar */
+static const int sidepad            = 10;       /* horizontal padding of bar */
 static const int focusonwheel       = 0;
 static const int user_bh            = 24;       /* 0 means that dwm will calculate bar height, >= 1 means dwm will user_bh as bar height */
 static const int pertag             = 1;
-static const char slopspawnstyle[]  = "-t 0 -b 3 -c 0.5,0.6,1.0"; /* do NOT define -f (format) here "-t 0 -b 2 -c 0.7,0.6,0.9,0.1 -l" for alternate, hope the highlight thing gets fixed or maybe i should do it myself but im lazy */
-static const char slopresizestyle[] = "-t 0 -b 3 -c 0.5,0.6,1.0"; /* do NOT define -f (format) here */
+static const char slopspawnstyle[]  = "-t 0 -b 2 -c 0.5,0.6,1.0"; /* do NOT define -f (format) here "-t 0 -b 2 -c 0.7,0.6,0.9,0.1 -l" for alternate, hope the highlight thing gets fixed or maybe i should do it myself but im lazy */
+static const char slopresizestyle[] = "-t 0 -b 2 -c 0.5,0.6,1.0"; /* do NOT define -f (format) here */
 static const int riodraw_borders    = 0;        /* 0 or 1, indicates whether the area drawn using slop includes the window borders */
 static const int riodraw_matchpid   = 1;        /* 0 or 1, indicates whether to match the PID of the client that was spawned with riospawn */
 static const int riodraw_spawnasync = 0;        /* 0 spawns after successful sel, 1 spawn during selection */
-static const char *fonts[]          = { "Roboto Mono:size=11:style=Medium", "RobotoMono Nerd Font:size=12:style=Medium", "Siji:size=12" };
-static const char dmenufont[]       = "Roboto Mono:size=11:style=Medium";
+static const char *fonts[]          = { "JetBrains Mono:size=11:style=Medium", "JetBrainsMono Nerd Font:size=12:style=Medium", "Siji:size=12" };
+static const char dmenufont[]       = "IBM Plex Mono:size=11:style=Medium";
 static const char col_gray1[]       = "#1a1b26"; // default bg color
 static const char col_gray2[]       = "#414868"; // unsel win border
 static const char col_gray3[]       = "#a9b1d6"; // unsel fg color
@@ -35,7 +35,7 @@ static const unsigned int baralpha = 0x70;
 static const unsigned int borderalpha = OPAQUE;
 static const char *colors[][3]      = {
 	/*               	fg         bg         border   */
-	[SchemeNorm]      = { col_gray3, col_gray1, col_gray2 },
+	[SchemeNorm]      = { col_gray3, col_gray1, col_gray1 },
 	[SchemeSel]       = { col_gray5, col_cyan,  col_cyan  },
 	[SchemeUrg]       = { col_gray1, col_red,   col_red   }, // idk why fg and bg colors are inverted but it works so who cares
     [SchemeTagsNorm]  = { col_gray3, col_gray1, col_gray2 }, // tags in the middle of the bar
@@ -85,7 +85,7 @@ static const int resizehints = 0;    /* 1 means respect size hints in tiled resi
 static const Layout layouts[] = {
 	/* symbol     arrange function */
 	{ "",      tile },    /* first entry is default */
-	{ "",      NULL },    /* no layout function means floating behavior */
+	{ "",      NULL },    /* no layout function means floating behavior */
 	{ "",      centeredmaster },
 	{ "",      spiral },
 	{ NULL,       NULL },
@@ -136,11 +136,13 @@ static Key keys[] = {
     { Mod1Mask|ControlMask,         XK_l,      spawn,          SHCMD("mpc next")},
     { Mod1Mask|ControlMask,         XK_space,  spawn,          SHCMD("mpc toggle")},
     /* picom */
-	{ MODKEY|ShiftMask,             XK_c,      spawn,          SHCMD("picom --experimental-backends")},
+	{ MODKEY|ShiftMask,             XK_c,      spawn,          SHCMD("picom")},
 	{ MODKEY|ShiftMask,             XK_x,      spawn,          SHCMD("killall picom")},
     /* take screenshots */
 	{ MODKEY,                       XK_p,      spawn,          SHCMD("scrot $HOME/pics/screenshots/$(date +%d-%m-%G-%T).png && screenshotnotify")},
 	{ MODKEY|ShiftMask,             XK_p,      spawn,          SHCMD("sleep 0.3 && scrot -s $HOME/pics/screenshots/$(date +%d-%m-%G-%T).png && screenshotnotify")},
+    /* select a color and have it in clipboard */
+    { MODKEY|ShiftMask,             XK_h,      spawn,          SHCMD("colorpicknotify")},
     /* qwerty azerty */
 	{ Mod1Mask|ShiftMask,           XK_f,      spawn,          SHCMD("setxkbmap fr && pkill -RTMIN+8 hydrablocks")},
 	{ Mod1Mask|ShiftMask,           XK_e,      spawn,          SHCMD("setxkbmap us && pkill -RTMIN+8 hydrablocks")},
@@ -196,7 +198,6 @@ static Key keys[] = {
 	TAGKEYS(                        XK_7,					   6)
 	TAGKEYS(                        XK_8,					   7)
 	TAGKEYS(                        XK_9,					   8)
-    /* killsesh kills process that stay even when quitting dwm */
 	{ MODKEY|ShiftMask,             XK_e,      quit,           {0} },
 };
 
