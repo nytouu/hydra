@@ -5,3 +5,4 @@ hydra.o
 hydra
 hydra.c.rej
 hydra.c.orig
+config.def.h
