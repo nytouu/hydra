@@ -13,10 +13,10 @@ static const int smartborders       = 1;        /* 1 means no border when there 
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static       int linepx             = 2;        /* 0 means no underline */
-static const int vertpad            = 6;       /* vertical padding of bar */
-static const int sidepad            = 10;       /* horizontal padding of bar */
+static const int vertpad            = 8;       /* vertical padding of bar */
+static const int sidepad            = 12;       /* horizontal padding of bar */
 static const int focusonwheel       = 0;
-static const int user_bh            = 24;       /* 0 means that dwm will calculate bar height, >= 1 means dwm will user_bh as bar height */
+static const int user_bh            = 28;       /* 0 means that dwm will calculate bar height, >= 1 means dwm will user_bh as bar height */
 static const int pertag             = 1;
 static const char slopspawnstyle[]  = "-t 0 -b 2 -c 0.5,0.6,1.0"; /* do NOT define -f (format) here "-t 0 -b 2 -c 0.7,0.6,0.9,0.1 -l" for alternate, hope the highlight thing gets fixed or maybe i should do it myself but im lazy */
 static const char slopresizestyle[] = "-t 0 -b 2 -c 0.5,0.6,1.0"; /* do NOT define -f (format) here */
@@ -37,7 +37,7 @@ static const unsigned int borderalpha = OPAQUE;
 static const char *colors[][3]      = {
 	/*               	fg         bg         border   */
 	[SchemeNorm]      = { col_gray3, col_gray1, col_gray1 },
-	[SchemeSel]       = { col_gray5, col_cyan,  col_cyan  },
+	[SchemeSel]       = { col_gray5, col_cyan,  col_gray2 },
 	[SchemeUrg]       = { col_gray1, col_red,   col_red   }, // idk why fg and bg colors are inverted but it works so who cares
     [SchemeTagsNorm]  = { col_gray3, col_gray1, col_gray2 }, // tags in the middle of the bar
 	[SchemeTagsSel]   = { col_gray5, col_cyan,  col_cyan  }, // selected tags
@@ -139,9 +139,10 @@ static Key keys[] = {
     /* picom */
 	{ MODKEY|ShiftMask,             XK_c,      spawn,          SHCMD("picom")},
 	{ MODKEY|ShiftMask,             XK_x,      spawn,          SHCMD("killall picom")},
-    /* take screenshots */
-	{ MODKEY,                       XK_p,      spawn,          SHCMD("scrot $HOME/pics/screenshots/$(date +%d-%m-%G-%T).png && screenshotnotify")},
-	{ MODKEY|ShiftMask,             XK_p,      spawn,          SHCMD("sleep 0.3 && scrot -s $HOME/pics/screenshots/$(date +%d-%m-%G-%T).png && screenshotnotify")},
+    /* take screenshots/vids */
+	{ MODKEY,                       XK_p,      spawn,          SHCMD("maim $HOME/pics/screenshots/$(date +%d-%m-%G-%T).png && screenshotnotify")},
+	{ MODKEY|ShiftMask,             XK_p,      spawn,          SHCMD("sleep 0.3 && maim -s $HOME/pics/screenshots/$(date +%d-%m-%G-%T).png && screenshotnotify")},
+	{ MODKEY|ShiftMask,             XK_r,      spawn,          SHCMD("dmenurecord")},
     /* select a color and have it in clipboard */
     { MODKEY|ShiftMask,             XK_h,      spawn,          SHCMD("colorpicknotify")},
     /* qwerty azerty */
