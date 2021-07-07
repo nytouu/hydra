@@ -1,7 +1,7 @@
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
-static const unsigned int borderpx  = 2;        /* border pixel of windows */
+static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const unsigned int snap      = 10;       /* snap pixel */
 static const int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
 static const unsigned int gappih    = 12;       /* horiz inner gap between windows */
@@ -9,7 +9,7 @@ static const unsigned int gappiv    = 12;       /* vert inner gap between window
 static const unsigned int gappoh    = 20;       /* horiz outer gap between windows and screen edge */
 static const unsigned int gappov    = 20;       /* vert outer gap between windows and screen edge */
 static const int smartgaps          = 0;        /* 1 means no outer gap when there is only one window, behaves weirdly with barpadding */
-static const int smartborders       = 1;        /* 1 means no border when there is only one window */
+static const int smartborders       = 0;        /* 1 means no border when there is only one window (unless floating) */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static       int linepx             = 2;        /* 0 means no underline */
@@ -200,7 +200,7 @@ static Key keys[] = {
 	TAGKEYS(                        XK_7,					   6)
 	TAGKEYS(                        XK_8,					   7)
 	TAGKEYS(                        XK_9,					   8)
-	{ MODKEY|ShiftMask,             XK_e,      quit,           {0} },
+	{ MODKEY|ShiftMask,             XK_e,      spawn,          SHCMD("powermenu")},
 };
 
 /* button definitions */
