@@ -7,9 +7,11 @@ here's a screenshot :\
 # patches
 here's a list of the patches applied in this build
 
+[alpha](https://dwm.suckless.org/patches/alpha/)\
 [actualfullscreen](https://dwm.suckless.org/patches/actualfullscreen/)\
 [alwayscenter](https://dwm.suckless.org/patches/alwayscenter/)\
 [autostart](https://dwm.suckless.org/patches/autostart/)\
+[barpadding](https://dwm.suckless.org/patches/barpadding/)\
 [bar-height](https://dwm.suckless.org/patches/bar_height/)\
 [cfacts](https://dwm.suckless.org/patches/cfacts/)\
 [cfacts-dragcfact](https://github.com/bakkeby/patches/wiki/dragcfact)\
