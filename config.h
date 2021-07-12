@@ -114,13 +114,6 @@ static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_d,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
-    /* binds for quickly opening apps i use often */
-	{ MODKEY,             			XK_n,      spawn,          SHCMD("$FILEBROWSER")},
-    { MODKEY|ShiftMask,             XK_n,      spawn,          SHCMD("$TERMINAL -e ranger")},
-	{ MODKEY,                       XK_b,      spawn,          SHCMD("$BROWSER")},
-	{ MODKEY,                       XK_t,      spawn,          SHCMD("$TERMINAL -e htop")},
-	{ MODKEY,                       XK_c,      spawn,          SHCMD("$TERMINAL -e calcurse")},
-	{ MODKEY,                       XK_x,      spawn,          SHCMD("xkill")},
     /* rio */
 	{ MODKEY,                       XK_r,      rioresize,      {0} },
 	{ MODKEY|ControlMask,           XK_Return, riospawn,       {.v = termcmd } },
@@ -130,25 +123,6 @@ static Key keys[] = {
     { MODKEY|ControlMask,           XK_t,      riospawn,       SHCMD("$TERMINAL -e htop")},
     { MODKEY|ControlMask,           XK_c,      riospawn,       SHCMD("$TERMINAL -e calcurse")},
     { MODKEY|ControlMask,           XK_m,      riospawn,       SHCMD("$TERMINAL -e ncmpcpp")},
-    /* ncmpcpp/mpd stuff */
-    { MODKEY,                       XK_m,      spawn,          SHCMD("$TERMINAL -e ncmpcpp")},
-    { Mod1Mask|ControlMask,         XK_k,      spawn,          SHCMD("mpc volume +2")},
-    { Mod1Mask|ControlMask,         XK_j,      spawn,          SHCMD("mpc volume -2")},
-    { Mod1Mask|ControlMask,         XK_h,      spawn,          SHCMD("mpc prev")},
-    { Mod1Mask|ControlMask,         XK_l,      spawn,          SHCMD("mpc next")},
-    { Mod1Mask|ControlMask,         XK_space,  spawn,          SHCMD("mpc toggle")},
-    /* picom */
-	{ MODKEY|ShiftMask,             XK_c,      spawn,          SHCMD("picom")},
-	{ MODKEY|ShiftMask,             XK_x,      spawn,          SHCMD("killall picom")},
-    /* take screenshots/vids */
-	{ MODKEY,                       XK_p,      spawn,          SHCMD("maim $HOME/pics/screenshots/$(date +%d-%m-%G-%T).png && screenshotnotify")},
-	{ MODKEY|ShiftMask,             XK_p,      spawn,          SHCMD("sleep 0.3 && maim -s $HOME/pics/screenshots/$(date +%d-%m-%G-%T).png && screenshotnotify")},
-	{ MODKEY|ShiftMask,             XK_r,      spawn,          SHCMD("dmenurecord")},
-    /* select a color and have it in clipboard */
-    { MODKEY|ShiftMask,             XK_h,      spawn,          SHCMD("colorpicknotify")},
-    /* qwerty azerty */
-	{ Mod1Mask|ShiftMask,           XK_f,      spawn,          SHCMD("setxkbmap fr && pkill -RTMIN+8 hydrablocks")},
-	{ Mod1Mask|ShiftMask,           XK_e,      spawn,          SHCMD("setxkbmap us && pkill -RTMIN+8 hydrablocks")},
     /* dwm stuff */
 	{ MODKEY|ShiftMask,             XK_u,      togglebar,      {0} },
 	{ MODKEY,                       XK_s,      togglesticky,   {0} },
