@@ -17,6 +17,7 @@ static       int linepx             = 2;        /* 0 means no underline */
 static const int vertpad            = 8;       /* vertical padding of bar */
 static const int sidepad            = 12;       /* horizontal padding of bar */
 static const int focusonwheel       = 0;
+static const int nmaxmaster         = 3;        /* maximum number of clients allowed in master area */
 static const int user_bh            = 28;       /* 0 means that dwm will calculate bar height, >= 1 means dwm will user_bh as bar height */
 static const int pertag             = 1;
 static const char slopspawnstyle[]  = "-t 0 -b 2 -c 0.5,0.6,1.0"; /* do NOT define -f (format) here "-t 0 -b 2 -c 0.7,0.6,0.9,0.1 -l" for alternate, hope the highlight thing gets fixed or maybe i should do it myself but im lazy */
