@@ -76,7 +76,7 @@ enum { NetSupported, NetWMName, NetWMState, NetWMCheck,
        NetWMFullscreen, NetActiveWindow, NetWMWindowType,
        NetWMWindowTypeDialog, NetClientList, NetClientListStacking, NetDesktopNames, NetDesktopViewport, NetNumberOfDesktops, NetCurrentDesktop, NetLast }; /* EWMH atoms */
 enum { WMProtocols, WMDelete, WMState, WMTakeFocus, WMLast }; /* default atoms */
-enum { ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle,
+enum { ClkTagBar, ClkLtSymbol, ClkStatusText, ClkButton, ClkWinTitle,
        ClkClientWin, ClkRootWin, ClkLast }; /* clicks */
 
 typedef union {
@@ -533,9 +533,11 @@ buttonpress(XEvent *e)
 			/* 	continue; */
 			x += TEXTW(tags[i]);
 		} while (ev->x >= x && ++i < LENGTH(tags));
-		if (ev->x < TEXTW(m->ltsymbol))
+		if (ev->x < TEXTW(buttonbar) + TEXTW(m->ltsymbol))
 			click = ClkLtSymbol;
-		else if (i < LENGTH(tags) && ev->x >= (m->ww - tsize) / 2) {
+        if (ev->x < TEXTW(buttonbar))
+            click = ClkButton;
+        else if (i < LENGTH(tags) && ev->x >= (m->ww - tsize) / 2) {
 			click = ClkTagBar;
 			arg.ui = 1 << i;
 		} else if (ev->x > selmon->ww - TEXTW(stext)) {
@@ -1259,6 +1261,9 @@ drawbar(Monitor *m)
 		x += w;
 	}
 	x = 0;
+    w = blw = TEXTW(buttonbar);
+    drw_setscheme(drw, scheme[SchemeTagsNorm]);
+    x = drw_text(drw, x, 0, w, bh, lrpad / 2, buttonbar, 0);
 	w = blw = TEXTW(m->ltsymbol);
 	drw_setscheme(drw, scheme[SchemeTagsNorm]);
 	x = drw_text(drw, x, 0, w, bh, lrpad / 2, m->ltsymbol, 0);
