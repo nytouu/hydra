@@ -501,7 +501,7 @@ attachstack(Client *c)
 void
 buttonpress(XEvent *e)
 {
-	unsigned int i, x, click,tsize, occ = 0;
+	unsigned int i, x, click,tsize;
 	Arg arg = {0};
 	Client *c;
 	Monitor *m;
@@ -517,23 +517,17 @@ buttonpress(XEvent *e)
 	}
 	if (ev->window == selmon->barwin) {
 		i = x = tsize = 0;
-		for (c = m->clients; c; c = c->next)
-			occ |= c->tags == 255 ? 0 : c->tags;
 		for (i = 0; i < LENGTH(tags); i++) {
-			/* if (!(occ & 1 << i || m->tagset[m->seltags] & 1 << i)) */
-			/* 	continue; */
 			tsize += TEXTW(tags[i]);
 		}
 
 		x = (m->ww - tsize) / 2;
 		i = 0;
-		do {
-			/* do not reserve space for vacant tags */
-			/* if (!(occ & 1 << i || m->tagset[m->seltags] & 1 << i)) */
-			/* 	continue; */
-			x += TEXTW(tags[i]);
-		} while (ev->x >= x && ++i < LENGTH(tags));
-		if (ev->x < TEXTW(buttonbar) + TEXTW(m->ltsymbol))
+		do
+            x += TEXTW(tags[i]);
+        while (ev->x >= x && ++i < LENGTH(tags));
+
+        if (ev->x < TEXTW(buttonbar) + TEXTW(m->ltsymbol))
 			click = ClkLtSymbol;
         if (ev->x < TEXTW(buttonbar))
             click = ClkButton;
