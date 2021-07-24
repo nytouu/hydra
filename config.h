@@ -109,7 +109,6 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run" };
 static const char *termcmd[]  = { "st", NULL };
-static const char *layoutmenu_cmd = "layoutmenu.sh";
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -184,8 +183,7 @@ static Key keys[] = {
 static Button buttons[] = {
 	/* click                event mask      button          function        argument */
 	{ ClkButton,		    0,		        Button1,	    spawn,		      {.v = dmenucmd } },
-	{ ClkLtSymbol,          0,              Button3,        layoutmenu,     {0} },
-	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },
+	{ ClkWinTitle,          0,              Button2,        zoom,             {0} },
 	{ ClkStatusText,        0,              Button1,        sighydrablocks,   {.i = 1} },
 	{ ClkStatusText,        0,              Button2,        sighydrablocks,   {.i = 2} },
 	{ ClkStatusText,        0,              Button3,        sighydrablocks,   {.i = 3} },
