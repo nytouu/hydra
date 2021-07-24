@@ -1249,17 +1249,17 @@ drawbar(Monitor *m)
 			drw_rect(drw, x + w / 4, bh - linepx, w / 2, linepx, 1, 0);
 		}
 		if (m->tagset[m->seltags] & 1 << i && linepx) {
-			drw_setscheme(drw, scheme[SchemeSel]);
-			drw_rect(drw, x, bh - linepx, w, linepx, 1, 1);
+			drw_setscheme(drw, scheme[SchemeTagsSel]);
+			drw_rect(drw, x, bh - linepx, w, linepx, 1, 0);
 		}
 		x += w;
 	}
 	x = 0;
     w = blw = TEXTW(buttonbar);
-    drw_setscheme(drw, scheme[SchemeTagsNorm]);
+    drw_setscheme(drw, scheme[SchemeNorm]);
     x = drw_text(drw, x, 0, w, bh, lrpad / 2, buttonbar, 0);
 	w = blw = TEXTW(m->ltsymbol);
-	drw_setscheme(drw, scheme[SchemeTagsNorm]);
+	drw_setscheme(drw, scheme[SchemeNorm]);
 	x = drw_text(drw, x, 0, w, bh, lrpad / 2, m->ltsymbol, 0);
 
 	if ((w = (m->ww / 2) - x - (tsize / 2))  > bh) {

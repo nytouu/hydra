@@ -28,22 +28,20 @@ static const int riodraw_spawnasync = 0;        /* 0 spawns after successful sel
 static const char *fonts[]          = { "JetBrains Mono:size=11:style=Medium", "JetBrainsMono Nerd Font:size=12:style=Medium", "Siji:size=12" };
 static const char dmenufont[]       = "IBM Plex Mono:size=11:style=Medium";
 static const char col_gray1[]       = "#1a1b26"; // default bg color
-static const char col_gray2[]       = "#414868"; // unsel win border
-static const char col_gray3[]       = "#a9b1d6"; // unsel fg color
-static const char col_gray4[]       = "#c0caf5"; // for win titles
-static const char col_gray5[]       = "#ffffff"; // sel fg
-static const char col_cyan[]        = "#7aa2f7"; // sel bg
+static const char col_gray2[]       = "#414868"; // unfocused border
+static const char col_gray3[]       = "#c0caf5"; // fg color
+static const char col_cyan[]        = "#7aa2f7"; // accent color
 static const char col_red[]         = "#f7768e"; // urgent color
 static const unsigned int baralpha = 0x70;
 static const unsigned int borderalpha = OPAQUE;
 static const char *colors[][3]      = {
 	/*               	fg         bg         border   */
 	[SchemeNorm]      = { col_gray3, col_gray1, col_gray1 },
-	[SchemeSel]       = { col_gray5, col_cyan,  col_gray2 },
+	[SchemeSel]       = { col_gray3, col_cyan,  col_gray2 },
 	[SchemeUrg]       = { col_gray1, col_red,   col_red   }, // idk why fg and bg colors are inverted but it works so who cares
     [SchemeTagsNorm]  = { col_gray3, col_gray1, col_gray2 }, // tags in the middle of the bar
-	[SchemeTagsSel]   = { col_gray5, col_cyan,  col_cyan  }, // selected tags
-    [SchemeInfo]   	  = { col_cyan,  col_gray1, col_cyan  }, // focused window name text
+	[SchemeTagsSel]   = { col_cyan,  col_cyan,  col_cyan  }, // selected tags
+    [SchemeInfo]   	  = { col_gray3, col_gray1, col_cyan  }, // focused window name text
 };
 static const unsigned int alphas[][3]      = {
 	/*               fg      bg        border     */
