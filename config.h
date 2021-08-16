@@ -29,8 +29,8 @@ static const char slopresizestyle[] = "-t 0 -b 2 -c 0.5,0.6,1.0"; /* do NOT defi
 static const int riodraw_borders    = 0;        /* 0 or 1, indicates whether the area drawn using slop includes the window borders */
 static const int riodraw_matchpid   = 1;        /* 0 or 1, indicates whether to match the PID of the client that was spawned with riospawn */
 static const int riodraw_spawnasync = 0;        /* 0 spawns after successful sel, 1 spawn during selection */
-static const char *fonts[]          = { "JetBrains Mono:size=11:style=Medium", "JetBrainsMono Nerd Font:size=12:style=Medium", "Siji:size=12" };
-static const char dmenufont[]       = "IBM Plex Mono:size=11:style=Medium";
+static const char *fonts[]          = { "Roboto Mono:size=11:style=Medium", "RobotoMono Nerd Font:size=13:style=Medium", "Siji:size=13" };
+static const char dmenufont[]       = "Roboto Mono:size=12:style=Medium";
 static const char col_gray1[]       = "#1a1b26"; // default bg color
 static const char col_gray2[]       = "#414868"; // unfocused border
 static const char col_gray3[]       = "#c0caf5"; // fg color
@@ -60,8 +60,8 @@ static const XPoint stickyicon[]    = { {0,0}, {4,0}, {4,8}, {2,6}, {0,8}, {0,0}
 static const XPoint stickyiconbb    = {4,8};	/* defines the bottom right corner of the polygon's bounding box (speeds up scaling) */
 
 /* tagging */
-static const char *tags[] = { "I", "II","III", "IV", "V", "VI", "VII"};
-/* static const char *tags[] = { "", "","", "", "", "ﭮ", ""}; */
+/* static const char *tags[] = { "I", "II","III", "IV", "V", "VI", "VII"}; */
+static const char *tags[] = { "", "","", "", "", "ﭮ", ""};
 /* static const char *tags[] = { "home", "tty", "www", "game", "chat", "misc"}; */
 
 static const Rule rules[] = {
@@ -72,12 +72,13 @@ static const Rule rules[] = {
 	/* class      instance    title       tags mask     isfloating   isterminal noswallow   monitor */
 	{ "discord",  NULL,       NULL,       1<<5,         0,           0,         0,          -1 },
 	{ "Firefox",  NULL,       NULL,       0,            0,           0,         0,          -1 },
-	{ "Carla2-Plugin","carla-plugin",NULL,    0,        1,           0,         0,          -1 },
+	{ "Carla2-Plugin","carla-plugin",NULL,0,            1,           0,         0,          -1 },
+	{ NULL, NULL, "BakkesModInjectorCpp", 0,            1,           0,         0,          -1 },
 	{ "Blueberry.py",NULL,    NULL,       0,            1,           0,         0,          -1 },
 	{ "Nitrogen", NULL,    	  NULL,       0,            1,           0,         0,          -1 },
 	{ "Connman-gtk", NULL,    NULL,       0,            1,           0,         0,          -1 },
 	{ "Engrampa",    NULL,    NULL,       0,            1,           0,         0,          -1 },
-	{ "st", 	  NULL,    	  "pulsemixer",0,           1,           0,         0,          -1 },
+	{ "st", 	  NULL,    	 "pulsemixer",0,            1,           0,         0,          -1 },
 	{ "st", 	  NULL,    	  "calculse", 0,            1,           0,         0,          -1 },
 	{ "st",       NULL,       NULL,       0,            0,           1,         0,          -1 },
 	{ NULL,      NULL,     "Event Tester", 0,           0,           0,         1,          -1 }, /* xev */
@@ -194,7 +195,7 @@ static Button buttons[] = {
 	{ ClkStatusText,        0,              Button4,        sighydrablocks,   {.i = 4} },
 	{ ClkStatusText,        0,              Button5,        sighydrablocks,   {.i = 5} },
     /* placemouse : 0=tiled pos rel to m cur 1=tiled pos rel to win center 2=m cur warps to win center */
-	{ ClkClientWin,         MODKEY,         Button1,        moveorplace,    {.i = 1} },
+	{ ClkClientWin,         MODKEY,         Button1,        moveorplace,    {.i = 0} },
 	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
 	{ ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
 	{ ClkClientWin,         MODKEY|ShiftMask, Button1,      dragmfact,      {0} },
