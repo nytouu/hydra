@@ -3,7 +3,7 @@
 /* appearance */
 #define ICONSIZE 16   /* icon size */
 #define ICONSPACING 8 /* space between icon and title */
-static const unsigned int borderpx  = 4;        /* border pixel of windows */
+static const unsigned int borderpx  = 2;        /* border pixel of windows */
 static const unsigned int snap      = 10;       /* snap pixel */
 static const int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
 static const unsigned int gappih    = 12;       /* horiz inner gap between windows */
@@ -33,7 +33,7 @@ static const char col_gray2[]       = "#414868"; // unfocused border
 static const char col_gray3[]       = "#c0caf5"; // fg color
 static const char col_cyan[]        = "#7aa2f7"; // accent color
 static const char col_red[]         = "#f7768e"; // urgent color
-static const unsigned int baralpha = 0x70;
+static const unsigned int baralpha = 0xaf;
 static const unsigned int borderalpha = OPAQUE;
 static const char buttonbar[]       = "גּ";
 static const char *colors[][3]      = {
