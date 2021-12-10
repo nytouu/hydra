@@ -342,6 +342,7 @@ static int bh, blw = 0;      /* bar geometry */
 static int lrpad;            /* sum of left and right padding for text */
 static int vp;               /* vertical padding for bar */
 static int sp;               /* side padding for bar */
+static int stp;
 static int (*xerrorxlib)(Display *, XErrorEvent *);
 static unsigned int numlockmask = 0;
 static int riodimensions[4] = { -1, -1, -1, -1 };
@@ -1187,7 +1188,7 @@ drawstatusbar(Monitor *m, int bh, char* stext) {
 	drw->scheme[ColFg] = scheme[SchemeNorm][ColFg];
 	drw->scheme[ColBg] = scheme[SchemeNorm][ColBg];
 	drw_rect(drw, x - 2 * sp, 0, w, bh, 1, 1);
-	x++;
+	x += stp / 2;
 
 	/* process status text */
 	i = -1;
@@ -1197,7 +1198,7 @@ drawstatusbar(Monitor *m, int bh, char* stext) {
 
 			text[i] = '\0';
 			w = TEXTW(text) - lrpad;
-			drw_text(drw, x - 2 * sp, 0, w, bh, 0, text, 0);
+			drw_text(drw, x - 2 * sp, stp / 2, w, bh - stp, 0, text, 0);
 
 			x += w;
 
@@ -1207,13 +1208,13 @@ drawstatusbar(Monitor *m, int bh, char* stext) {
 					char buf[8];
 					memcpy(buf, (char*)text+i+1, 7);
 					buf[7] = '\0';
-					drw_clr_create(drw, &drw->scheme[ColFg], buf, OPAQUE);
+					drw_clr_create(drw, &drw->scheme[ColFg], buf, baralpha);
 					i += 7;
 				} else if (text[i] == 'b') {
 					char buf[8];
 					memcpy(buf, (char*)text+i+1, 7);
 					buf[7] = '\0';
-					drw_clr_create(drw, &drw->scheme[ColBg], buf, baralpha);
+					drw_clr_create(drw, &drw->scheme[ColBg], buf, OPAQUE);
 					i += 7;
 				} else if (text[i] == 'd') {
 					drw->scheme[ColFg] = scheme[SchemeNorm][ColFg];
@@ -1227,7 +1228,7 @@ drawstatusbar(Monitor *m, int bh, char* stext) {
 					while (text[++i] != ',');
 					int rh = atoi(text + ++i);
 
-					drw_rect(drw, rx + x - 2 * sp, ry, rw, rh, 1, 0);
+					drw_rect(drw, rx + x - 2 * sp, ry + stp / 2, rw, rh, 1, 0);
 				} else if (text[i] == 'f') {
 					x += atoi(text + ++i);
 				}
@@ -1241,7 +1242,7 @@ drawstatusbar(Monitor *m, int bh, char* stext) {
 
 	if (!isCode) {
 		w = TEXTW(text) - lrpad;
-		drw_text(drw, x - 2 * sp, 0, w, bh, 0, text, 0);
+		drw_text(drw, x - 2 * sp, stp / 2, w, bh - stp, 0, text, 0);
 	}
 
 	drw_setscheme(drw, scheme[SchemeNorm]);
@@ -2750,6 +2751,7 @@ setup(void)
 	updategeom();
 	sp = sidepad;
 	vp = (topbar == 1) ? vertpad : - vertpad;
+	stp = statuspad;
 
 	/* init atoms */
 	utf8string = XInternAtom(dpy, "UTF8_STRING", False);
