@@ -4,21 +4,21 @@
 #define ICONSIZE 16   /* icon size */
 #define ICONSPACING 8 /* space between icon and title */
 static const unsigned int refreshrate = 144;
-static const unsigned int borderpx  = 2;        /* border pixel of windows */
+static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const unsigned int snap      = 10;       /* snap pixel */
 static const int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
 static const unsigned int gappih    = 12;       /* horiz inner gap between windows */
 static const unsigned int gappiv    = 12;       /* vert inner gap between windows */
 static const unsigned int gappoh    = 20;       /* horiz outer gap between windows and screen edge */
 static const unsigned int gappov    = 20;       /* vert outer gap between windows and screen edge */
-static const int smartgaps          = 0;        /* 1 means no outer gap when there is only one window, behaves weirdly with barpadding */
+static const int smartgaps          = 1;        /* 1 means no outer gap when there is only one window, behaves weirdly with barpadding */
 static const int smartborders       = 1;        /* 1 means no border when there is only one window (unless floating) */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const int viewontag          = 0;        /* Switch view on tag switch */
 static       int linepx             = 2;        /* 0 means no underline */
-static const int vertpad            = 6;       /* vertical padding of bar */
-static const int sidepad            = 6;       /* horizontal padding of bar */
+static const int vertpad            = 0;       /* vertical padding of bar */
+static const int sidepad            = 0;       /* horizontal padding of bar */
 static const int statuspad          = 8;
 static const int nmaxmaster         = 3;        /* maximum number of clients allowed in master area */
 static const int user_bh            = 28;       /* 0 means that dwm will calculate bar height, >= 1 means dwm will user_bh as bar height */
@@ -73,11 +73,12 @@ static const Rule rules[] = {
 	{ "discord",  NULL,       NULL,       1<<5,         0,           0,         0,          -1 },
 	{ "Firefox",  NULL,       NULL,       0,            0,           0,         0,          -1 },
 	{ "Carla2-Plugin","carla-plugin",NULL,0,            1,           0,         0,          -1 },
-	{ NULL, NULL, "BakkesModInjectorCpp", 0,            1,           0,         0,          -1 },
+	{ "steam_proton", NULL, "BakkesModInjectorCpp", 0,  1,           0,         0,          -1 },
 	{ "Blueberry.py",NULL,    NULL,       0,            1,           0,         0,          -1 },
 	{ "Nitrogen", NULL,    	  NULL,       0,            1,           0,         0,          -1 },
 	{ "Connman-gtk", NULL,    NULL,       0,            1,           0,         0,          -1 },
 	{ "Engrampa",    NULL,    NULL,       0,            1,           0,         0,          -1 },
+	{ "File-roller", NULL,    NULL,       0,            1,           0,         0,          -1 },
 	{ "st", 	  NULL,    	 "pulsemixer",0,            1,           0,         0,          -1 },
 	{ "st", 	  NULL,    	  "calculse", 0,            1,           0,         0,          -1 },
 	{ "st",       NULL,       NULL,       0,            0,           1,         0,          -1 },
