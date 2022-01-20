@@ -80,7 +80,7 @@ static const Rule rules[] = {
 	{ "Engrampa",    NULL,    NULL,       0,            1,           0,         0,          -1 },
 	{ "File-roller", NULL,    NULL,       0,            1,           0,         0,          -1 },
 	{ "st", 	  NULL,    	 "pulsemixer",0,            1,           0,         0,          -1 },
-	{ "st", 	  NULL,    	  "calculse", 0,            1,           0,         0,          -1 },
+	{ "st", 	  NULL,    	  "calcurse", 0,            1,           0,         0,          -1 },
 	{ "st",       NULL,       NULL,       0,            0,           1,         0,          -1 },
 	{ NULL,      NULL,     "Event Tester", 0,           0,           0,         1,          -1 }, /* xev */
 };
@@ -110,7 +110,7 @@ static const Layout layouts[] = {
 	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} },
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
-#define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
+#define SHCMD(cmd) { .v = (const char*[]){ "/bin/dash", "-c", cmd, NULL } }
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
