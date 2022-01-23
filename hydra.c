@@ -602,6 +602,7 @@ buttonpress(XEvent *e)
     } else if ((c = wintoclient(ev->window))) {
 		focus(c);
 		restack(selmon);
+        /* XRaiseWindow(dpy,c->win); */
 		XAllowEvents(dpy, ReplayPointer, CurrentTime);
 		click = ClkClientWin;
 	}
@@ -1347,6 +1348,8 @@ enternotify(XEvent *e)
         } else if (!c || c == selmon->sel)
         return;
         focus(c);
+        if ((!selmon->lt[selmon->sellt]->arrange || (selmon->sel && selmon->sel->isfloating)))
+            XRaiseWindow(dpy,c->win);
     }
 
 void
