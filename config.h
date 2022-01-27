@@ -20,6 +20,7 @@ static       int linepx             = 2;        /* 0 means no underline */
 static const int vertpad            = 0;       /* vertical padding of bar */
 static const int sidepad            = 0;       /* horizontal padding of bar */
 static const int statuspad          = 8;
+static const int scalepreview       = 4;        /* Tag preview scaling */
 static const int nmaxmaster         = 3;        /* maximum number of clients allowed in master area */
 static const int user_bh            = 28;       /* 0 means that dwm will calculate bar height, >= 1 means dwm will user_bh as bar height */
 static const int pertag             = 1;
