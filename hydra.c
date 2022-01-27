@@ -1884,7 +1884,7 @@ motionnotify(XEvent *e)
             tsize += TEXTW(tags[i]);
         }
 
-        x = left = (m->ww - tsize) / 2;
+        x = left = (m->ww - tsize) / 2 + lrpad / 2;
         i = 0;
 
 		do
