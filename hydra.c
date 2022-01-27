@@ -1874,7 +1874,7 @@ motionnotify(XEvent *e)
 	static Monitor *mon = NULL;
 	Monitor *m = selmon;
 	XMotionEvent *ev = &e->xmotion;
-	int i, x, px, py, tsize;
+	int i, x, px, py, tsize, left;
 	int ov = gappov;
 	int oh = gappoh;
 
@@ -1884,27 +1884,29 @@ motionnotify(XEvent *e)
             tsize += TEXTW(tags[i]);
         }
 
-        x = (m->ww - tsize) / 2;
+        x = left = (m->ww - tsize) / 2;
         i = 0;
 
 		do
 			x += TEXTW(tags[i]);
 		while (ev->x >= x && ++i < NUMTAGS);
 
-		if (i < NUMTAGS) {
-			if ((i + 1) != selmon->previewshow && !(selmon->tagset[selmon->seltags] & 1 << i)) {
-				py = vertpad + bh + oh;
-				px = sidepad + ev->x - m->mw / scalepreview / 2;
-				if (px + m->mw / scalepreview > m->mx + m->mw)
-					px = m->wx + m->ww - m->mw / scalepreview - ov;
-				else if (px < sidepad)
-					px = m->wx + ov;
+        if (ev->x >= left) {
+            if (i < NUMTAGS) {
+                if ((i + 1) != selmon->previewshow && !(selmon->tagset[selmon->seltags] & 1 << i)) {
+                    py = vertpad + bh + oh;
+                    px = sidepad + ev->x - m->mw / scalepreview / 2;
+                    if (px + m->mw / scalepreview > m->mx + m->mw)
+                        px = m->wx + m->ww - m->mw / scalepreview - ov;
+                    else if (px < sidepad)
+                        px = m->wx + ov;
 
-				selmon->previewshow = i + 1;
-				showtagpreview(i, px, py);
-			} else if (selmon->tagset[selmon->seltags] & 1 << i)
-				hidetagpreview(selmon);
-		}
+                    selmon->previewshow = i + 1;
+                    showtagpreview(i, px, py);
+                } else if (selmon->tagset[selmon->seltags] & 1 << i)
+                    hidetagpreview(selmon);
+            }
+        }
 	} else if (selmon->previewshow != 0)
 		hidetagpreview(selmon);
 
