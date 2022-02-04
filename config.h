@@ -32,6 +32,7 @@ static const int riodraw_matchpid   = 1;        /* 0 or 1, indicates whether to 
 static const int riodraw_spawnasync = 0;        /* 0 spawns after successful sel, 1 spawn during selection */
 static const char *fonts[]          = { "Roboto Mono:size=11:style=Medium", "RobotoMono Nerd Font:size=13:style=Medium", "Siji:size=13" };
 static const char dmenufont[]       = "Roboto Mono:size=12:style=Medium";
+static const char black[]           = "#0a0a0a"; // black
 static const char col_gray1[]       = "#1a1b26"; // default bg color
 static const char col_gray2[]       = "#414868"; // unfocused border
 static const char col_gray3[]       = "#c0caf5"; // fg color
@@ -42,7 +43,7 @@ static const unsigned int borderalpha = OPAQUE;
 static const char buttonbar[]       = "גּ";
 static const char *colors[][3]      = {
 	/*               	fg         bg         border   */
-	[SchemeNorm]      = { col_gray3, col_gray1, col_gray1 },
+	[SchemeNorm]      = { col_gray3, col_gray1, black },
 	[SchemeSel]       = { col_gray3, col_cyan,  col_gray2 },
 	[SchemeUrg]       = { col_gray1, col_red,   col_red   }, // idk why fg and bg colors are inverted but it works so who cares
     [SchemeTagsNorm]  = { col_gray3, col_gray1, col_gray2 }, // tags in the middle of the bar
