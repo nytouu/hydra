@@ -1891,7 +1891,7 @@ motionnotify(XEvent *e)
 			x += TEXTW(tags[i]);
 		while (ev->x >= x && ++i < NUMTAGS);
 
-        if (ev->x >= left) {
+        if (ev->x >= left && showpreview) {
             if (i < NUMTAGS) {
                 if ((i + 1) != selmon->previewshow && !(selmon->tagset[selmon->seltags] & 1 << i)) {
                     py = vertpad + bh + oh;
@@ -1907,7 +1907,7 @@ motionnotify(XEvent *e)
                     hidetagpreview(selmon);
             }
         }
-	} else if (selmon->previewshow != 0)
+	} else if (selmon->previewshow != 0 && showpreview)
 		hidetagpreview(selmon);
 
 	if (ev->window != root)
