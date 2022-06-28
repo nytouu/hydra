@@ -14,6 +14,7 @@ static const unsigned int gappov    = 20;       /* vert outer gap between window
 static const int smartgaps          = 1;        /* 1 means no outer gap when there is only one window, behaves weirdly with barpadding */
 static const int smartborders       = 1;        /* 1 means no border when there is only one window (unless floating) */
 static const int showbar            = 1;        /* 0 means no bar */
+static const int showtitle          = 0;        /* 0 means no title */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const int viewontag          = 0;        /* Switch view on tag switch */
 static       int linepx             = 2;        /* 0 means no underline */
@@ -30,8 +31,8 @@ static const char slopresizestyle[] = "-t 0 -b 1 -c 0.5,0.6,1.0"; /* do NOT defi
 static const int riodraw_borders    = 0;        /* 0 or 1, indicates whether the area drawn using slop includes the window borders */
 static const int riodraw_matchpid   = 1;        /* 0 or 1, indicates whether to match the PID of the client that was spawned with riospawn */
 static const int riodraw_spawnasync = 0;        /* 0 spawns after successful sel, 1 spawn during selection */
-static const char *fonts[]          = { "Roboto Mono:size=11:style=Medium", "RobotoMono Nerd Font:size=13:style=Medium", "Siji:size=13" };
-static const char dmenufont[]       = "Roboto Mono:size=12:style=Medium";
+static const char *fonts[]          = { "JetBrains Mono:size=11:style=Medium", "JetBrainsMono Nerd Font:size=12:style=Medium", "Siji:size=14" };
+static const char dmenufont[]       = "JetBrains Mono:size=12:style=Medium";
 static const char black[]           = "#0a0a0a"; // black
 static const char col_gray1[]       = "#1a1b26"; // default bg color
 static const char col_gray2[]       = "#414868"; // unfocused border

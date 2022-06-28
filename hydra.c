@@ -1313,11 +1313,11 @@ drawbar(Monitor *m)
 	x = drw_text(drw, x, 0, w, bh, lrpad / 2, m->ltsymbol, 0);
 
 	if ((w = (m->ww / 2) - x - (tsize / 2))  > bh) {
-		if (m->sel) {
+		if (m->sel && showtitle) {
 			drw_setscheme(drw, scheme[SchemeInfo]);
 			x = drw_text(drw, x, 0, w, bh, (m->sel->icon ? m->sel->icon->width + ICONSPACING : 0), m->sel->name, 0);
 			static uint32_t tmp[ICONSIZE * ICONSIZE];
-			if (m->sel->icon) 
+			if (m->sel->icon)
 				drw_img(drw, TEXTW(buttonbar) + TEXTW(m->ltsymbol), (bh - m->sel->icon->height) / 2, m->sel->icon, tmp);
 			drw_setscheme(drw, scheme[SchemeInfo]);
 			drw_rect(drw, x + tsize, 0, (m->ww / 2) - (tsize / 2) - tw - 2 * sp, bh, 1, 1);
@@ -1350,7 +1350,7 @@ enternotify(XEvent *e)
         Client *c;
         Monitor *m;
         XCrossingEvent *ev = &e->xcrossing;
-    
+
         if ((ev->mode != NotifyNormal || ev->detail == NotifyInferior) && ev->window != root)
             return;
         c = wintoclient(ev->window);
@@ -1533,9 +1533,9 @@ geticonprop(Window win)
 	unsigned long n, extra, *p = NULL;
 	Atom real;
 
-	if (XGetWindowProperty(dpy, win, netatom[NetWMIcon], 0L, LONG_MAX, False, AnyPropertyType, 
+	if (XGetWindowProperty(dpy, win, netatom[NetWMIcon], 0L, LONG_MAX, False, AnyPropertyType,
 						   &real, &format, &n, &extra, (unsigned char **)&p) != Success)
-		return NULL; 
+		return NULL;
 	if (n == 0 || format != 32) { XFree(p); return NULL; }
 
 	unsigned long *bstp = NULL;
