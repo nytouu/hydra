@@ -100,7 +100,9 @@
 
 /* enums */
 enum { CurNormal, CurResize, CurMove, CurResizeHorzArrow, CurResizeVertArrow, CurLast }; /* cursor */
-enum { SchemeNorm, SchemeSel, SchemeUrg, SchemeTagsSel, SchemeTagsNorm, SchemeInfo }; /* color schemes */
+enum { SchemeNorm, SchemeSel, SchemeUrg, SchemeInfo,
+       SchemeTag, SchemeTag1, SchemeTag2, SchemeTag3, SchemeTag4,
+       SchemeTag5, SchemeTag6, SchemeTag7 }; /* color schemes */
 enum { NetSupported, NetWMName, NetWMIcon, NetWMState, NetWMFullscreen, NetActiveWindow, NetWMWindowType,
 	   NetWMWindowTypeDialog, NetClientList, NetWMCheck, NetClientListStacking,
        NetDesktopNames, NetDesktopViewport, NetNumberOfDesktops, NetCurrentDesktop, NetLast }; /* EWMH atoms */
@@ -1292,14 +1294,15 @@ drawbar(Monitor *m)
 	x = (m->ww - tsize) / 2;
 	for (i = 0; i < LENGTH(tags); i++) {
 		w = TEXTW(tags[i]);
-		drw_setscheme(drw, scheme[m->tagset[m->seltags] & 1 << i && !linepx ? SchemeTagsSel : urg & 1 << i ? SchemeUrg : SchemeTagsNorm]);
+		drw_setscheme(drw, scheme[occ & 1 << i ? (rainbowtags ? tagschemes[i] : SchemeSel) : (m->tagset[m->seltags] & 1 << i && !linepx ? SchemeNorm : urg & 1 << i ? SchemeUrg : SchemeTag)]);
 		drw_text(drw, x, 0, w, bh, lrpad / 2, tags[i], urg & 1 << i);
 		if (occ & 1 << i) {
-			drw_setscheme(drw, scheme[SchemeNorm]);
+			drw_setscheme(drw, scheme[occ & 1 << i ? (rainbowtags ? tagschemes[i] : SchemeSel) : (m->tagset[m->seltags] & 1 << i && !linepx ? SchemeNorm : urg & 1 << i ? SchemeUrg : SchemeTag)]);
 			drw_rect(drw, x + w / 4, bh - linepx, w / 2, linepx, 1, 0);
 		}
-		if (m->tagset[m->seltags] & 1 << i && linepx) {
-			drw_setscheme(drw, scheme[SchemeTagsSel]);
+		if (m->tagset[m->seltags] & 1 << i && linepx ) {
+			/* && (occ & 1 << i) */
+			drw_setscheme(drw, scheme[occ & 1 << i ? (rainbowtags ? tagschemes[i] : SchemeSel) : (m->tagset[m->seltags] & 1 << i && !linepx ? SchemeNorm : urg & 1 << i ? SchemeUrg : SchemeTag)]);
 			drw_rect(drw, x, bh - linepx, w, linepx, 1, 0);
 		}
 		x += w;

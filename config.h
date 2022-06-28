@@ -18,8 +18,9 @@ static const int showtitle          = 0;        /* 0 means no title */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const int viewontag          = 0;        /* Switch view on tag switch */
 static       int linepx             = 2;        /* 0 means no underline */
-static const int vertpad            = 0;       /* vertical padding of bar */
-static const int sidepad            = 0;       /* horizontal padding of bar */
+static const int rainbowtags    	= 1;        /* 1 means rainbow tags */
+static const int vertpad            = 0;        /* vertical padding of bar */
+static const int sidepad            = 0;        /* horizontal padding of bar */
 static const int statuspad          = 8;
 static const int scalepreview       = 4;        /* Tag preview scaling */
 static const int showpreview        = 0;        /* 1 enables tag preview */
@@ -33,40 +34,58 @@ static const int riodraw_matchpid   = 1;        /* 0 or 1, indicates whether to 
 static const int riodraw_spawnasync = 0;        /* 0 spawns after successful sel, 1 spawn during selection */
 static const char *fonts[]          = { "JetBrains Mono:size=11:style=Medium", "JetBrainsMono Nerd Font:size=12:style=Medium", "Siji:size=14" };
 static const char dmenufont[]       = "JetBrains Mono:size=12:style=Medium";
-static const char black[]           = "#0a0a0a"; // black
-static const char col_gray1[]       = "#1a1b26"; // default bg color
-static const char col_gray2[]       = "#414868"; // unfocused border
-static const char col_gray3[]       = "#c0caf5"; // fg color
-static const char col_cyan[]        = "#7aa2f7"; // accent color
-static const char col_red[]         = "#f7768e"; // urgent color
-static const unsigned int baralpha = 0xaf;
+static const char black[]           = "#0a0a0a";
+static const char darkgray[]        = "#1a1b26";
+static const char gray[]            = "#414868";
+static const char blue[]            = "#7aa2f7";
+static const char red[]             = "#f7768e";
+static const char green[]           = "#9ece6a";
+static const char purple[]          = "#bb9af2";
+static const char orange[]          = "#e0af68";
+static const char yellow[]          = "#e0d168";
+static const char lightblue[]       = "#7dcfff";
+static const char white[]           = "#c0caf5";
+static const unsigned int baralpha  = 0xaf;
 static const unsigned int borderalpha = OPAQUE;
 static const char buttonbar[]       = "גּ";
 static const char *colors[][3]      = {
 	/*               	fg         bg         border   */
-	[SchemeNorm]      = { col_gray3, col_gray1, black },
-	[SchemeSel]       = { col_gray3, col_cyan,  col_gray2 },
-	[SchemeUrg]       = { col_gray1, col_red,   col_red   }, // idk why fg and bg colors are inverted but it works so who cares
-    [SchemeTagsNorm]  = { col_gray3, col_gray1, col_gray2 }, // tags in the middle of the bar
-	[SchemeTagsSel]   = { col_cyan,  col_cyan,  col_cyan  }, // selected tags
-    [SchemeInfo]   	  = { col_gray3, col_gray1, col_cyan  }, // focused window name text
+	[SchemeNorm]      = { white, darkgray, black },
+	[SchemeSel]       = { white, blue,  gray },
+	[SchemeUrg]       = { darkgray, red,   red   }, // idk why fg and bg colors are inverted but it works so who cares
+    [SchemeInfo]   	  = { white, darkgray, blue  }, // focused window name text
+	[SchemeTag]  	  = { white, 	 darkgray,     white  	  },
+	[SchemeTag1] 	  = { green, 	 darkgray,     black     },
+	[SchemeTag2] 	  = { purple, 	 darkgray,     black     },
+	[SchemeTag3]      = { red, 	 darkgray,     black     },
+	[SchemeTag4] 	  = { orange,	 darkgray,     black     },
+	[SchemeTag5]      = { blue,	 darkgray,     black     },
+	[SchemeTag6]      = { lightblue,	 darkgray,     black     },
+	[SchemeTag7]      = { yellow,	 darkgray,     black     },
 };
 static const unsigned int alphas[][3] = {
 	/*               fg      bg        border     */
 	[SchemeNorm]      = { OPAQUE, baralpha, borderalpha },
 	[SchemeSel]       = { OPAQUE, baralpha, borderalpha },
 	[SchemeUrg]       = { baralpha, OPAQUE, borderalpha }, // idk why fg and bg colors are inverted but it works so who cares
-    [SchemeTagsNorm]  = { OPAQUE, baralpha, borderalpha },
-	[SchemeTagsSel]   = { OPAQUE, baralpha, borderalpha },
-    [SchemeInfo]   	  = { OPAQUE, baralpha, borderalpha  }
+    [SchemeInfo]   	  = { OPAQUE, baralpha, borderalpha  },
+	[SchemeTag]  	  = { OPAQUE, baralpha, borderalpha  },
+	[SchemeTag1] 	  = { OPAQUE, baralpha, borderalpha  },
+	[SchemeTag2] 	  = { OPAQUE, baralpha, borderalpha  },
+	[SchemeTag3]      = { OPAQUE, baralpha, borderalpha  },
+	[SchemeTag4] 	  = { OPAQUE, baralpha, borderalpha  },
+	[SchemeTag5]      = { OPAQUE, baralpha, borderalpha  },
+	[SchemeTag6]      = { OPAQUE, baralpha, borderalpha  },
+	[SchemeTag7]      = { OPAQUE, baralpha, borderalpha  },
 };
 static const XPoint stickyicon[]    = { {0,0}, {4,0}, {4,8}, {2,6}, {0,8}, {0,0} }; /* represents the icon as an array of vertices */
 static const XPoint stickyiconbb    = {4,8};	/* defines the bottom right corner of the polygon's bounding box (speeds up scaling) */
 
 /* tagging */
 /* static const char *tags[] = { "I", "II","III", "IV", "V", "VI", "VII"}; */
-static const char *tags[] = { "", "","", "", "", "ﭮ", ""};
 /* static const char *tags[] = { "home", "tty", "www", "game", "chat", "misc"}; */
+static const char *tags[] = { "", "","", "", "", "ﭮ", ""};
+static const int tagschemes[] = { SchemeTag1, SchemeTag2, SchemeTag3, SchemeTag4, SchemeTag5, SchemeTag6, SchemeTag7 };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -175,8 +194,6 @@ static Key keys[] = {
 	TAGKEYS(                        XK_parenleft,              4)
 	TAGKEYS(                        XK_minus,                  5)
 	TAGKEYS(                        XK_egrave,                 6)
-	TAGKEYS(                        XK_underscore,             7)
-	TAGKEYS(                        XK_ccedilla,               8)
     /* for qwerty */
 	TAGKEYS(                        XK_1,					   0)
 	TAGKEYS(                        XK_2,					   1)
@@ -185,8 +202,6 @@ static Key keys[] = {
 	TAGKEYS(                        XK_5,					   4)
 	TAGKEYS(                        XK_6,					   5)
 	TAGKEYS(                        XK_7,					   6)
-	TAGKEYS(                        XK_8,					   7)
-	TAGKEYS(                        XK_9,					   8)
 	{ MODKEY|ShiftMask,             XK_e,      spawn,          SHCMD("powermenu")},
 };
 
