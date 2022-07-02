@@ -74,23 +74,6 @@
 
 #define OPAQUE                  0xffU
 
-#define SYSTEM_TRAY_REQUEST_DOCK    0
-#define _NET_SYSTEM_TRAY_ORIENTATION_HORZ 0
-
-/* XEMBED messages */
-#define XEMBED_EMBEDDED_NOTIFY      0
-#define XEMBED_WINDOW_ACTIVATE      1
-#define XEMBED_FOCUS_IN             4
-#define XEMBED_MODALITY_ON         10
-
-#define XEMBED_MAPPED              (1 << 0)
-#define XEMBED_WINDOW_ACTIVATE      1
-#define XEMBED_WINDOW_DEACTIVATE    2
-
-#define VERSION_MAJOR               0
-#define VERSION_MINOR               0
-#define XEMBED_EMBEDDED_VERSION (VERSION_MAJOR << 16) | VERSION_MINOR
-
 #define MWM_HINTS_FLAGS_FIELD       0
 #define MWM_HINTS_DECORATIONS_FIELD 2
 #define MWM_HINTS_DECORATIONS       (1 << 1)
@@ -2956,17 +2939,8 @@ showtagpreview(int tag, int x, int y)
 void
 sighydrablocks(const Arg *arg)
 {
-	/* union sigval sv; */
-
-	/* if (!statussig) */
-	/* 	return; */
-	/* sv.sival_int = arg->i; */
-	/* if ((statuspid = getstatusbarpid()) <= 0) */
-	/* 	return; */
-
-	/* sigqueue(statuspid, SIGUSR1, sv); */
-	/* sigqueue(statuspid, SIGRTMIN+statussig, sv); */
 	union sigval sv;
+
 	sv.sival_int = (hydrablockssig << 8) | arg->i;
 	if (!hydrablockspid)
 		if (gethydrablockspid() == -1)
