@@ -14,7 +14,7 @@ static const unsigned int gappov    = 20;       /* vert outer gap between window
 static const int smartgaps          = 1;        /* 1 means no outer gap when there is only one window, behaves weirdly with barpadding */
 static const int smartborders       = 1;        /* 1 means no border when there is only one window (unless floating) */
 static const int showbar            = 1;        /* 0 means no bar */
-static const int showtitle          = 1;        /* 0 means no title */
+static const int showtitle          = 0;        /* 0 means no title */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const int viewontag          = 0;        /* Switch view on tag switch */
 static       int linepx             = 2;        /* 0 means no underline */
@@ -25,15 +25,15 @@ static const int statuspad          = 8;
 static const int scalepreview       = 4;        /* Tag preview scaling */
 static const int showpreview        = 0;        /* 1 enables tag preview */
 static const int nmaxmaster         = 3;        /* maximum number of clients allowed in master area */
-static const int user_bh            = 28;       /* 0 means that dwm will calculate bar height, >= 1 means dwm will user_bh as bar height */
+static const int user_bh            = 32;       /* 0 means that dwm will calculate bar height, >= 1 means dwm will user_bh as bar height */
 static const int pertag             = 1;
 static const char slopspawnstyle[]  = "-t 0 -b 1 -c 0.5,0.6,1.0"; /* do NOT define -f (format) here "-t 0 -b 2 -c 0.7,0.6,0.9,0.1 -l" for alternate, hope the highlight thing gets fixed or maybe i should do it myself but im lazy */
 static const char slopresizestyle[] = "-t 0 -b 1 -c 0.5,0.6,1.0"; /* do NOT define -f (format) here */
 static const int riodraw_borders    = 0;        /* 0 or 1, indicates whether the area drawn using slop includes the window borders */
 static const int riodraw_matchpid   = 1;        /* 0 or 1, indicates whether to match the PID of the client that was spawned with riospawn */
 static const int riodraw_spawnasync = 0;        /* 0 spawns after successful sel, 1 spawn during selection */
-static const char *fonts[]          = { "JetBrains Mono:size=11:style=Medium", "JetBrainsMono Nerd Font:size=12:style=Medium", "Siji:size=14" };
-static const char dmenufont[]       = "JetBrains Mono:size=12:style=Medium";
+static const char *fonts[]          = { "SF Mono:size=11:style=Regular", "nonicons:size=11", "SFMono Nerd Font:size=12:style=Regular", "Siji:size=14" };
+static const char dmenufont[]       = "SF Mono:size=12:style=Medium";
 static const char black[]           = "#0a0a0a";
 static const char darkgray[]        = "#1a1b26";
 static const char gray[]            = "#414868";
@@ -45,7 +45,7 @@ static const char orange[]          = "#e0af68";
 static const char yellow[]          = "#e0d168";
 static const char lightblue[]       = "#7dcfff";
 static const char white[]           = "#c0caf5";
-static const unsigned int baralpha  = 0xaf;
+static const unsigned int baralpha  = OPAQUE;
 static const unsigned int borderalpha = OPAQUE;
 static const char buttonbar[]       = "גּ";
 static const char *colors[][3]      = {
@@ -84,7 +84,7 @@ static const XPoint stickyiconbb    = {4,8};	/* defines the bottom right corner 
 /* tagging */
 /* static const char *tags[] = { "I", "II","III", "IV", "V", "VI", "VII"}; */
 /* static const char *tags[] = { "home", "tty", "www", "game", "chat", "misc"}; */
-static const char *tags[] = { "", "","", "", "", "ﭮ", ""};
+static const char *tags[] = { "", "","", "", "", "ﭮ", ""};
 static const int tagschemes[] = { SchemeTag1, SchemeTag2, SchemeTag3, SchemeTag4, SchemeTag5, SchemeTag6, SchemeTag7 };
 
 static const Rule rules[] = {
@@ -146,6 +146,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
     /* rio */
 	{ MODKEY,                       XK_r,      rioresize,      {0} },
+	{ MODKEY|ControlMask,           XK_d,      spawn,          {.v = dmenucmd } },
 	{ MODKEY|ControlMask,           XK_Return, riospawn,       {.v = termcmd } },
     { MODKEY|ControlMask,           XK_n,      riospawn,       SHCMD("$FILEBROWSER")},
     { MODKEY|ShiftMask|ControlMask, XK_n,      riospawn,       SHCMD("$TERMINAL -e ranger")},
