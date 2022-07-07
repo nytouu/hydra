@@ -149,9 +149,9 @@ static Key keys[] = {
 	{ MODKEY|ControlMask,           XK_d,      spawn,          {.v = dmenucmd } },
 	{ MODKEY|ControlMask,           XK_Return, riospawn,       {.v = termcmd } },
     { MODKEY|ControlMask,           XK_n,      riospawn,       SHCMD("$FILEBROWSER")},
-    { MODKEY|ShiftMask|ControlMask, XK_n,      riospawn,       SHCMD("$TERMINAL -e ranger")},
+    { MODKEY|ShiftMask|ControlMask, XK_n,      riospawn,       SHCMD("$TERMINAL -e lf")},
     { MODKEY|ControlMask,           XK_b,      riospawn,       SHCMD("$BROWSER")},
-    { MODKEY|ControlMask,           XK_t,      riospawn,       SHCMD("$TERMINAL -e htop")},
+    { MODKEY|ControlMask,           XK_t,      riospawn,       SHCMD("$TERMINAL -e btop")},
     { MODKEY|ControlMask,           XK_c,      riospawn,       SHCMD("$TERMINAL -e calcurse")},
     { MODKEY|ControlMask,           XK_m,      riospawn,       SHCMD("$TERMINAL -e ncmpcpp")},
     /* dwm stuff */
