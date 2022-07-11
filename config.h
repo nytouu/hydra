@@ -33,17 +33,17 @@ static const int riodraw_matchpid   = 1;        /* 0 or 1, indicates whether to 
 static const int riodraw_spawnasync = 0;        /* 0 spawns after successful sel, 1 spawn during selection */
 static const char *fonts[]          = { "SF Mono:size=11:style=Regular", "nonicons:size=11", "SFMono Nerd Font:size=12:style=Regular", "Siji:size=14" };
 static const char dmenufont[]       = "SF Mono:size=12:style=Medium";
-static const char black[]           = "#0a0a0a";
-static const char darkgray[]        = "#1a1b26";
-static const char gray[]            = "#414868";
-static const char blue[]            = "#7aa2f7";
-static const char red[]             = "#f7768e";
-static const char green[]           = "#9ece6a";
-static const char purple[]          = "#bb9af2";
-static const char orange[]          = "#e0af68";
-static const char yellow[]          = "#e0d168";
-static const char lightblue[]       = "#7dcfff";
-static const char white[]           = "#c0caf5";
+static char black[]           = "#0a0a0a";
+static char darkgray[]        = "#1a1b26";
+static char gray[]            = "#414868";
+static char blue[]            = "#7aa2f7";
+static char red[]             = "#f7768e";
+static char green[]           = "#9ece6a";
+static char purple[]          = "#bb9af2";
+static char orange[]          = "#e0af68";
+static char yellow[]          = "#e0d168";
+static char lightblue[]       = "#7dcfff";
+static char white[]           = "#c0caf5";
 static const unsigned int baralpha  = OPAQUE;
 static const unsigned int borderalpha = OPAQUE;
 static const char buttonbar[]       = "גּ";
@@ -76,6 +76,19 @@ static const unsigned int alphas[][3] = {
 	[SchemeTag5]      = { OPAQUE, baralpha, borderalpha  },
 	[SchemeTag6]      = { OPAQUE, baralpha, borderalpha  },
 	[SchemeTag7]      = { OPAQUE, baralpha, borderalpha  },
+};
+ResourcePref resources[] = {
+	{ "white",     	STRING,  &white },
+	{ "lightblue",  STRING,  &lightblue },
+	{ "yellow",    	STRING,  &yellow },
+	{ "orange",    	STRING,  &orange },
+	{ "purple",    	STRING,  &purple },
+	{ "green",     	STRING,  &green },
+	{ "red",     	STRING,  &red },
+	{ "blue",     	STRING,  &blue },
+	{ "gray",     	STRING,  &gray },
+	{ "darkgray",   STRING,  &darkgray },
+	{ "black",     	STRING,  &black },
 };
 static const XPoint stickyicon[]    = { {0,0}, {4,0}, {4,8}, {2,6}, {0,8}, {0,0} }; /* represents the icon as an array of vertices */
 static const XPoint stickyiconbb    = {4,8};	/* defines the bottom right corner of the polygon's bounding box (speeds up scaling) */
@@ -178,6 +191,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_agrave, tag,            {.ui = ~0 } },
 	{ MODKEY,                       XK_v,      focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_v,      tagmon,         {.i = +1 } },
+	{ MODKEY|ControlMask,           XK_x,      xrdb,           {.v = NULL } },
     /* TODO need to find a way to reset both mfact and cfact */
     { MODKEY|ShiftMask,             XK_f,      setmfact,       {.f =  0.50} },
 	{ MODKEY|ShiftMask,             XK_f,      setcfact,       {.f =  0.00} },

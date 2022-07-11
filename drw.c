@@ -214,7 +214,7 @@ drw_clr_create(Drw *drw, Clr *dest, const char *clrname, unsigned int alpha)
 /* Wrapper to create color schemes. The caller has to call free(3) on the
  * returned color scheme when done using it. */
 Clr *
-drw_scm_create(Drw *drw, const char *clrnames[], const unsigned int alphas[], size_t clrcount)
+drw_scm_create(Drw *drw, char *clrnames[], const unsigned int alphas[], size_t clrcount)
 {
 	size_t i;
 	Clr *ret;
@@ -410,9 +410,9 @@ inline static uint32_t blend(uint32_t p1rb, uint32_t p1g, uint8_t p1a, uint32_t 
 	uint32_t g = (p2 & 0x00FF00u) + ( (a * p1g) >> 8u );
 	return (rb & 0xFF00FFu) | (g & 0x00FF00u) | div255(~a * 255u + a * p1a) << 24u;
 }
-	
+
 void
-drw_img(Drw *drw, int x, int y, XImage *img, uint32_t *tmp) 
+drw_img(Drw *drw, int x, int y, XImage *img, uint32_t *tmp)
 {
 	if (!drw || !drw->scheme)
 		return;
