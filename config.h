@@ -26,7 +26,6 @@ static const int scalepreview       = 4;        /* Tag preview scaling */
 static const int showpreview        = 0;        /* 1 enables tag preview */
 static const int nmaxmaster         = 3;        /* maximum number of clients allowed in master area */
 static const int user_bh            = 32;       /* 0 means that dwm will calculate bar height, >= 1 means dwm will user_bh as bar height */
-static const int pertag             = 1;
 static const char slopspawnstyle[]  = "-t 0 -b 1 -c 0.5,0.6,1.0"; /* do NOT define -f (format) here "-t 0 -b 2 -c 0.7,0.6,0.9,0.1 -l" for alternate, hope the highlight thing gets fixed or maybe i should do it myself but im lazy */
 static const char slopresizestyle[] = "-t 0 -b 1 -c 0.5,0.6,1.0"; /* do NOT define -f (format) here */
 static const int riodraw_borders    = 0;        /* 0 or 1, indicates whether the area drawn using slop includes the window borders */
