@@ -898,15 +898,8 @@ dragcfact(const Arg *arg)
 		resizemouse(arg);
 		return;
 	}
-	#if !FAKEFULLSCREEN_PATCH
-	#if FAKEFULLSCREEN_CLIENT_PATCH
-	if (c->isfullscreen && !c->fakefullscreen) /* no support resizing fullscreen windows by mouse */
-		return;
-	#else
 	if (c->isfullscreen) /* no support resizing fullscreen windows by mouse */
 		return;
-	#endif // FAKEFULLSCREEN_CLIENT_PATCH
-	#endif // !FAKEFULLSCREEN_PATCH
 	restack(selmon);
 
 	if (XGrabPointer(dpy, root, False, MOUSEMASK, GrabModeAsync, GrabModeAsync,
@@ -972,13 +965,8 @@ dragmfact(const Arg *arg)
 
 	m = selmon;
 
-	#if VANITYGAPS_PATCH
-	int oh, ov, ih, iv;
-	getgaps(m, &oh, &ov, &ih, &iv, &n);
-	#else
 	Client *c;
 	for (n = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), n++);
-	#endif // VANITYGAPS_PATCH
 
 	ax = m->wx;
 	ay = m->wy;
@@ -1002,56 +990,26 @@ dragmfact(const Arg *arg)
 	)
 		return;
 
-	#if VANITYGAPS_PATCH
-	ay += oh;
-	ax += ov;
-	aw -= 2*ov;
-	ah -= 2*oh;
-	#endif // VANITYGAPS_PATCH
 
 	if (center) {
 		if (horizontal) {
 			px = ax + aw / 2;
-			#if VANITYGAPS_PATCH
-			py = ay + ah / 2 + (ah - 2*ih) * (m->mfact / 2.0) + ih / 2;
-			#else
 			py = ay + ah / 2 + ah * m->mfact / 2.0;
-			#endif // VANITYGAPS_PATCH
 		} else { // vertical split
-			#if VANITYGAPS_PATCH
-			px = ax + aw / 2 + (aw - 2*iv) * m->mfact / 2.0 + iv / 2;
-			#else
 			px = ax + aw / 2 + aw * m->mfact / 2.0;
-			#endif // VANITYGAPS_PATCH
 			py = ay + ah / 2;
 		}
 	} else if (horizontal) {
 		px = ax + aw / 2;
 		if (mirror)
-			#if VANITYGAPS_PATCH
-			py = ay + (ah - ih) * (1.0 - m->mfact) + ih / 2;
-			#else
 			py = ay + (ah * (1.0 - m->mfact));
-			#endif // VANITYGAPS_PATCH
 		else
-			#if VANITYGAPS_PATCH
-			py = ay + ((ah - ih) * m->mfact) + ih / 2;
-			#else
 			py = ay + (ah * m->mfact);
-			#endif // VANITYGAPS_PATCH
 	} else { // vertical split
 		if (mirror)
-			#if VANITYGAPS_PATCH
-			px = ax + (aw - iv) * (1.0 - m->mfact) + iv / 2;
-			#else
 			px = ax + (aw * m->mfact);
-			#endif // VANITYGAPS_PATCH
 		else
-			#if VANITYGAPS_PATCH
-			px = ax + ((aw - iv) * m->mfact) + iv / 2;
-			#else
 			px = ax + (aw * m->mfact);
-			#endif // VANITYGAPS_PATCH
 		py = ay + ah / 2;
 	}
 
@@ -1077,24 +1035,6 @@ dragmfact(const Arg *arg)
 			}
 			lasttime = ev.xmotion.time;
 
-			#if VANITYGAPS_PATCH
-			if (center)
-				if (horizontal)
-					if (py - ay > ah / 2)
-						fact = (double) 1.0 - (ay + ah - py - ih / 2) * 2 / (double) (ah - 2*ih);
-					else
-						fact = (double) 1.0 - (py - ay - ih / 2) * 2 / (double) (ah - 2*ih);
-				else
-					if (px - ax > aw / 2)
-						fact = (double) 1.0 - (ax + aw - px - iv / 2) * 2 / (double) (aw - 2*iv);
-					else
-						fact = (double) 1.0 - (px - ax - iv / 2) * 2 / (double) (aw - 2*iv);
-			else
-				if (horizontal)
-					fact = (double) (py - ay - ih / 2) / (double) (ah - ih);
-				else
-					fact = (double) (px - ax - iv / 2) / (double) (aw - iv);
-			#else
 			if (center)
 				if (horizontal)
 					if (py - ay > ah / 2)
@@ -1111,7 +1051,6 @@ dragmfact(const Arg *arg)
 					fact = (double) (py - ay) / (double) ah;
 				else
 					fact = (double) (px - ax) / (double) aw;
-			#endif // VANITYGAPS_PATCH
 
 			if (!center && mirror)
 				fact = 1.0 - fact;
