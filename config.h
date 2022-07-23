@@ -50,8 +50,8 @@ static const char buttonbar[]       = "גּ";
 static const char *colors[][3]      = {
 	/*               	fg          bg          border   */
 	[SchemeNorm]      = { white,    darkgray,   black   },
-	[SchemeSel]       = { white,    blue,       gray    },
-	[SchemeUrg]       = { darkgray, red,        red     }, // idk why fg and bg colors are inverted but it works so who cares
+	[SchemeSel]       = { white,    blue,       orange  },
+	[SchemeUrg]       = { darkgray, red,        red     },
     [SchemeInfo]   	  = { white,    darkgray,   blue    },
 	[SchemeTag]  	  = { white, 	darkgray,   white   },
 	[SchemeTag1] 	  = { green, 	darkgray,   black   },
