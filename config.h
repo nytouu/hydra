@@ -26,8 +26,8 @@ static const int scalepreview       = 4;        /* Tag preview scaling */
 static const int showpreview        = 0;        /* 1 enables tag preview */
 static const int nmaxmaster         = 3;        /* maximum number of clients allowed in master area */
 static const int user_bh            = 32;       /* 0 means that dwm will calculate bar height, >= 1 means dwm will user_bh as bar height */
-static const char slopspawnstyle[]  = "-t 0 -b 1 -c 0.5,0.6,1.0"; /* do NOT define -f (format) here "-t 0 -b 2 -c 0.7,0.6,0.9,0.1 -l" for alternate, hope the highlight thing gets fixed or maybe i should do it myself but im lazy */
-static const char slopresizestyle[] = "-t 0 -b 1 -c 0.5,0.6,1.0"; /* do NOT define -f (format) here */
+static const char slopspawnstyle[]  = "-t 0 -b 2 -c 1.0,0.8,0.7"; /* do NOT define -f (format) here "-t 0 -b 2 -c 0.7,0.6,0.9,0.1 -l" for alternate, hope the highlight thing gets fixed or maybe i should do it myself but im lazy */
+static const char slopresizestyle[] = "-t 0 -b 2 -c 1.0,0.8,0.7"; /* do NOT define -f (format) here */
 static const int riodraw_borders    = 0;        /* 0 or 1, indicates whether the area drawn using slop includes the window borders */
 static const int riodraw_matchpid   = 1;        /* 0 or 1, indicates whether to match the PID of the client that was spawned with riospawn */
 static const int riodraw_spawnasync = 0;        /* 0 spawns after successful sel, 1 spawn during selection */
@@ -104,20 +104,21 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class      instance    title       tags mask     isfloating   isterminal noswallow   monitor */
-	{ "discord",  NULL,       NULL,       1<<5,         0,           0,         0,          -1 },
-	{ "Firefox",  NULL,       NULL,       0,            0,           0,         0,          -1 },
-	{ "Carla2-Plugin","carla-plugin",NULL,0,            1,           0,         0,          -1 },
-	{ "steam_proton", NULL, "BakkesModInjectorCpp", 0,  1,           0,         0,          -1 },
-	{ "Blueberry.py",NULL,    NULL,       0,            1,           0,         0,          -1 },
-	{ "Nitrogen", NULL,    	  NULL,       0,            1,           0,         0,          -1 },
-	{ "Connman-gtk", NULL,    NULL,       0,            1,           0,         0,          -1 },
-	{ "Engrampa",    NULL,    NULL,       0,            1,           0,         0,          -1 },
-	{ "File-roller", NULL,    NULL,       0,            1,           0,         0,          -1 },
-	{ "st", 	  NULL,    	 "pulsemixer",0,            1,           0,         0,          -1 },
-	{ "st", 	  NULL,    	  "calcurse", 0,            1,           0,         0,          -1 },
-	{ "st",       NULL,       NULL,       0,            0,           1,         0,          -1 },
-	{ NULL,      NULL,     "Event Tester", 0,           0,           0,         1,          -1 }, /* xev */
+	/* class            instance        title           tags mask     isfloating   isterminal noswallow   monitor */
+	{ "discord",        NULL,           NULL,           1<<5,         0,           0,         0,          -1 },
+	{ "Firefox",        NULL,           NULL,           0,            0,           0,         0,          -1 },
+	{ "Carla2-Plugin",  "carla-plugin", NULL,           0,            1,           0,         0,          -1 },
+	{ "Blueberry.py",   NULL,           NULL,           0,            1,           0,         0,          -1 },
+	{ "Nitrogen",       NULL,    	    NULL,           0,            1,           0,         0,          -1 },
+	{ "Connman-gtk",    NULL,           NULL,           0,            1,           0,         0,          -1 },
+	{ "Engrampa",       NULL,           NULL,           0,            1,           0,         0,          -1 },
+	{ "File-roller",    NULL,           NULL,           0,            1,           0,         0,          -1 },
+	{ "steam_proton",   NULL, "BakkesModInjectorCpp",   0,            1,           0,         0,          -1 },
+	{ "st", 	        NULL,    	    "pulsemixer",   0,            1,           0,         0,          -1 },
+	{ "st", 	        NULL,    	    "calcurse",     0,            1,           0,         0,          -1 },
+	{ "st", 	        NULL,    	    "ncmpcpp 0.9.2",0,            1,           0,         0,          -1 },
+	{ "st",             NULL,           NULL,           0,            0,           1,         0,          -1 },
+	{ NULL,             NULL,           "Event Tester", 0,            0,           0,         1,          -1 }, /* xev */
 };
 
 /* layout(s) */
@@ -158,7 +159,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
     /* rio */
 	{ MODKEY,                       XK_r,      rioresize,      {0} },
-	{ MODKEY|ControlMask,           XK_d,      spawn,          {.v = dmenucmd } },
+	{ MODKEY|ControlMask,           XK_d,      riospawn,       {.v = dmenucmd } },
 	{ MODKEY|ControlMask,           XK_Return, riospawn,       {.v = termcmd } },
     { MODKEY|ControlMask,           XK_n,      riospawn,       SHCMD("$FILEBROWSER")},
     { MODKEY|ShiftMask|ControlMask, XK_n,      riospawn,       SHCMD("$TERMINAL -e lf")},
