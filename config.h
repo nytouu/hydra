@@ -114,9 +114,9 @@ static const Rule rules[] = {
 	{ "Engrampa",       NULL,           NULL,           0,            1,           0,         0,          -1 },
 	{ "File-roller",    NULL,           NULL,           0,            1,           0,         0,          -1 },
 	{ "steam_proton",   NULL, "BakkesModInjectorCpp",   0,            1,           0,         0,          -1 },
-	{ "st", 	        NULL,    	    "pulsemixer",   0,            1,           0,         0,          -1 },
-	{ "st", 	        NULL,    	    "calcurse",     0,            1,           0,         0,          -1 },
-	{ "st", 	        NULL,    	    "ncmpcpp 0.9.2",0,            1,           0,         0,          -1 },
+	{ "pulsemixer", 	NULL,    	    NULL,           0,            1,           0,         0,          -1 },
+	{ "calcurse", 	    NULL,    	    NULL,           0,            1,           0,         0,          -1 },
+	{ "ncmpcpp", 	    NULL,    	    NULL,           0,            1,           0,         0,          -1 },
 	{ "st",             NULL,           NULL,           0,            0,           1,         0,          -1 },
 	{ NULL,             NULL,           "Event Tester", 0,            0,           0,         1,          -1 }, /* xev */
 };
