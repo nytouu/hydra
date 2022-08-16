@@ -44,13 +44,14 @@ static char orange[]          = "#e0af68";
 static char yellow[]          = "#e0d168";
 static char lightblue[]       = "#7dcfff";
 static char white[]           = "#c0caf5";
+static char border[]          = "#ffffff";
 static const unsigned int baralpha  = OPAQUE;
 static const unsigned int borderalpha = OPAQUE;
 static const char buttonbar[]       = "גּ";
 static const char *colors[][3]      = {
 	/*               	fg          bg          border   */
 	[SchemeNorm]      = { white,    darkgray,   black   },
-	[SchemeSel]       = { white,    blue,       orange  },
+	[SchemeSel]       = { white,    blue,       border  },
 	[SchemeUrg]       = { darkgray, red,        red     },
     [SchemeInfo]   	  = { white,    darkgray,   blue    },
 	[SchemeTag]  	  = { white, 	darkgray,   white   },
@@ -78,6 +79,7 @@ static const unsigned int alphas[][3] = {
 	[SchemeTag7]      = { OPAQUE, baralpha, borderalpha  },
 };
 ResourcePref resources[] = {
+	{ "border",     STRING,  &border },
 	{ "white",     	STRING,  &white },
 	{ "lightblue",  STRING,  &lightblue },
 	{ "yellow",    	STRING,  &yellow },
