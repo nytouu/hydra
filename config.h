@@ -4,8 +4,8 @@
 #define ICONSIZE 16   /* icon size */
 #define ICONSPACING 8 /* space between icon and title */
 static const unsigned int refreshrate = 144;
-static const unsigned int borderpx  = 2;        /* border pixel of windows */
-static const unsigned int snap      = 10;       /* snap pixel */
+static const unsigned int borderpx  = 1;        /* border pixel of windows */
+static const unsigned int snap      = 16;       /* snap pixel */
 static const int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
 static const unsigned int gappih    = 12;       /* horiz inner gap between windows */
 static const unsigned int gappiv    = 12;       /* vert inner gap between windows */
@@ -31,7 +31,7 @@ static const char slopresizestyle[] = "-t 0 -b 2 -c 1.0,0.8,0.7"; /* do NOT defi
 static const int riodraw_borders    = 0;        /* 0 or 1, indicates whether the area drawn using slop includes the window borders */
 static const int riodraw_matchpid   = 1;        /* 0 or 1, indicates whether to match the PID of the client that was spawned with riospawn */
 static const int riodraw_spawnasync = 0;        /* 0 spawns after successful sel, 1 spawn during selection */
-static const char *fonts[]          = { "SF Mono:size=11:style=Regular", "nonicons:size=11", "SFMono Nerd Font:size=12:style=Regular", "Siji:size=14" };
+static const char *fonts[]          = { "SF Mono:size=11:style=Medium", "nonicons:size=11", "SFMono Nerd Font:size=12:style=Regular", "Siji:size=14" };
 static const char dmenufont[]       = "SF Mono:size=12:style=Medium";
 static char black[]           = "#0a0a0a";
 static char darkgray[]        = "#1a1b26";
