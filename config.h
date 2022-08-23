@@ -45,7 +45,7 @@ static char yellow[]          = "#e0d168";
 static char lightblue[]       = "#7dcfff";
 static char white[]           = "#c0caf5";
 static char border[]          = "#ffffff";
-static const unsigned int baralpha  = OPAQUE;
+static const unsigned int baralpha  = OPAQUE; // 0xf2 = 0.95
 static const unsigned int borderalpha = OPAQUE;
 static const char buttonbar[]       = "גּ";
 static const char *colors[][3]      = {
@@ -108,14 +108,17 @@ static const Rule rules[] = {
 	 */
 	/* class            instance        title           tags mask     isfloating   isterminal noswallow   monitor */
 	{ "discord",        NULL,           NULL,           1<<5,         0,           0,         0,          -1 },
-	{ "Firefox",        NULL,           NULL,           0,            0,           0,         0,          -1 },
+	{ "librewolf",      NULL,           NULL,           1<<3,         0,           0,         0,          -1 },
+	{ "Steam",          NULL,           NULL,           1,            0,           0,         0,          -1 },
+	{ "steam_app_252950", NULL,         NULL,           1<<4,         0,           0,         0,          -1 },
+	{ "librewolf",      "Toolkit",      NULL,           0,            1,           0,         0,          -1 },
 	{ "Carla2-Plugin",  "carla-plugin", NULL,           0,            1,           0,         0,          -1 },
 	{ "Blueberry.py",   NULL,           NULL,           0,            1,           0,         0,          -1 },
 	{ "Nitrogen",       NULL,    	    NULL,           0,            1,           0,         0,          -1 },
 	{ "Connman-gtk",    NULL,           NULL,           0,            1,           0,         0,          -1 },
 	{ "Engrampa",       NULL,           NULL,           0,            1,           0,         0,          -1 },
 	{ "File-roller",    NULL,           NULL,           0,            1,           0,         0,          -1 },
-	{ "steam_proton",   NULL, "BakkesModInjectorCpp",   0,            1,           0,         0,          -1 },
+	{ "steam_proton",   NULL,           NULL,           0,            1,           0,         0,          -1 },
 	{ "pulsemixer", 	NULL,    	    NULL,           0,            1,           0,         0,          -1 },
 	{ "calcurse", 	    NULL,    	    NULL,           0,            1,           0,         0,          -1 },
 	{ "ncmpcpp", 	    NULL,    	    NULL,           0,            1,           0,         0,          -1 },
