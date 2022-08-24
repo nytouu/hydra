@@ -3080,6 +3080,7 @@ updatebars(void)
 		.background_pixel = 0,
 		.border_pixel = 0,
 		.colormap = cmap,
+        .event_mask = ButtonPressMask|ExposureMask
 	};
 	XClassHint ch = {"hydra", "hydra"};
 	for (m = mons; m; m = m->next) {
