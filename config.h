@@ -2,7 +2,7 @@
 
 /* appearance */
 static const unsigned int refreshrate = 144;
-static const unsigned int borderpx  = 1;        /* border pixel of windows */
+static const unsigned int borderpx  = 2;        /* border pixel of windows */
 static const unsigned int snap      = 16;       /* snap pixel */
 static const int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
 static const unsigned int gappih    = 12;       /* horiz inner gap between windows */
@@ -21,13 +21,13 @@ static const int vertpad            = 0;        /* vertical padding of bar */
 static const int sidepad            = 0;        /* horizontal padding of bar */
 static const int statuspad          = 8;
 static const int nmaxmaster         = 3;        /* maximum number of clients allowed in master area */
-static const int user_bh            = 32;       /* 0 means that dwm will calculate bar height, >= 1 means dwm will user_bh as bar height */
+static const int user_bh            = 42;       /* 0 means that dwm will calculate bar height, >= 1 means dwm will user_bh as bar height */
 static const char slopspawnstyle[]  = "-t 0 -b 2 -c 1.0,0.8,0.7"; /* do NOT define -f (format) here "-t 0 -b 2 -c 0.7,0.6,0.9,0.1 -l" for alternate, hope the highlight thing gets fixed or maybe i should do it myself but im lazy */
 static const char slopresizestyle[] = "-t 0 -b 2 -c 1.0,0.8,0.7"; /* do NOT define -f (format) here */
 static const int riodraw_borders    = 0;        /* 0 or 1, indicates whether the area drawn using slop includes the window borders */
 static const int riodraw_matchpid   = 1;        /* 0 or 1, indicates whether to match the PID of the client that was spawned with riospawn */
 static const int riodraw_spawnasync = 0;        /* 0 spawns after successful sel, 1 spawn during selection */
-static const char *fonts[]          = { "SF Mono:size=11:style=Medium", "nonicons:size=11", "SFMono Nerd Font:size=12:style=Regular", "Siji:size=14" };
+static const char *fonts[]          = { "SF Mono:size=10:style=Medium", "nonicons:size=11", "SFMono Nerd Font:size=12:style=Regular", "Siji:size=14" };
 static const char dmenufont[]       = "SF Mono:size=12:style=Medium";
 static char black[]           = "#0a0a0a";
 static char darkgray[]        = "#1a1b26";
