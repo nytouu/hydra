@@ -105,6 +105,7 @@ static const Rule rules[] = {
 	/* class            instance        title           tags mask     isfloating   isterminal noswallow   monitor */
 	{ "discord",        NULL,           NULL,           1<<5,         0,           0,         0,          -1 },
 	{ "librewolf",      NULL,           NULL,           1<<3,         0,           0,         0,          -1 },
+	{ "firefox",        NULL,           NULL,           1<<3,         0,           0,         0,          -1 },
 	{ "Steam",          NULL,           NULL,           1,            0,           0,         0,          -1 },
 	{ "steam_app_252950", NULL,         NULL,           1<<4,         0,           0,         0,          -1 },
 	{ "librewolf",      "Toolkit",      NULL,           0,            1,           0,         0,          -1 },
