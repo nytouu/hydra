@@ -539,17 +539,12 @@ buttonpress(XEvent *e)
 			tsize += TEXTW(tags[i]);
 		}
 
-		x = (m->ww - tsize) / 2;
-		i = 0;
+		x = i = 0;
 		do
             x += TEXTW(tags[i]);
         while (ev->x >= x && ++i < LENGTH(tags));
 
-        if (ev->x < TEXTW(buttonbar) + TEXTW(m->ltsymbol))
-			click = ClkLtSymbol;
-        if (ev->x < TEXTW(buttonbar))
-            click = ClkButton;
-        else if (i < LENGTH(tags) && ev->x >= (m->ww - tsize) / 2) {
+        if (i < LENGTH(tags) && ev->x >= (m->ww - tsize) / 2) {
 			click = ClkTagBar;
 			arg.ui = 1 << i;
 		} else if (ev->x > selmon->ww - TEXTW(stext)) {
@@ -1181,7 +1176,7 @@ drawbar(Monitor *m)
 		tsize += TEXTW(tags[i]);
 	}
 
-	x = (m->ww - tsize) / 2;
+	x = 0;
 	for (i = 0; i < LENGTH(tags); i++) {
 		w = TEXTW(tags[i]);
 		drw_setscheme(drw, scheme[occ & 1 << i ? (rainbowtags ? tagschemes[i] : SchemeSel) : (m->tagset[m->seltags] & 1 << i && !linepx ? SchemeNorm : urg & 1 << i ? SchemeUrg : SchemeTag)]);
@@ -1198,14 +1193,11 @@ drawbar(Monitor *m)
 		x += w;
 	}
 	x = 0;
-    w = blw = TEXTW(buttonbar);
-    drw_setscheme(drw, scheme[SchemeNorm]);
-    x = drw_text(drw, x, 0, w, bh, lrpad / 2, buttonbar, 0);
 	w = blw = TEXTW(m->ltsymbol);
 	drw_setscheme(drw, scheme[SchemeNorm]);
 	x = drw_text(drw, x, 0, w, bh, lrpad / 2, m->ltsymbol, 0);
 
-	if ((w = (m->ww / 2) - x - (tsize / 2))  > bh) {
+	if ((w = x - (tsize / 2))  > bh) {
 		if (m->sel && showtitle) {
 			x = drw_text(drw, x, 0, w, bh, 0, m->sel->name, 0);
 			drw_setscheme(drw, scheme[SchemeInfo]);
