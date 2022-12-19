@@ -58,6 +58,7 @@ static const char *colors[][3]      = {
 	[SchemeTag5]      = { blue,     darkgray,   black   },
 	[SchemeTag6]      = { lightblue,darkgray,   black   },
 	[SchemeTag7]      = { yellow,	darkgray,   black   },
+	[SchemeButton]    = { white,	gray,       black   },
 };
 static const unsigned int alphas[][3] = {
 	/*               fg      bg        border     */
@@ -73,6 +74,7 @@ static const unsigned int alphas[][3] = {
 	[SchemeTag5]      = { OPAQUE, baralpha, borderalpha  },
 	[SchemeTag6]      = { OPAQUE, baralpha, borderalpha  },
 	[SchemeTag7]      = { OPAQUE, baralpha, borderalpha  },
+	[SchemeButton]    = { OPAQUE, baralpha, borderalpha  },
 };
 ResourcePref resources[] = {
 	{ "border",     STRING,  &border },

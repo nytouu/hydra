@@ -81,7 +81,7 @@
 enum { CurNormal, CurResize, CurMove, CurResizeHorzArrow, CurResizeVertArrow, CurLast }; /* cursor */
 enum { SchemeNorm, SchemeSel, SchemeUrg, SchemeInfo,
        SchemeTag, SchemeTag1, SchemeTag2, SchemeTag3, SchemeTag4,
-       SchemeTag5, SchemeTag6, SchemeTag7 }; /* color schemes */
+       SchemeTag5, SchemeTag6, SchemeTag7, SchemeButton }; /* color schemes */
 enum { NetSupported, NetWMName, NetWMState, NetWMFullscreen, NetActiveWindow, NetWMWindowType,
 	   NetWMWindowTypeDialog, NetClientList, NetWMCheck, NetClientListStacking,
        NetDesktopNames, NetDesktopViewport, NetNumberOfDesktops, NetCurrentDesktop, NetLast }; /* EWMH atoms */
@@ -1199,7 +1199,7 @@ drawbar(Monitor *m)
 	}
 	x = 0;
     w = blw = TEXTW(buttonbar);
-    drw_setscheme(drw, scheme[SchemeNorm]);
+    drw_setscheme(drw, scheme[SchemeButton]);
     x = drw_text(drw, x, 0, w, bh, lrpad / 2, buttonbar, 0);
 	w = blw = TEXTW(m->ltsymbol);
 	drw_setscheme(drw, scheme[SchemeNorm]);
