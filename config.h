@@ -43,7 +43,7 @@ static char white[]           = "#c0caf5";
 static char border[]          = "#ffffff";
 static const unsigned int baralpha  = OPAQUE; // 0xf2 = 0.95
 static const unsigned int borderalpha = OPAQUE;
-static const char buttonbar[]       = "גּ";
+static const char buttonbar[]       = " ";
 static const char *colors[][3]      = {
 	/*               	fg          bg          border   */
 	[SchemeNorm]      = { white,    darkgray,   black   },
@@ -58,7 +58,7 @@ static const char *colors[][3]      = {
 	[SchemeTag5]      = { blue,     darkgray,   black   },
 	[SchemeTag6]      = { lightblue,darkgray,   black   },
 	[SchemeTag7]      = { yellow,	darkgray,   black   },
-	[SchemeButton]    = { white,	gray,       black   },
+	[SchemeButton]    = { darkgray,	red,        black   },
 };
 static const unsigned int alphas[][3] = {
 	/*               fg      bg        border     */
