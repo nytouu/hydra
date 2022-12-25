@@ -5,7 +5,7 @@ here's a screenshot :\
 ![screenshot](https://raw.githubusercontent.com/nytouu/hydra/master/screenshot.png)
 
 # patches
-here's a list of the patches applied in this build
+here's a list of (some of) the patches applied in this build
 
 [alpha](https://dwm.suckless.org/patches/alpha/)\
 [actualfullscreen](https://dwm.suckless.org/patches/actualfullscreen/)\
@@ -31,7 +31,11 @@ here's a list of the patches applied in this build
 [swallow & riodraw](https://github.com/bakkeby/patches/wiki/riodraw)\
 [vanitygaps](https://dwm.suckless.org/patches/vanitygaps/)\
 [statusallmons](https://dwm.suckless.org/patches/statusallmons/)\
-[netclientliststacking](https://github.com/bakkeby/patches/wiki/netclientliststacking)
+[netclientliststacking](https://github.com/bakkeby/patches/wiki/netclientliststacking)\
+[focusadjacenttag](https://dwm.suckless.org/patches/focusadjacenttag/)\
+colorful-tags\
+underline-tags\
+xrdb
 
 # installation
 ```sh
