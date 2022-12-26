@@ -1193,7 +1193,6 @@ drawbar(Monitor *m)
 			drw_rect(drw, x + w / 4, bh - linepx, w / 2, linepx, 1, 0);
 		}
 		if (m->tagset[m->seltags] & 1 << i && linepx ) {
-			/* && (occ & 1 << i) */
 			drw_setscheme(drw, scheme[occ & 1 << i ? (rainbowtags ? tagschemes[i] : SchemeSel) : (m->tagset[m->seltags] & 1 << i && !linepx ? SchemeNorm : urg & 1 << i ? SchemeUrg : SchemeTag)]);
 			drw_rect(drw, x, bh - linepx, w, linepx, 1, 0);
 		}
@@ -1213,9 +1212,9 @@ drawbar(Monitor *m)
 			drw_setscheme(drw, scheme[SchemeInfo]);
 			drw_rect(drw, x + tsize, 0, (m->ww / 2) - (tsize / 2) - tw - 2 * sp, bh, 1, 1);
 			if (m->sel->isfloating)
-				drw_rect(drw, x + boxs - w - 8, boxs, boxw, boxw, m->sel->isfixed, 0);
+				drw_rect(drw, x + boxs - w - 14, boxs, boxw, boxw, m->sel->isfixed, 0);
 			if (m->sel->issticky)
-				drw_polygon(drw, x + boxs - w - 8, m->sel->isfloating ? boxs * 2 + boxw : boxs, stickyiconbb.x, stickyiconbb.y, boxw, boxw * stickyiconbb.y / stickyiconbb.x, stickyicon, LENGTH(stickyicon), Nonconvex, m->sel->tags & m->tagset[m->seltags]);
+				drw_polygon(drw, x + boxs - w - 14, m->sel->isfloating ? boxs * 2 + boxw : boxs, stickyiconbb.x, stickyiconbb.y, boxw, boxw * stickyiconbb.y / stickyiconbb.x, stickyicon, LENGTH(stickyicon), Nonconvex, m->sel->tags & m->tagset[m->seltags]);
 		} else {
 			drw_setscheme(drw, scheme[SchemeInfo]);
 			drw_rect(drw, x, 0, w, bh, 1, 1);
