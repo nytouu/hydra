@@ -1632,6 +1632,7 @@ manage(Window w, XWindowAttributes *wa)
 	XChangeProperty(dpy, root, netatom[NetClientListStacking], XA_WINDOW, 32, PropModePrepend,
 		(unsigned char *) &(c->win), 1);
 	XMoveResizeWindow(dpy, c->win, c->x + 2 * sw, c->y, c->w, c->h); /* some windows require this */
+	setclientstate(c, NormalState);
 	if (focusclient) {
 		if (c->mon == selmon)
 			unfocus(selmon->sel, 0);
@@ -1650,6 +1651,7 @@ manage(Window w, XWindowAttributes *wa)
 	}
 
 	arrange(c->mon);
+	XMapWindow(dpy, c->win);
 	if (focusclient)
 		focus(NULL);
 }
@@ -2441,7 +2443,7 @@ scan(void)
 			if (!XGetWindowAttributes(dpy, wins[i], &wa))
 				continue;
 			if (XGetTransientForHint(dpy, wins[i], &d1)
-			&& (wa.map_state == IsViewable || getstate(wins[i]) == IconicState || getstate(wins[i]) == WithdrawnState))
+			&& (wa.map_state == IsViewable || getstate(wins[i]) == IconicState))
 				manage(wins[i], &wa);
 		}
 		if (wins)
@@ -2730,32 +2732,15 @@ showhide(Client *c)
 		return;
 	if (ISVISIBLE(c)) {
 		/* show clients top down */
-        XMapWindow(dpy, c->win);
-        setclientstate(c, NormalState);
+		XMoveWindow(dpy, c->win, c->x, c->y);
 		if ((!c->mon->lt[c->mon->sellt]->arrange || c->isfloating) && !c->isfullscreen)
 			resize(c, c->x, c->y, c->w, c->h, 0);
 		showhide(c->snext);
 	} else {
 		/* hide clients bottom up */
 		showhide(c->snext);
-
-    	static XWindowAttributes ra, ca;
-
-    	if (!c->win)
-   		    return;
-
-    	XGrabServer(dpy);
-    	XGetWindowAttributes(dpy, root, &ra);
-    	XGetWindowAttributes(dpy, c->win, &ca);
-    	/* Prevent UnmapNotify events */
-    	XSelectInput(dpy, root, ra.your_event_mask & ~SubstructureNotifyMask);
-    	XSelectInput(dpy, c->win, ca.your_event_mask & ~StructureNotifyMask);
-    	XUnmapWindow(dpy, c->win);
-    	setclientstate(c, WithdrawnState);
-    	XSelectInput(dpy, root, ra.your_event_mask);
-    	XSelectInput(dpy, c->win, ca.your_event_mask);
-    	XUngrabServer(dpy);
-    }
+		XMoveWindow(dpy, c->win, WIDTH(c) * -2, c->y);
+	}
 }
 
 void
