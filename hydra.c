@@ -1228,7 +1228,7 @@ drawbar(Monitor *m)
 			drw_setscheme(drw, scheme[SchemeInfo]);
 			drw_rect(drw, x, 0, w, bh, 1, 1);
 			drw_setscheme(drw, scheme[SchemeInfo]);
-			drw_rect(drw, x + w + tsize, 0, (m->ww / 2) - (tsize / 2) - tw - 2 * sp, bh, 1, 1);
+			drw_rect(drw, (x + w + tsize) - 1, 0, (m->ww / 2) - (tsize / 2) - tw - 2 * sp, bh, 1, 1);
 		}
 	}
 	drw_map(drw, m->barwin, 0, 0, m->ww, bh);
