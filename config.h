@@ -21,7 +21,7 @@ static const int vertpad            = 0;        /* vertical padding of bar */
 static const int sidepad            = 0;        /* horizontal padding of bar */
 static const int statuspad          = 8;
 static const int nmaxmaster         = 3;        /* maximum number of clients allowed in master area */
-static const int user_bh            = 42;       /* 0 means that dwm will calculate bar height, >= 1 means dwm will user_bh as bar height */
+static const int user_bh            = 38;       /* 0 means that dwm will calculate bar height, >= 1 means dwm will user_bh as bar height */
 static const char slopspawnstyle[]  = "-t 0 -b 2 -c 1.0,0.8,0.7"; /* do NOT define -f (format) here "-t 0 -b 2 -c 0.7,0.6,0.9,0.1 -l" for alternate, hope the highlight thing gets fixed or maybe i should do it myself but im lazy */
 static const char slopresizestyle[] = "-t 0 -b 2 -c 1.0,0.8,0.7"; /* do NOT define -f (format) here */
 static const int riodraw_borders    = 0;        /* 0 or 1, indicates whether the area drawn using slop includes the window borders */
@@ -106,8 +106,9 @@ static const Rule rules[] = {
 	 */
 	/* class            instance        title           tags mask     isfloating   isterminal noswallow   monitor */
 	{ "discord",        NULL,           NULL,           1<<5,         0,           0,         0,          -1 },
-	{ "librewolf",      NULL,           NULL,           1<<3,         0,           0,         0,          -1 },
-	{ "firefox",        NULL,           NULL,           1<<3,         0,           0,         0,          -1 },
+	{ "librewolf",      NULL,           NULL,           1<<3,         0,           0,         1,          -1 },
+	{ "firefox",        NULL,           NULL,           1<<3,         0,           0,         1,          -1 },
+	{ "Deno",           NULL,       "Peek preview",     0,            0,           0,         1,          -1 },
 	{ "Steam",          NULL,           NULL,           1,            0,           0,         0,          -1 },
 	{ "steam_app_252950", NULL,         NULL,           1<<4,         0,           0,         0,          -1 },
 	{ "librewolf",      "Toolkit",      NULL,           0,            1,           0,         0,          -1 },
@@ -170,7 +171,7 @@ static Key keys[] = {
     { MODKEY|ControlMask,           XK_n,      riospawn,       SHCMD("$FILEBROWSER")},
     { MODKEY|ShiftMask|ControlMask, XK_n,      riospawn,       SHCMD("$TERMINAL -e lf")},
     { MODKEY|ControlMask,           XK_b,      riospawn,       SHCMD("$BROWSER")},
-    { MODKEY|ControlMask,           XK_t,      riospawn,       SHCMD("$TERMINAL -e btop")},
+    { MODKEY|ControlMask,           XK_t,      riospawn,       SHCMD("$TERMINAL -e htop")},
     { MODKEY|ControlMask,           XK_c,      riospawn,       SHCMD("$TERMINAL -e calcurse")},
     { MODKEY|ControlMask,           XK_m,      riospawn,       SHCMD("$TERMINAL -e ncmpcpp")},
     /* dwm stuff */
