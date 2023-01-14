@@ -1180,7 +1180,7 @@ drawbar(Monitor *m)
 
 	/* draw status first so it can be overdrawn by tags later */
 	if (m == selmon || 1) { /* status is only drawn on selected monitor */
-		tw = statusw = m->ww - drawstatusbar(m, bh, stext);
+		tw = statusw = m->ww - drawstatusbar(m, bh, stext) - 1;
 	}
 
 	for (c = m->clients; c; c = c->next) {
@@ -1208,9 +1208,9 @@ drawbar(Monitor *m)
 		x += w;
 	}
 	x = 0;
-    w = blw = TEXTW(buttonbar);
+    w = blw = TEXTW(buttonbar) - 2;
     drw_setscheme(drw, scheme[SchemeButton]);
-    x = drw_text(drw, x, 0, w, bh, (lrpad / 2) + 2, buttonbar, 0);
+    x = drw_text(drw, x, 0, w, bh, (lrpad / 2) + 1, buttonbar, 0);
 	w = blw = TEXTW(m->ltsymbol);
 	drw_setscheme(drw, scheme[SchemeNorm]);
 	x = drw_text(drw, x, 0, w, bh, lrpad / 2, m->ltsymbol, 0);
