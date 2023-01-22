@@ -172,6 +172,7 @@ typedef struct {
 	int isfloating;
 	int isterminal;
 	int noswallow;
+	int isfullscreen;
 	int monitor;
 } Rule;
 
@@ -404,6 +405,8 @@ applyrules(Client *c)
 			c->isterminal = r->isterminal;
 			c->noswallow  = r->noswallow;
 			c->isfloating = r->isfloating;
+			if (r->isfullscreen)
+				setfullscreen(c, r->isfullscreen);
 			c->tags |= r->tags;
 			for (m = mons; m && m->num != r->monitor; m = m->next);
 			if (m)

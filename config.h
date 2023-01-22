@@ -104,28 +104,29 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class            instance        title           tags mask     isfloating   isterminal noswallow   monitor */
-	{ "discord",        NULL,           NULL,           1<<5,         0,           0,         0,          -1 },
-	{ "librewolf",      NULL,           NULL,           1<<3,         0,           0,         1,          -1 },
-	{ "firefox",        NULL,           NULL,           1<<3,         0,           0,         1,          -1 },
-	{ "Deno",           NULL,       "Peek preview",     0,            0,           0,         1,          -1 },
-	{ "Steam",          NULL,           NULL,           1,            0,           0,         0,          -1 },
-	{ "steam_app_252950", NULL,         NULL,           1<<4,         0,           0,         0,          -1 },
-	{ "librewolf",      "Toolkit",      NULL,           0,            1,           0,         0,          -1 },
-	{ "Thunar",        NULL, "File Operation Progress", 0,            1,           0,         0,          -1 },
-	{ "Carla2-Plugin",  "carla-plugin", NULL,           0,            1,           0,         0,          -1 },
-	{ "Blueberry.py",   NULL,           NULL,           0,            1,           0,         0,          -1 },
-	{ "Nitrogen",       NULL,    	    NULL,           0,            1,           0,         0,          -1 },
-	{ "Galculator",     NULL,    	    NULL,           0,            1,           0,         0,          -1 },
-	{ "Connman-gtk",    NULL,           NULL,           0,            1,           0,         0,          -1 },
-	{ "Engrampa",       NULL,           NULL,           0,            1,           0,         0,          -1 },
-	{ "File-roller",    NULL,           NULL,           0,            1,           0,         0,          -1 },
-	{ "steam_proton",   NULL,           NULL,           0,            1,           0,         0,          -1 },
-	{ "pulsemixer", 	NULL,    	    NULL,           0,            1,           0,         0,          -1 },
-	{ "calcurse", 	    NULL,    	    NULL,           0,            1,           0,         0,          -1 },
-	{ "ncmpcpp", 	    NULL,    	    NULL,           0,            1,           0,         0,          -1 },
-	{ "st",             NULL,           NULL,           0,            0,           1,         0,          -1 },
-	{ NULL,             NULL,           "Event Tester", 0,            0,           0,         1,          -1 }, /* xev */
+	/* class            instance        title           tags mask     isfloating   isterminal noswallow   isfullscreen  monitor */
+	{ "discord",        NULL,           NULL,           1<<5,         0,           0,         0,          0,            -1 },
+	{ "librewolf",      NULL,           NULL,           1<<3,         0,           0,         1,          0,            -1 },
+	{ "firefox",        NULL,           NULL,           1<<3,         0,           0,         1,          0,            -1 },
+	{ "Deno",           NULL,       "Peek preview",     0,            0,           0,         1,          0,            -1 },
+	{ "Steam",          NULL,           NULL,           1,            0,           0,         0,          0,            -1 },
+	{ "steam_app_252950", NULL,         NULL,           1<<4,         0,           0,         0,          0,            -1 },
+	{ "librewolf",      "Toolkit",      NULL,           0,            1,           0,         0,          0,            -1 },
+	{ "kdeconnect.daemon", "kdeconnectd", NULL,         0,            1,           0,         0,          1,            -1 },
+	{ "Thunar",        NULL, "File Operation Progress", 0,            1,           0,         0,          0,            -1 },
+	{ "Carla2-Plugin",  "carla-plugin", NULL,           0,            1,           0,         0,          0,            -1 },
+	{ "Blueberry.py",   NULL,           NULL,           0,            1,           0,         0,          0,            -1 },
+	{ "Nitrogen",       NULL,    	    NULL,           0,            1,           0,         0,          0,            -1 },
+	{ "Galculator",     NULL,    	    NULL,           0,            1,           0,         0,          0,            -1 },
+	{ "Connman-gtk",    NULL,           NULL,           0,            1,           0,         0,          0,            -1 },
+	{ "Engrampa",       NULL,           NULL,           0,            1,           0,         0,          0,            -1 },
+	{ "File-roller",    NULL,           NULL,           0,            1,           0,         0,          0,            -1 },
+	{ "steam_proton",   NULL,           NULL,           0,            1,           0,         0,          0,            -1 },
+	{ "pulsemixer", 	NULL,    	    NULL,           0,            1,           0,         0,          0,            -1 },
+	{ "calcurse", 	    NULL,    	    NULL,           0,            1,           0,         0,          0,            -1 },
+	{ "ncmpcpp", 	    NULL,    	    NULL,           0,            1,           0,         0,          0,            -1 },
+	{ "st",             NULL,           NULL,           0,            0,           1,         0,          0,            -1 },
+	{ NULL,             NULL,           "Event Tester", 0,            0,           0,         1,          0,            -1 }, /* xev */
 };
 
 /* layout(s) */
