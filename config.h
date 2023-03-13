@@ -111,6 +111,7 @@ static const Rule rules[] = {
 	{ "Deno",           NULL,       "Peek preview",     0,            0,           0,         1,          0,            -1 },
 	{ "Steam",          NULL,           NULL,           1,            0,           0,         0,          0,            -1 },
 	{ "steam_app_252950", NULL,         NULL,           1<<4,         0,           0,         0,          0,            -1 },
+	{ "osu!.exe",       NULL,           NULL,           1<<4,         0,           0,         0,          0,            -1 },
 	{ "librewolf",      "Toolkit",      NULL,           0,            1,           0,         0,          0,            -1 },
 	{ "kdeconnect.daemon", "kdeconnectd", NULL,         0,            1,           0,         0,          1,            -1 },
 	{ "Thunar",        NULL, "File Operation Progress", 0,            1,           0,         0,          0,            -1 },
