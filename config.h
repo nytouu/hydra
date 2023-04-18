@@ -2,7 +2,7 @@
 
 /* appearance */
 static const unsigned int refreshrate = 144;
-static const unsigned int borderpx  = 2;        /* border pixel of windows */
+static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const unsigned int snap      = 16;       /* snap pixel */
 static const int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
 static const unsigned int gappih    = 12;       /* horiz inner gap between windows */
@@ -27,7 +27,12 @@ static const char slopresizestyle[] = "-t 0 -b 2 -c 1.0,0.8,0.7"; /* do NOT defi
 static const int riodraw_borders    = 0;        /* 0 or 1, indicates whether the area drawn using slop includes the window borders */
 static const int riodraw_matchpid   = 1;        /* 0 or 1, indicates whether to match the PID of the client that was spawned with riospawn */
 static const int riodraw_spawnasync = 0;        /* 0 spawns after successful sel, 1 spawn during selection */
-static const char *fonts[]          = { "SF Mono:size=11:style=Medium", "nonicons:size=12", "SFMono Nerd Font:size=12:style=Medium", "Siji:size=14" };
+static const char *fonts[]          = {
+    "JetBrains Mono:size=11:style=Regular", 
+    "nonicons:size=12", 
+    "JetBrainsMono Nerd Font:size=12:style=Regular", 
+    "Siji:size=14" 
+};
 static const char dmenufont[]       = "SF Mono:size=12:style=Medium";
 static char black[]           = "#0a0a0a";
 static char darkgray[]        = "#1a1b26";
@@ -41,6 +46,7 @@ static char yellow[]          = "#e0d168";
 static char lightblue[]       = "#7dcfff";
 static char white[]           = "#c0caf5";
 static char border[]          = "#ffffff";
+static char buttoncolor[]     = "#7aa2f7";
 static const unsigned int baralpha  = 0xe5; // 0xf2 = 0.95
 static const unsigned int borderalpha = OPAQUE;
 static const char buttonbar[]       = " ";
@@ -58,7 +64,7 @@ static const char *colors[][3]      = {
 	[SchemeTag5]      = { blue,     darkgray,   black   },
 	[SchemeTag6]      = { lightblue,darkgray,   black   },
 	[SchemeTag7]      = { yellow,	darkgray,   black   },
-	[SchemeButton]    = { darkgray,	red,        black   },
+	[SchemeButton]    = { darkgray,	buttoncolor,black   },
 };
 static const unsigned int alphas[][3] = {
 	/*               fg      bg        border     */
@@ -89,6 +95,7 @@ ResourcePref resources[] = {
 	{ "gray",     	STRING,  &gray },
 	{ "darkgray",   STRING,  &darkgray },
 	{ "black",     	STRING,  &black },
+	{ "buttoncolor",STRING,  &buttoncolor },
 };
 static const XPoint stickyicon[]    = { {0,0}, {4,0}, {4,8}, {2,6}, {0,8}, {0,0} }; /* represents the icon as an array of vertices */
 static const XPoint stickyiconbb    = {4,8};	/* defines the bottom right corner of the polygon's bounding box (speeds up scaling) */
@@ -106,13 +113,14 @@ static const Rule rules[] = {
 	 */
 	/* class            instance        title           tags mask     isfloating   isterminal noswallow   isfullscreen  monitor */
 	{ "discord",        NULL,           NULL,           1<<5,         0,           0,         0,          0,            -1 },
-	{ "librewolf",      NULL,           NULL,           1<<3,         0,           0,         1,          0,            -1 },
+	{ "LibreWolf",      NULL,           NULL,           1<<3,         0,           0,         1,          0,            -1 },
 	{ "firefox",        NULL,           NULL,           1<<3,         0,           0,         1,          0,            -1 },
 	{ "Deno",           NULL,       "Peek preview",     0,            0,           0,         1,          0,            -1 },
 	{ "Steam",          NULL,           NULL,           1,            0,           0,         0,          0,            -1 },
 	{ "steam_app_252950", NULL,         NULL,           1<<4,         0,           0,         0,          0,            -1 },
 	{ "osu!.exe",       NULL,           NULL,           1<<4,         0,           0,         0,          0,            -1 },
-	{ "librewolf",      "Toolkit",      NULL,           0,            1,           0,         0,          0,            -1 },
+	{ "LibreWolf",      "Toolkit",      NULL,           0,            1,           0,         0,          0,            -1 },
+	{ "firefox",        "Toolkit",      NULL,           0,            1,           0,         0,          0,            -1 },
 	{ "kdeconnect.daemon", "kdeconnectd", NULL,         0,            1,           0,         0,          1,            -1 },
 	{ "Thunar",        NULL, "File Operation Progress", 0,            1,           0,         0,          0,            -1 },
 	{ "Carla2-Plugin",  "carla-plugin", NULL,           0,            1,           0,         0,          0,            -1 },
@@ -139,10 +147,10 @@ static const int decorhints  = 1;    /* 1 means respect decoration hints */
 #include "gaps.c"
 static const Layout layouts[] = {
 	/* symbol     arrange function */
-	{ "",      tile },    /* first entry is default */
+	{ "󰽙",      tile },    /* first entry is default */
 	{ "",      NULL },    /* no layout function means floating behavior */
-	{ "",      centeredmaster },
-	{ "",      spiral },
+	{ "󱒅",      centeredmaster },
+	{ "",      spiral },
 	{ NULL,       NULL },
 };
 
