@@ -1935,12 +1935,11 @@ placemouse(const Arg *arg)
 			if (!r || r == c)
 				break;
 
-			attachmode = 0; // below
-			if (((float)(r->y + r->h - py) / r->h) > ((float)(r->x + r->w - px) / r->w)) {
-				if (abs(r->y - py) < r->h / 2)
-					attachmode = 1; // above
-			} else if (abs(r->x - px) < r->w / 2)
+			if ((((float)(r->y + r->h - py) / r->h) > ((float)(r->x + r->w - px) / r->w)
+			    	&& (abs(r->y - py) < r->h / 2)) || (abs(r->x - px) < r->w / 2))
 				attachmode = 1; // above
+			else
+				attachmode = 0; // below
 
 			if ((r && r != prevr) || (attachmode != prevattachmode)) {
 				detachstack(c);
