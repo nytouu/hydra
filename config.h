@@ -47,7 +47,7 @@ static char lightblue[]       = "#7dcfff";
 static char white[]           = "#c0caf5";
 static char border[]          = "#ffffff";
 static char buttoncolor[]     = "#7aa2f7";
-static const unsigned int baralpha  = 0xe5; // 0xf2 = 0.95
+static const unsigned int baralpha  = 0xb5; // 0xe5 - 0xf2 = 0.95
 static const unsigned int borderalpha = OPAQUE;
 static const char buttonbar[]       = " ";
 static const char *colors[][3]      = {
@@ -65,6 +65,14 @@ static const char *colors[][3]      = {
 	[SchemeTag6]      = { lightblue,darkgray,   black   },
 	[SchemeTag7]      = { yellow,	darkgray,   black   },
 	[SchemeButton]    = { darkgray,	buttoncolor,black   },
+	[SchemeAlt]       = { white,	darkgray,   black   },
+	[SchemeAlt1] 	  = { green, 	darkgray,   black   },
+	[SchemeAlt2] 	  = { purple, 	darkgray,   black   },
+	[SchemeAlt3]      = { red, 	    darkgray,   black   },
+	[SchemeAlt4] 	  = { orange,	darkgray,   black   },
+	[SchemeAlt5]      = { blue,     darkgray,   black   },
+	[SchemeAlt6]      = { lightblue,darkgray,   black   },
+	[SchemeAlt7]      = { yellow,	darkgray,   black   },
 };
 static const unsigned int alphas[][3] = {
 	/*               fg      bg        border     */
@@ -81,6 +89,14 @@ static const unsigned int alphas[][3] = {
 	[SchemeTag6]      = { OPAQUE, baralpha, borderalpha  },
 	[SchemeTag7]      = { OPAQUE, baralpha, borderalpha  },
 	[SchemeButton]    = { OPAQUE, baralpha, borderalpha  },
+    [SchemeAlt]       = { OPAQUE, OPAQUE,   borderalpha  },
+	[SchemeAlt1] 	  = { OPAQUE, OPAQUE,   borderalpha  },
+	[SchemeAlt2] 	  = { OPAQUE, OPAQUE,   borderalpha  },
+	[SchemeAlt3]      = { OPAQUE, OPAQUE,   borderalpha  },
+	[SchemeAlt4] 	  = { OPAQUE, OPAQUE,   borderalpha  },
+	[SchemeAlt5]      = { OPAQUE, OPAQUE,   borderalpha  },
+	[SchemeAlt6]      = { OPAQUE, OPAQUE,   borderalpha  },
+	[SchemeAlt7]      = { OPAQUE, OPAQUE,   borderalpha  },
 };
 ResourcePref resources[] = {
 	{ "border",     STRING,  &border },
@@ -101,10 +117,9 @@ static const XPoint stickyicon[]    = { {0,0}, {4,0}, {4,8}, {2,6}, {0,8}, {0,0}
 static const XPoint stickyiconbb    = {4,8};	/* defines the bottom right corner of the polygon's bounding box (speeds up scaling) */
 
 /* tagging */
-/* static const char *tags[] = { "I", "II","III", "IV", "V", "VI", "VII"}; */
-/* static const char *tags[] = { "home", "tty", "www", "game", "chat", "misc"}; */
 static const char *tags[] = { "", "","", "", "", "ﭮ", ""};
 static const int tagschemes[] = { SchemeTag1, SchemeTag2, SchemeTag3, SchemeTag4, SchemeTag5, SchemeTag6, SchemeTag7 };
+static const int altschemes[] = { SchemeAlt1, SchemeAlt2, SchemeAlt3, SchemeAlt4, SchemeAlt5, SchemeAlt6, SchemeAlt7 };
 
 static const Rule rules[] = {
 	/* xprop(1):
