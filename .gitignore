@@ -1,8 +1,7 @@
 
-drw.o
-util.o
-hydra.o
+*.o
+*.rej
+*.orig
 hydra
-hydra.c.rej
-hydra.c.orig
+hydractl
 config.def.h
