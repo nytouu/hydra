@@ -24,12 +24,16 @@ FREETYPEINC = /usr/include/freetype2
 # Xrender
 XRENDERLIBS = -lXrender
 
+# yajl
+YAJLLIBS = -lyajl
+YAJLINC = /usr/include/yajl
+
 # This is needed for the swallow patch
 XCBLIBS = -lX11-xcb -lxcb -lxcb-res
 
 # includes and libs
 INCS = -I${X11INC} -I${FREETYPEINC}
-LIBS = -L${X11LIB} -lX11 ${XINERAMALIBS} ${FREETYPELIBS} ${XCBLIBS} ${KVMLIB} ${XRENDERLIBS}
+LIBS = -L${X11LIB} -lX11 ${XINERAMALIBS} ${FREETYPELIBS} ${XCBLIBS} ${KVMLIB} ${XRENDERLIBS} ${YAJLLIBS}
 
 # flags
 CPPFLAGS = -D_DEFAULT_SOURCE -D_BSD_SOURCE -D_POSIX_C_SOURCE=200809L -DVERSION=\"${VERSION}\" ${XINERAMAFLAGS}
