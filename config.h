@@ -14,9 +14,9 @@ static const int smartborders       = 1;        /* 1 means no border when there 
 static const int showbar            = 1;        /* 0 means no bar */
 static const int showtitle          = 0;        /* 0 means no title */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const int usealtbar          = 1;        /* 1 means use non-hydra status bar */
-static const char *altbarclass      = "Polybar"; /* Alternate bar class name */
-static const char *altbarcmd        = "$HOME/.config/polybar/bar.sh"; /* Alternate bar launch command */
+static const int usealtbar          = 0;        /* 1 means use non-hydra status bar */
+static const char *altbarclass      = "eww-bar"; /* Alternate bar class name */
+static const char *altbarcmd        = "$HOME/scripts/eww-launch"; /* Alternate bar launch command */
 static const int viewontag          = 0;        /* Switch view on tag switch */
 static       int linepx             = 2;        /* 0 means no underline */
 static const int rainbowtags    	= 1;        /* 1 means rainbow tags */
@@ -120,7 +120,7 @@ static const XPoint stickyicon[]    = { {0,0}, {4,0}, {4,8}, {2,6}, {0,8}, {0,0}
 static const XPoint stickyiconbb    = {4,8};	/* defines the bottom right corner of the polygon's bounding box (speeds up scaling) */
 
 /* tagging */
-static const char *tags[] = { "", "","", "", "", "ﭮ", ""};
+static const char *tags[] = { "", "","", "", "󰊖", "󰙯", ""};
 static const int tagschemes[] = { SchemeTag1, SchemeTag2, SchemeTag3, SchemeTag4, SchemeTag5, SchemeTag6, SchemeTag7 };
 static const int altschemes[] = { SchemeAlt1, SchemeAlt2, SchemeAlt3, SchemeAlt4, SchemeAlt5, SchemeAlt6, SchemeAlt7 };
 
@@ -293,6 +293,7 @@ static IPCCommand ipccommands[] = {
     IPCCOMMAND(  incnmaster,          1,      {ARG_TYPE_SINT}   ),
     IPCCOMMAND(  killclient,          1,      {ARG_TYPE_SINT}   ),
     IPCCOMMAND(  togglefloating,      1,      {ARG_TYPE_NONE}   ),
+    IPCCOMMAND(  togglesticky,        1,      {ARG_TYPE_NONE}   ),
     IPCCOMMAND(  setmfact,            1,      {ARG_TYPE_FLOAT}  ),
     IPCCOMMAND(  setlayoutsafe,       1,      {ARG_TYPE_PTR}    ),
     IPCCOMMAND(  quit,                1,      {ARG_TYPE_NONE}   )
