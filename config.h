@@ -189,6 +189,35 @@ static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_d,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
+    /* apps */
+	{ MODKEY,                       XK_b,      spawn,          SHCMD("$BROWSER") },
+	{ MODKEY,                       XK_n,      spawn,          SHCMD("$FILEBROWSER") },
+	{ MODKEY|ShiftMask,             XK_n,      spawn,          SHCMD("$TERMINAL -e lf") },
+	{ MODKEY,                       XK_t,      spawn,          SHCMD("$TERMINAL -e htop") },
+	{ MODKEY,                       XK_c,      spawn,          SHCMD("$TERMINAL -c calcurse -e calcurse") },
+	{ MODKEY,                       XK_m,      spawn,          SHCMD("$TERMINAL -c ncmpcpp -e ncmpcpp") },
+    /* useful keybinds */
+	{ MODKEY,                       XK_x,      spawn,          SHCMD("xkill") },
+	{ MODKEY,                       XK_p,      spawn,          SHCMD("maim $HOME/pics/screenshots/$(date +%d-%m-%G-%T).png && screenshotnotify") },
+	{ MODKEY|ShiftMask,             XK_p,      spawn,          SHCMD("sleep 0.3 && maim -s $HOME/pics/screenshots/$(date +%d-%m-%G-%T).png && screenshotnotify") },
+	{ MODKEY|ControlMask,           XK_p,      spawn,          SHCMD("cd $HOME/pics/screenshots && nsxiv $(/bin/ls -t | head -n1)") },
+	{ MODKEY|ShiftMask|ControlMask, XK_p,      spawn,          SHCMD("passmenu") },
+	{ MODKEY|ShiftMask,             XK_r,      spawn,          SHCMD("dmenurecord") },
+	{ MODKEY|ShiftMask,             XK_h,      spawn,          SHCMD("colorpicknotify") },
+	{ MODKEY|ControlMask,           XK_x,      spawn,          SHCMD("kill -USR1 $(pidof st)") },
+	{ MODKEY|ShiftMask,             XK_d,      spawn,          SHCMD("dunsttoggle") },
+	{ MODKEY|ControlMask,           XK_d,      spawn,          SHCMD("edconf") },
+	{ MODKEY|ShiftMask,             XK_c,      spawn,          SHCMD("[ ! $(pgrep picom) ] && (notify-send -r 555 -a Picom Enabled && picom) || (notify-send -r 555 -a Picom Disabled && pkill picom)") },
+	{ MODKEY,                       XK_Escape, spawn,          SHCMD("[ ! $(pgrep skippy-xd) ] && skippy-xd") },
+    /* keyboard */
+	{ Mod1Mask|ShiftMask,           XK_f,      spawn,          SHCMD("setxkbmap fr # && pkill -RTMIN+5 hydrablocks") },
+	{ Mod1Mask|ShiftMask,           XK_e,      spawn,          SHCMD("setxkbmap us # && pkill -RTMIN+5 hydrablocks") },
+    /* mpc */
+	{ Mod1Mask|ControlMask,         XK_h,      spawn,          SHCMD("mpc prev") },
+	{ Mod1Mask|ControlMask,         XK_l,      spawn,          SHCMD("mpc next") },
+	{ Mod1Mask|ControlMask,         XK_j,      spawn,          SHCMD("mpc volume -2") },
+	{ Mod1Mask|ControlMask,         XK_k,      spawn,          SHCMD("mpc volume +2") },
+	{ Mod1Mask|ControlMask,         XK_space,  spawn,          SHCMD("mpc toggle") },
     /* rio */
 	{ MODKEY,                       XK_r,      rioresize,      {0} },
 	{ MODKEY|ControlMask,           XK_d,      riospawn,       {.v = dmenucmd } },

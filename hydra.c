@@ -1289,7 +1289,7 @@ drawbar(Monitor *m)
 		x += w;
 	}
 	x = 0;
-    w = blw = TEXTW(buttonbar) - 2;
+    w = blw = TEXTW(buttonbar) - 7;
     drw_setscheme(drw, scheme[SchemeButton]);
     x = drw_text(drw, x, 0, w, bh, (lrpad / 2) + 1, buttonbar, 0);
 	w = blw = TEXTW(m->ltsymbol);
