@@ -9,8 +9,8 @@ static const unsigned int gappih    = 12;       /* horiz inner gap between windo
 static const unsigned int gappiv    = 12;       /* vert inner gap between windows */
 static const unsigned int gappoh    = 20;       /* horiz outer gap between windows and screen edge */
 static const unsigned int gappov    = 20;       /* vert outer gap between windows and screen edge */
-static const int smartgaps          = 1;        /* 1 means no outer gap when there is only one window, behaves weirdly with barpadding */
-static const int smartborders       = 1;        /* 1 means no border when there is only one window (unless floating) */
+static const int smartgaps          = 0;        /* 1 means no outer gap when there is only one window, behaves weirdly with barpadding */
+static const int smartborders       = 0;        /* 1 means no border when there is only one window (unless floating) */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int showtitle          = 0;        /* 0 means no title */
 static const int topbar             = 1;        /* 0 means bottom bar */
@@ -28,7 +28,7 @@ static const int riodraw_borders    = 0;        /* 0 or 1, indicates whether the
 static const int riodraw_matchpid   = 1;        /* 0 or 1, indicates whether to match the PID of the client that was spawned with riospawn */
 static const int riodraw_spawnasync = 0;        /* 0 spawns after successful sel, 1 spawn during selection */
 static const char *fonts[]          = {
-    "JetBrains Mono:size=11:style=Regular", 
+    "Torus:size=11:style=Regular", 
     "nonicons:size=12", 
     "Symbols Nerd Font:size=12:style=Regular", 
     "Siji:size=14" 
@@ -88,7 +88,7 @@ static const unsigned int alphas[][3] = {
 	[SchemeTag5]      = { OPAQUE, baralpha, borderalpha  },
 	[SchemeTag6]      = { OPAQUE, baralpha, borderalpha  },
 	[SchemeTag7]      = { OPAQUE, baralpha, borderalpha  },
-	[SchemeButton]    = { OPAQUE, baralpha, borderalpha  },
+	[SchemeButton]    = { OPAQUE, OPAQUE,   borderalpha  },
     [SchemeAlt]       = { OPAQUE, OPAQUE,   borderalpha  },
 	[SchemeAlt1] 	  = { OPAQUE, OPAQUE,   borderalpha  },
 	[SchemeAlt2] 	  = { OPAQUE, OPAQUE,   borderalpha  },
