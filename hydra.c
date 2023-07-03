@@ -1290,9 +1290,9 @@ drawbar(Monitor *m)
 		x += w;
 	}
 	x = 0;
-    w = blw = TEXTW(buttonbar) - 7;
+    w = blw = TEXTW(buttonbar);
     drw_setscheme(drw, scheme[SchemeButton]);
-    x = drw_text(drw, x, 0, w, bh, (lrpad / 2) + 1, buttonbar, 0);
+    x = drw_text(drw, x, 0, w - 2, bh, (lrpad / 2) + 1, buttonbar, 0);
 	w = blw = TEXTW(m->ltsymbol);
 	drw_setscheme(drw, scheme[single ? SchemeAlt : SchemeInfo]);
 	x = drw_text(drw, x, 0, w, bh, lrpad / 2, m->ltsymbol, 0);
@@ -2927,7 +2927,7 @@ showhide(Client *c)
 	} else {
 		/* hide clients bottom up */
 		showhide(c->snext);
-		XMoveWindow(dpy, c->win, c->x , HEIGHT(c) * -3);
+		XMoveWindow(dpy, c->win, c->x , HEIGHT(c)  + 1920);
 	}
 }
 
