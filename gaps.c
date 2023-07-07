@@ -309,8 +309,8 @@ tile(Monitor *m)
 
 	sx = mx = m->wx + ov;
 	sy = my = m->wy + oh;
-	mh = m->wh - 2*oh - ih * (MIN(n, m->nmaster) - 1);
-	sh = m->wh - 2*oh - ih * (n - m->nmaster - 1);
+	mh = m->wh - 2*oh - ih * (MIN(n, m->nmaster) - 1) - panel[0];
+	sh = m->wh - 2*oh - ih * (n - m->nmaster - 1) - panel[0];
 	sw = mw = m->ww - 2*ov;
 
 	if (m->nmaster && n > m->nmaster) {
@@ -323,10 +323,10 @@ tile(Monitor *m)
 
 	for (i = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), i++)
 		if (i < m->nmaster) {
-			resize(c, mx, my, mw - (2*c->bw), mh * (c->cfact / mfacts) + (i < mrest ? 1 : 0) - (2*c->bw), 0);
+			resize(c, mx + panel[2], my + panel[1], mw - (2*c->bw), mh * (c->cfact / mfacts) + (i < mrest ? 1 : 0) - (2*c->bw) - panel[1], 0);
 			my += HEIGHT(c) + ih;
 		} else {
-			resize(c, sx, sy, sw - (2*c->bw), sh * (c->cfact / sfacts) + ((i - m->nmaster) < srest ? 1 : 0) - (2*c->bw), 0);
+			resize(c, sx + panel[2], sy + panel[1], sw - (2*c->bw) - panel[2] - panel[3], sh * (c->cfact / sfacts) + ((i - m->nmaster) < srest ? 1 : 0) - (2*c->bw) - panel[1], 0);
 			sy += HEIGHT(c) + ih;
 		}
 }

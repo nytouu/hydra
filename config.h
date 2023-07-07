@@ -9,6 +9,7 @@ static const unsigned int gappih    = 6;       /* horiz inner gap between window
 static const unsigned int gappiv    = 6;       /* vert inner gap between windows */
 static const unsigned int gappoh    = 12;       /* horiz outer gap between windows and screen edge */
 static const unsigned int gappov    = 12;       /* vert outer gap between windows and screen edge */
+static const unsigned int panel[]   = {0, 0, 0, 0};//positions: 0-top panel, 1-bottom panel, 2-left panel, 3-right panel
 static const int smartgaps          = 0;        /* 1 means no outer gap when there is only one window, behaves weirdly with barpadding */
 static const int smartborders       = 0;        /* 1 means no border when there is only one window (unless floating) */
 static const int showbar            = 1;        /* 0 means no bar */
