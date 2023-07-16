@@ -6,7 +6,7 @@ include config.mk
 SRC = drw.c hydra.c util.c
 OBJ = ${SRC:.c=.o}
 
-all: options hydra hydractl
+all: options hydra
 
 options:
 	@echo hydra build options:
@@ -25,11 +25,8 @@ config.h:
 hydra: ${OBJ}
 	${CC} -o $@ ${OBJ} ${LDFLAGS}
 
-hydractl: hydractl.o
-	${CC} -o $@ $< ${LDFLAGS}
-
 clean:
-	rm -f hydra hydractl ${OBJ} hydra-${VERSION}.tar.gz
+	rm -f hydra ${OBJ} hydra-${VERSION}.tar.gz
 
 dist: clean
 	mkdir -p hydra-${VERSION}
@@ -41,9 +38,8 @@ dist: clean
 
 install: all
 	mkdir -p ${DESTDIR}${PREFIX}/bin
-	cp -f hydra hydractl ${DESTDIR}${PREFIX}/bin
+	cp -f hydra ${DESTDIR}${PREFIX}/bin
 	chmod 755 ${DESTDIR}${PREFIX}/bin/hydra
-	chmod 755 ${DESTDIR}${PREFIX}/bin/hydractl
 	mkdir -p ${DESTDIR}${MANPREFIX}/man1
 	sed "s/VERSION/${VERSION}/g" < hydra.1 > ${DESTDIR}${MANPREFIX}/man1/hydra.1
 	chmod 644 ${DESTDIR}${MANPREFIX}/man1/hydra.1
