@@ -5,24 +5,24 @@ static const unsigned int refreshrate = 144;
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const unsigned int snap      = 16;       /* snap pixel */
 static const int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
-static const unsigned int gappih    = 6;       /* horiz inner gap between windows */
-static const unsigned int gappiv    = 6;       /* vert inner gap between windows */
-static const unsigned int gappoh    = 12;       /* horiz outer gap between windows and screen edge */
-static const unsigned int gappov    = 12;       /* vert outer gap between windows and screen edge */
+static const unsigned int gappih    = 12;       /* horiz inner gap between windows */
+static const unsigned int gappiv    = 12;       /* vert inner gap between windows */
+static const unsigned int gappoh    = 24;       /* horiz outer gap between windows and screen edge */
+static const unsigned int gappov    = 24;       /* vert outer gap between windows and screen edge */
 static const unsigned int panel[]   = {0, 0, 0, 0};//positions: 0-top panel, 1-bottom panel, 2-left panel, 3-right panel
 static const int smartgaps          = 0;        /* 1 means no outer gap when there is only one window, behaves weirdly with barpadding */
 static const int smartborders       = 0;        /* 1 means no border when there is only one window (unless floating) */
 static const int showbar            = 1;        /* 0 means no bar */
-static const int showtitle          = 0;        /* 0 means no title */
+static const int showtitle          = 1;        /* 0 means no title */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const int viewontag          = 0;        /* Switch view on tag switch */
-static       int linepx             = 2;        /* 0 means no underline */
+static       int linepx             = 1;        /* 0 means no underline */
 static const int rainbowtags    	= 1;        /* 1 means rainbow tags */
 static const int vertpad            = 0;        /* vertical padding of bar */
 static const int sidepad            = 0;        /* horizontal padding of bar */
 static const int statuspad          = 8;
 static const int nmaxmaster         = 3;        /* maximum number of clients allowed in master area */
-static const int user_bh            = 38;       /* 0 means that dwm will calculate bar height, >= 1 means dwm will user_bh as bar height */
+static const int user_bh            = 42;       /* 0 means that dwm will calculate bar height, >= 1 means dwm will user_bh as bar height */
 static const char slopspawnstyle[]  = "-t 0 -b 2 -c 1.0,0.8,0.7"; /* do NOT define -f (format) here "-t 0 -b 2 -c 0.7,0.6,0.9,0.1 -l" for alternate, hope the highlight thing gets fixed or maybe i should do it myself but im lazy */
 static const char slopresizestyle[] = "-t 0 -b 2 -c 1.0,0.8,0.7"; /* do NOT define -f (format) here */
 static const int riodraw_borders    = 0;        /* 0 or 1, indicates whether the area drawn using slop includes the window borders */
@@ -133,6 +133,7 @@ static const Rule rules[] = {
 	{ "firefox",        NULL,           NULL,           1<<3,         0,           0,         1,          0,            -1 },
 	{ "Deno",           NULL,       "Peek preview",     0,            0,           0,         1,          0,            -1 },
 	{ "Steam",          NULL,           NULL,           1,            0,           0,         0,          0,            -1 },
+	{ "steam",          NULL,           NULL,           1,            0,           0,         0,          0,            -1 },
 	{ "steam_app_252950", NULL,         NULL,           1<<4,         0,           0,         0,          0,            -1 },
 	{ "osu!.exe",       NULL,           NULL,           1<<4,         0,           0,         0,          0,            -1 },
 	{ "LibreWolf",      "Toolkit",      NULL,           0,            1,           0,         0,          0,            -1 },
@@ -186,6 +187,8 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[] = { "dmenu_run" };
 static const char *termcmd[]  = { "st", NULL };
 
+#include <X11/XF86keysym.h>
+
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_d,      spawn,          {.v = dmenucmd } },
@@ -213,6 +216,15 @@ static Key keys[] = {
     /* keyboard */
 	{ Mod1Mask|ShiftMask,           XK_f,      spawn,          SHCMD("setxkbmap fr # && pkill -RTMIN+5 hydrablocks") },
 	{ Mod1Mask|ShiftMask,           XK_e,      spawn,          SHCMD("setxkbmap us # && pkill -RTMIN+5 hydrablocks") },
+    /* fn keys */
+    { NULL,          XF86XK_MonBrightnessDown, spawn,          SHCMD("doas light -U 1 && pkill -RTMIN+9 hydrablocks && notify-send -r 555 -a Brightness \"$(printf \"%.0f\\n\" \"$(light -G)\")\"%") },
+    { NULL,          XF86XK_MonBrightnessUp,   spawn,          SHCMD("doas light -A 1 && pkill -RTMIN+9 hydrablocks && notify-send -r 555 -a Brightness \"$(printf \"%.0f\\n\" \"$(light -G)\")\"%") },
+    { NULL,          XF86XK_AudioMute,         spawn,          SHCMD("pulsemixer --toggle-mute && pkill -RTMIN+4 hydrablocks && notify-send -r 555 -a Volume $( [ $(pamixer --get-mute) = \"true\" ] && (echo Muted) || (echo Unmuted) )") },
+    { NULL,          XF86XK_AudioRaiseVolume,  spawn,          SHCMD("pamixer -i 1 && pkill -RTMIN+4 hydrablocks && notify-send -r 555 -a Volume \"$(pamixer --get-volume)\"%") },
+    { NULL,          XF86XK_AudioLowerVolume,  spawn,          SHCMD("pamixer -d 1 && pkill -RTMIN+4 hydrablocks && notify-send -r 555 -a Volume \"$(pamixer --get-volume)\"%") },
+    { NULL,          XF86XK_AudioPrev,         spawn,          SHCMD("mpc prev && songnotify") },
+    { NULL,          XF86XK_AudioNext,         spawn,          SHCMD("mpc next && songnotify") },
+    { NULL,          XF86XK_AudioPlay,         spawn,          SHCMD("mpc toggle") },
     /* mpc */
 	{ Mod1Mask|ControlMask,         XK_h,      spawn,          SHCMD("mpc prev") },
 	{ Mod1Mask|ControlMask,         XK_l,      spawn,          SHCMD("mpc next") },
