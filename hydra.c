@@ -526,7 +526,7 @@ attachstack(Client *c)
 void
 buttonpress(XEvent *e)
 {
-	unsigned int i, x, click;
+	unsigned int i, x, click,tsize;
 	Arg arg = {0};
 	Client *c;
 	Monitor *m;
@@ -540,49 +540,53 @@ buttonpress(XEvent *e)
 		focus(NULL);
 	}
 	if (ev->window == selmon->barwin) {
-        i = x = 0;
-        x += TEXTW(buttonbar);
-        if (ev->x < x){
-            click = ClkButton;
-        } else {
-            do
-                x += TEXTW(tags[i]);
-            while (ev->x >= x && ++i < LENGTH(tags));
-            if (i < LENGTH(tags)) {
-                click = ClkTagBar;
-                arg.ui = 1 << i;
-            } else if (ev->x < x + TEXTW(selmon->ltsymbol))
-                click = ClkLtSymbol;
-            else if (ev->x > selmon->ww - TEXTW(stext)) {
-                x = selmon->ww - statusw - sp * 2;
-                click = ClkStatusText;
+		i = x = tsize = 0;
+		for (i = 0; i < LENGTH(tags); i++) {
+			tsize += TEXTW(tags[i]);
+		}
 
-                char *text, *s, ch;
-                hydrablockssig = 0;
-                for (text = s = stext; *s && x <= ev->x; s++) {
-                    if ((unsigned char)(*s) < ' ') {
-                        ch = *s;
-                        *s = '\0';
-                        x += TEXTW(text) - lrpad;
-                        *s = ch;
-                        text = s + 1;
-                        if (x >= ev->x)
-                            break;
-                        hydrablockssig = ch;
-                    } else if (*s == '^') {
-                        *s = '\0';
-                        x += TEXTW(text) - lrpad;
-                        *s = '^';
-                        if (*(++s) == 'f')
-                            x += atoi(++s);
-                        while (*(s++) != '^');
-                        text = s;
-                        s--;
-                    }
-                }
-            } else
-                click = ClkWinTitle;
-        }
+		x = (m->ww - tsize) / 2;
+		i = 0;
+		do
+            x += TEXTW(tags[i]);
+        while (ev->x >= x && ++i < LENGTH(tags));
+
+        if (ev->x < TEXTW(buttonbar) + TEXTW(m->ltsymbol))
+			click = ClkLtSymbol;
+        if (ev->x < TEXTW(buttonbar))
+            click = ClkButton;
+        else if (i < LENGTH(tags) && ev->x >= (m->ww - tsize) / 2) {
+			click = ClkTagBar;
+			arg.ui = 1 << i;
+		} else if (ev->x > selmon->ww - TEXTW(stext)) {
+			x = selmon->ww - statusw - sp * 2;
+			click = ClkStatusText;
+
+			char *text, *s, ch;
+			hydrablockssig = 0;
+			for (text = s = stext; *s && x <= ev->x; s++) {
+				if ((unsigned char)(*s) < ' ') {
+					ch = *s;
+					*s = '\0';
+					x += TEXTW(text) - lrpad;
+					*s = ch;
+					text = s + 1;
+					if (x >= ev->x)
+						break;
+					hydrablockssig = ch;
+				} else if (*s == '^') {
+					*s = '\0';
+					x += TEXTW(text) - lrpad;
+					*s = '^';
+					if (*(++s) == 'f')
+						x += atoi(++s);
+					while (*(s++) != '^');
+					text = s;
+					s--;
+				}
+			}
+		} else
+			click = ClkWinTitle;
     } else if ((c = wintoclient(ev->window))) {
 		focus(c);
 		restack(selmon);
@@ -1209,12 +1213,11 @@ drawbar(Monitor *m)
 		if (c->isurgent)
 			urg |= c->tags;
 	}
+	for (i = 0; i < LENGTH(tags); i++) {
+		tsize += TEXTW(tags[i]);
+	}
 
-    x = 0;
-    w = blw = TEXTW(buttonbar);
-	drw_setscheme(drw, scheme[SchemeButton]);
-    x = drw_text(drw, x, 0, w, bh, lrpad / 2, buttonbar, 0);
-
+	x = (m->ww - tsize) / 2;
 	for (i = 0; i < LENGTH(tags); i++) {
 		w = TEXTW(tags[i]);
 		drw_setscheme(drw, scheme[occ & 1 << i ? (rainbowtags ? (single ? altschemes[i] : tagschemes[i]) : SchemeSel) : (m->tagset[m->seltags] & 1 << i && !linepx ? (single ? SchemeAlt : SchemeNorm) : urg & 1 << i ? SchemeUrg : (single ? SchemeAlt : SchemeNorm))]);
@@ -1229,15 +1232,19 @@ drawbar(Monitor *m)
 		}
 		x += w;
 	}
+	x = 0;
+    w = blw = TEXTW(buttonbar);
+    drw_setscheme(drw, scheme[SchemeButton]);
+    x = drw_text(drw, x, 0, w - 2, bh, (lrpad / 2) + 1, buttonbar, 0);
 	w = blw = TEXTW(m->ltsymbol);
 	drw_setscheme(drw, scheme[single ? SchemeAlt : SchemeInfo]);
 	x = drw_text(drw, x, 0, w, bh, lrpad / 2, m->ltsymbol, 0);
 
-	if ((w = m->ww - tw - x)  > bh) {
+	if ((w = (m->ww / 2) - x - (tsize / 2))  > bh) {
 		if (m->sel && showtitle) {
 			x = drw_text(drw, x, 0, w, bh, 0, m->sel->name, 0);
-			/* drw_setscheme(drw, scheme[single ? SchemeAlt : SchemeInfo]); */
-			/* drw_rect(drw, x + tsize, 0, (m->ww / 2) - (tsize / 2) - tw - 2 * sp, bh, 1, 1); */
+			drw_setscheme(drw, scheme[single ? SchemeAlt : SchemeInfo]);
+			drw_rect(drw, x + tsize, 0, (m->ww / 2) - (tsize / 2) - tw - 2 * sp, bh, 1, 1);
 			if (m->sel->isfloating)
 				drw_rect(drw, x + boxs - w - 14, boxs, boxw, boxw, m->sel->isfixed, 0);
 			if (m->sel->issticky)
@@ -1245,8 +1252,8 @@ drawbar(Monitor *m)
 		} else {
 			drw_setscheme(drw, scheme[single ? SchemeAlt : SchemeInfo]);
 			drw_rect(drw, x, 0, w, bh, 1, 1);
-			/* drw_setscheme(drw, scheme[single ? SchemeAlt : SchemeInfo]); */
-			/* drw_rect(drw, (x + w + tsize) - 1, 0, (m->ww / 2) - (tsize / 2) - tw - 2 * sp, bh, 1, 1); */
+			drw_setscheme(drw, scheme[single ? SchemeAlt : SchemeInfo]);
+			drw_rect(drw, (x + w + tsize) - 1, 0, (m->ww / 2) - (tsize / 2) - tw - 2 * sp, bh, 1, 1);
 		}
 	}
 	drw_map(drw, m->barwin, 0, 0, m->ww, bh);
