@@ -48,7 +48,7 @@ static char lightblue[]       = "#7dcfff";
 static char white[]           = "#c0caf5";
 static char border[]          = "#ffffff";
 static char buttoncolor[]     = "#7aa2f7";
-static const unsigned int baralpha  = 0xb5; // 0xe5 - 0xf2 = 0.95
+static const unsigned int baralpha  = 0x40; // 0xe5 - 0xf2 = 0.95
 static const unsigned int borderalpha = OPAQUE;
 static const char buttonbar[]       = " ";
 static const char *colors[][3]      = {
