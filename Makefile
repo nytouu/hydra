@@ -1,4 +1,4 @@
-# hydra - a fork of hydra, the dynamic window manager
+# dwm - a fork of dwm, the dynamic window manager
 # See LICENSE file for copyright and license details.
 
 include config.mk
@@ -6,10 +6,10 @@ include config.mk
 SRC = drw.c hydra.c util.c
 OBJ = ${SRC:.c=.o}
 
-all: options hydra
+all: options dwm
 
 options:
-	@echo hydra build options:
+	@echo dwm build options:
 	@echo "CFLAGS   = ${CFLAGS}"
 	@echo "LDFLAGS  = ${LDFLAGS}"
 	@echo "CC       = ${CC}"
@@ -22,30 +22,30 @@ ${OBJ}: config.h config.mk
 config.h:
 	cp config.def.h $@
 
-hydra: ${OBJ}
+dwm: ${OBJ}
 	${CC} -o $@ ${OBJ} ${LDFLAGS}
 
 clean:
-	rm -f hydra ${OBJ} hydra-${VERSION}.tar.gz
+	rm -f dwm ${OBJ} dwm-${VERSION}.tar.gz
 
 dist: clean
-	mkdir -p hydra-${VERSION}
+	mkdir -p dwm-${VERSION}
 	cp -R LICENSE Makefile README config.def.h config.mk\
-		hydra.1 drw.h util.h ${SRC} hydra.png transient.c hydra-${VERSION}
-	tar -cf hydra-${VERSION}.tar hydra-${VERSION}
-	gzip hydra-${VERSION}.tar
-	rm -rf hydra-${VERSION}
+		dwm.1 drw.h util.h ${SRC} dwm.png transient.c dwm-${VERSION}
+	tar -cf dwm-${VERSION}.tar dwm-${VERSION}
+	gzip dwm-${VERSION}.tar
+	rm -rf dwm-${VERSION}
 
 install: all
 	mkdir -p ${DESTDIR}${PREFIX}/bin
-	cp -f hydra ${DESTDIR}${PREFIX}/bin
-	chmod 755 ${DESTDIR}${PREFIX}/bin/hydra
+	cp -f dwm ${DESTDIR}${PREFIX}/bin
+	chmod 755 ${DESTDIR}${PREFIX}/bin/dwm
 	mkdir -p ${DESTDIR}${MANPREFIX}/man1
-	sed "s/VERSION/${VERSION}/g" < hydra.1 > ${DESTDIR}${MANPREFIX}/man1/hydra.1
-	chmod 644 ${DESTDIR}${MANPREFIX}/man1/hydra.1
+	sed "s/VERSION/${VERSION}/g" < dwm.1 > ${DESTDIR}${MANPREFIX}/man1/dwm.1
+	chmod 644 ${DESTDIR}${MANPREFIX}/man1/dwm.1
 
 uninstall:
-	rm -f ${DESTDIR}${PREFIX}/bin/hydra\
-		${DESTDIR}${MANPREFIX}/man1/hydra.1
+	rm -f ${DESTDIR}${PREFIX}/bin/dwm\
+		${DESTDIR}${MANPREFIX}/man1/dwm.1
 
 .PHONY: all options clean dist install uninstall

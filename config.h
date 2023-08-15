@@ -29,9 +29,9 @@ static const int riodraw_borders    = 0;        /* 0 or 1, indicates whether the
 static const int riodraw_matchpid   = 1;        /* 0 or 1, indicates whether to match the PID of the client that was spawned with riospawn */
 static const int riodraw_spawnasync = 0;        /* 0 spawns after successful sel, 1 spawn during selection */
 static const char *fonts[]          = {
-    "Torus:size=11:style=Regular", 
+    "Torus Pro:size=11:style=Regular", 
     "nonicons:size=12", 
-    "Symbols Nerd Font:size=12:style=Regular", 
+    "Symbols Nerd Font:size=16:style=Regular", 
     "Siji:size=14" 
 };
 static const char dmenufont[]       = "SF Mono:size=12:style=Medium";
@@ -118,7 +118,7 @@ static const XPoint stickyicon[]    = { {0,0}, {4,0}, {4,8}, {2,6}, {0,8}, {0,0}
 static const XPoint stickyiconbb    = {4,8};	/* defines the bottom right corner of the polygon's bounding box (speeds up scaling) */
 
 /* tagging */
-static const char *tags[] = { "", "","", "", "󰊖", "󰙯", ""};
+static const char *tags[] = { "", "","", "󰈹", "󰊖", "󰙯", ""};
 static const int tagschemes[] = { SchemeTag1, SchemeTag2, SchemeTag3, SchemeTag4, SchemeTag5, SchemeTag6, SchemeTag7 };
 static const int altschemes[] = { SchemeAlt1, SchemeAlt2, SchemeAlt3, SchemeAlt4, SchemeAlt5, SchemeAlt6, SchemeAlt7 };
 
@@ -180,7 +180,7 @@ static const Layout layouts[] = {
 	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} },
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
-#define SHCMD(cmd) { .v = (const char*[]){ "/bin/dash", "-c", cmd, NULL } }
+#define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
@@ -194,12 +194,12 @@ static Key keys[] = {
 	{ MODKEY,                       XK_d,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
     /* apps */
-	{ MODKEY,                       XK_b,      spawn,          SHCMD("$BROWSER") },
-	{ MODKEY,                       XK_n,      spawn,          SHCMD("$FILEBROWSER") },
-	{ MODKEY|ShiftMask,             XK_n,      spawn,          SHCMD("$TERMINAL -e lf") },
-	{ MODKEY,                       XK_t,      spawn,          SHCMD("$TERMINAL -e htop") },
-	{ MODKEY,                       XK_c,      spawn,          SHCMD("$TERMINAL -c calcurse -e calcurse") },
-	{ MODKEY,                       XK_m,      spawn,          SHCMD("$TERMINAL -c ncmpcpp -e ncmpcpp") },
+	{ MODKEY,                       XK_b,      spawn,          SHCMD("librewolf") },
+	{ MODKEY,                       XK_n,      spawn,          SHCMD("thunar") },
+	{ MODKEY|ShiftMask,             XK_n,      spawn,          SHCMD("st -e lf") },
+	{ MODKEY,                       XK_t,      spawn,          SHCMD("st -e htop") },
+	{ MODKEY,                       XK_c,      spawn,          SHCMD("st -c calcurse -e calcurse") },
+	{ MODKEY,                       XK_m,      spawn,          SHCMD("st -c ncmpcpp -e ncmpcpp") },
     /* useful keybinds */
 	{ MODKEY,                       XK_x,      spawn,          SHCMD("xkill") },
 	{ MODKEY,                       XK_p,      spawn,          SHCMD("maim $HOME/pics/screenshots/$(date +%d-%m-%G-%T).png && screenshotnotify") },
@@ -235,12 +235,12 @@ static Key keys[] = {
 	{ MODKEY,                       XK_r,      rioresize,      {0} },
 	{ MODKEY|ControlMask,           XK_d,      riospawn,       {.v = dmenucmd } },
 	{ MODKEY|ControlMask,           XK_Return, riospawn,       {.v = termcmd } },
-    { MODKEY|ControlMask,           XK_n,      riospawn,       SHCMD("$FILEBROWSER")},
-    { MODKEY|ShiftMask|ControlMask, XK_n,      riospawn,       SHCMD("$TERMINAL -e lf")},
-    { MODKEY|ControlMask,           XK_b,      riospawn,       SHCMD("$BROWSER")},
-    { MODKEY|ControlMask,           XK_t,      riospawn,       SHCMD("$TERMINAL -e htop")},
-    { MODKEY|ControlMask,           XK_c,      riospawn,       SHCMD("$TERMINAL -e calcurse")},
-    { MODKEY|ControlMask,           XK_m,      riospawn,       SHCMD("$TERMINAL -e ncmpcpp")},
+    { MODKEY|ControlMask,           XK_n,      riospawn,       SHCMD("thunar")},
+    { MODKEY|ShiftMask|ControlMask, XK_n,      riospawn,       SHCMD("st -e lf")},
+    { MODKEY|ControlMask,           XK_b,      riospawn,       SHCMD("librewolf")},
+    { MODKEY|ControlMask,           XK_t,      riospawn,       SHCMD("st -e htop")},
+    { MODKEY|ControlMask,           XK_c,      riospawn,       SHCMD("st -e calcurse")},
+    { MODKEY|ControlMask,           XK_m,      riospawn,       SHCMD("st -e ncmpcpp")},
     /* dwm stuff */
 	{ MODKEY|ShiftMask,             XK_u,      togglebar,      {0} },
 	{ MODKEY,                       XK_s,      togglesticky,   {0} },
