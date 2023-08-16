@@ -31,7 +31,7 @@ static const int riodraw_spawnasync = 0;        /* 0 spawns after successful sel
 static const char *fonts[]          = {
     "Torus Pro:size=11:style=Regular", 
     "nonicons:size=12", 
-    "Symbols Nerd Font Mono:size=12:style=Regular", 
+    "Symbols Nerd Font Mono:size=11:style=Regular", 
     "Siji:size=14" 
 };
 static const char dmenufont[]       = "SF Mono:size=12:style=Medium";
