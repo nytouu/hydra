@@ -165,7 +165,8 @@ static const int decorhints  = 1;    /* 1 means respect decoration hints */
 static const Layout layouts[] = {
 	/* symbol     arrange function */
 	{ "󰽙",      tile },    /* first entry is default */
-	{ "",      NULL },    /* no layout function means floating behavior */
+	{ "󰊕",      NULL },    /* no layout function means floating behavior */
+	{ "",      monocle },
 	{ "󱒅",      centeredmaster },
 	{ "",      spiral },
 	{ NULL,       NULL },
@@ -194,7 +195,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_d,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
     /* apps */
-	{ MODKEY,                       XK_b,      spawn,          SHCMD("librewolf") },
+	{ MODKEY,                       XK_b,      spawn,          SHCMD("firefox") },
 	{ MODKEY,                       XK_n,      spawn,          SHCMD("thunar") },
 	{ MODKEY|ShiftMask,             XK_n,      spawn,          SHCMD("st -e lf") },
 	{ MODKEY,                       XK_t,      spawn,          SHCMD("st -e htop") },
