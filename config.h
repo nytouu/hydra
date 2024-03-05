@@ -10,19 +10,24 @@ static const unsigned int gappiv    = 12;       /* vert inner gap between window
 static const unsigned int gappoh    = 24;       /* horiz outer gap between windows and screen edge */
 static const unsigned int gappov    = 24;       /* vert outer gap between windows and screen edge */
 static const unsigned int panel[]   = {0, 0, 0, 0};//positions: 0-top panel, 1-bottom panel, 2-left panel, 3-right panel
-static const int smartgaps          = 0;        /* 1 means no outer gap when there is only one window, behaves weirdly with barpadding */
-static const int smartborders       = 0;        /* 1 means no border when there is only one window (unless floating) */
+static const int smartgaps          = 1;        /* 1 means no outer gap when there is only one window, behaves weirdly with barpadding */
+static const int smartborders       = 1;        /* 1 means no border when there is only one window (unless floating) */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int showtitle          = 1;        /* 0 means no title */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const int viewontag          = 0;        /* Switch view on tag switch */
-static       int linepx             = 1;        /* 0 means no underline */
+static       int linepx             = 2;        /* 0 means no underline */
 static const int rainbowtags    	= 1;        /* 1 means rainbow tags */
 static const int vertpad            = 0;        /* vertical padding of bar */
 static const int sidepad            = 0;        /* horizontal padding of bar */
 static const int statuspad          = 8;
 static const int nmaxmaster         = 3;        /* maximum number of clients allowed in master area */
-static const int user_bh            = 42;       /* 0 means that dwm will calculate bar height, >= 1 means dwm will user_bh as bar height */
+static const int user_bh            = 38;       /* 0 means that dwm will calculate bar height, >= 1 means dwm will user_bh as bar height */
+static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
+static const unsigned int systrayspacing = 2;   /* systray spacing */
+static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
+static const int showsystray             = 1;   /* 0 means no systray */
+static const unsigned int systrayiconsize = 20; /* systray icon size in px */
 static const char slopspawnstyle[]  = "-t 0 -b 2 -c 1.0,0.8,0.7"; /* do NOT define -f (format) here "-t 0 -b 2 -c 0.7,0.6,0.9,0.1 -l" for alternate, hope the highlight thing gets fixed or maybe i should do it myself but im lazy */
 static const char slopresizestyle[] = "-t 0 -b 2 -c 1.0,0.8,0.7"; /* do NOT define -f (format) here */
 static const int riodraw_borders    = 0;        /* 0 or 1, indicates whether the area drawn using slop includes the window borders */
@@ -31,8 +36,8 @@ static const int riodraw_spawnasync = 0;        /* 0 spawns after successful sel
 static const char *fonts[]          = {
     "Torus Pro:size=11:style=Regular", 
     "nonicons:size=12", 
-    "Symbols Nerd Font Mono:size=10:style=Regular", 
-    "Siji:size=14" 
+    "Symbols Nerd Font Mono:size=11:style=Regular", 
+    "Siji:size=14"
 };
 static const char dmenufont[]       = "SF Mono:size=12:style=Medium";
 static char black[]           = "#0a0a0a";
@@ -48,7 +53,7 @@ static char lightblue[]       = "#7dcfff";
 static char white[]           = "#c0caf5";
 static char border[]          = "#ffffff";
 static char buttoncolor[]     = "#7aa2f7";
-static const unsigned int baralpha  = 0x40; // 0xe5 - 0xf2 = 0.95
+static const unsigned int baralpha  = OPAQUE; // 0xe5 - 0xf2 = 0.95
 static const unsigned int borderalpha = OPAQUE;
 static const char buttonbar[]       = " ";
 static const char *colors[][3]      = {
@@ -185,7 +190,8 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run" };
+/* static const char *dmenucmd[] = { "dmenu_run", NULL }; */
+static const char *dmenucmd[] = { "rofi", "-show", "drun", NULL };
 static const char *termcmd[]  = { "st", NULL };
 
 #include <X11/XF86keysym.h>
@@ -199,28 +205,24 @@ static Key keys[] = {
 	{ MODKEY,                       XK_n,      spawn,          SHCMD("thunar") },
 	{ MODKEY|ShiftMask,             XK_n,      spawn,          SHCMD("st -e lf") },
 	{ MODKEY,                       XK_t,      spawn,          SHCMD("st -e htop") },
-	{ MODKEY,                       XK_c,      spawn,          SHCMD("st -c calcurse -e calcurse") },
 	{ MODKEY,                       XK_m,      spawn,          SHCMD("st -c ncmpcpp -e ncmpcpp") },
     /* useful keybinds */
 	{ MODKEY,                       XK_x,      spawn,          SHCMD("xkill") },
 	{ MODKEY,                       XK_p,      spawn,          SHCMD("maim $HOME/pics/screenshots/$(date +%d-%m-%G-%T).png && screenshotnotify") },
 	{ MODKEY|ShiftMask,             XK_p,      spawn,          SHCMD("sleep 0.3 && maim -s $HOME/pics/screenshots/$(date +%d-%m-%G-%T).png && screenshotnotify") },
 	{ MODKEY|ControlMask,           XK_p,      spawn,          SHCMD("cd $HOME/pics/screenshots && nsxiv $(/bin/ls -t | head -n1)") },
-	{ MODKEY|ShiftMask|ControlMask, XK_p,      spawn,          SHCMD("passmenu") },
-	{ MODKEY|ShiftMask,             XK_r,      spawn,          SHCMD("dmenurecord") },
 	{ MODKEY|ShiftMask,             XK_h,      spawn,          SHCMD("colorpicknotify") },
 	{ MODKEY|ControlMask,           XK_x,      spawn,          SHCMD("kill -USR1 $(pidof st)") },
 	{ MODKEY|ShiftMask,             XK_d,      spawn,          SHCMD("dunsttoggle") },
-	{ MODKEY|ControlMask,           XK_d,      spawn,          SHCMD("edconf") },
-	{ MODKEY|ShiftMask,             XK_c,      spawn,          SHCMD("[ ! $(pgrep picom) ] && (notify-send -r 555 -a Picom Enabled && picom) || (notify-send -r 555 -a Picom Disabled && pkill picom)") },
+	{ MODKEY|ShiftMask,             XK_c,      spawn,          SHCMD("[ ! $(pgrep compfy) ] && (notify-send -r 555 -a Picom Enabled && compfy) || (notify-send -r 555 -a Picom Disabled && pkill compfy)") },
 	{ MODKEY,                       XK_Escape, spawn,          SHCMD("[ ! $(pgrep skippy-xd) ] && skippy-xd") },
     /* keyboard */
 	{ Mod1Mask|ShiftMask,           XK_f,      spawn,          SHCMD("setxkbmap fr # && pkill -RTMIN+5 hydrablocks") },
 	{ Mod1Mask|ShiftMask,           XK_e,      spawn,          SHCMD("setxkbmap us # && pkill -RTMIN+5 hydrablocks") },
     /* fn keys */
-    { NULL,          XF86XK_MonBrightnessDown, spawn,          SHCMD("doas light -U 1 && pkill -RTMIN+9 hydrablocks && notify-send -r 555 -a Brightness \"$(printf \"%.0f\\n\" \"$(light -G)\")\"%") },
-    { NULL,          XF86XK_MonBrightnessUp,   spawn,          SHCMD("doas light -A 1 && pkill -RTMIN+9 hydrablocks && notify-send -r 555 -a Brightness \"$(printf \"%.0f\\n\" \"$(light -G)\")\"%") },
-    { NULL,          XF86XK_AudioMute,         spawn,          SHCMD("pulsemixer --toggle-mute && pkill -RTMIN+4 hydrablocks && notify-send -r 555 -a Volume $( [ $(pamixer --get-mute) = \"true\" ] && (echo Muted) || (echo Unmuted) )") },
+    { NULL,          XF86XK_MonBrightnessDown, spawn,          SHCMD("brightnessctl s 10-%% && pkill -RTMIN+9 hydrablocks && notify-send -r 555 -a Brightness \"$(printf \"%.0f\\n\" \"$(brightnessctl g -P)\")\"%") },
+    { NULL,          XF86XK_MonBrightnessUp,   spawn,          SHCMD("brightnessctl s 10+%% 1 && pkill -RTMIN+9 hydrablocks && notify-send -r 555 -a Brightness \"$(printf \"%.0f\\n\" \"$(brightnessctl g -P)\")\"%") },
+    { NULL,          XF86XK_AudioMute,         spawn,          SHCMD("pamixer -t && pkill -RTMIN+4 hydrablocks && notify-send -r 555 -a Volume $( [ $(pamixer --get-mute) = \"true\" ] && (echo Muted) || (echo Unmuted) )") },
     { NULL,          XF86XK_AudioRaiseVolume,  spawn,          SHCMD("pamixer -i 1 && pkill -RTMIN+4 hydrablocks && notify-send -r 555 -a Volume \"$(pamixer --get-volume)\"%") },
     { NULL,          XF86XK_AudioLowerVolume,  spawn,          SHCMD("pamixer -d 1 && pkill -RTMIN+4 hydrablocks && notify-send -r 555 -a Volume \"$(pamixer --get-volume)\"%") },
     { NULL,          XF86XK_AudioPrev,         spawn,          SHCMD("mpc prev && songnotify") },
@@ -234,14 +236,6 @@ static Key keys[] = {
 	{ Mod1Mask|ControlMask,         XK_space,  spawn,          SHCMD("mpc toggle") },
     /* rio */
 	{ MODKEY,                       XK_r,      rioresize,      {0} },
-	{ MODKEY|ControlMask,           XK_d,      riospawn,       {.v = dmenucmd } },
-	{ MODKEY|ControlMask,           XK_Return, riospawn,       {.v = termcmd } },
-    { MODKEY|ControlMask,           XK_n,      riospawn,       SHCMD("thunar")},
-    { MODKEY|ShiftMask|ControlMask, XK_n,      riospawn,       SHCMD("st -e lf")},
-    { MODKEY|ControlMask,           XK_b,      riospawn,       SHCMD("librewolf")},
-    { MODKEY|ControlMask,           XK_t,      riospawn,       SHCMD("st -e htop")},
-    { MODKEY|ControlMask,           XK_c,      riospawn,       SHCMD("st -e calcurse")},
-    { MODKEY|ControlMask,           XK_m,      riospawn,       SHCMD("st -e ncmpcpp")},
     /* dwm stuff */
 	{ MODKEY|ShiftMask,             XK_u,      togglebar,      {0} },
 	{ MODKEY,                       XK_s,      togglesticky,   {0} },
