@@ -20,7 +20,7 @@ static       int linepx             = 2;        /* 0 means no underline */
 static const int rainbowtags    	= 1;        /* 1 means rainbow tags */
 static const int vertpad            = 0;        /* vertical padding of bar */
 static const int sidepad            = 0;        /* horizontal padding of bar */
-static const int statuspad          = 8;
+static const int statuspad          = 12;
 static const int nmaxmaster         = 3;        /* maximum number of clients allowed in master area */
 static const int user_bh            = 38;       /* 0 means that dwm will calculate bar height, >= 1 means dwm will user_bh as bar height */
 static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
@@ -35,8 +35,8 @@ static const int riodraw_matchpid   = 1;        /* 0 or 1, indicates whether to 
 static const int riodraw_spawnasync = 0;        /* 0 spawns after successful sel, 1 spawn during selection */
 static const char *fonts[]          = {
     "Torus Pro:size=11:style=Regular", 
-    "nonicons:size=12", 
-    "Symbols Nerd Font Mono:size=11:style=Regular", 
+    "nonicons:size=13",
+    "Symbols Nerd Font Mono:size=13:style=Regular", 
     "Siji:size=14"
 };
 static const char dmenufont[]       = "SF Mono:size=12:style=Medium";
@@ -55,7 +55,7 @@ static char border[]          = "#ffffff";
 static char buttoncolor[]     = "#7aa2f7";
 static const unsigned int baralpha  = OPAQUE; // 0xe5 - 0xf2 = 0.95
 static const unsigned int borderalpha = OPAQUE;
-static const char buttonbar[]       = " ";
+static const char buttonbar[]       = "  ";
 static const char *colors[][3]      = {
 	/*               	fg          bg          border   */
 	[SchemeNorm]      = { white,    darkgray,   black   },
@@ -207,18 +207,20 @@ static Key keys[] = {
 	{ MODKEY,                       XK_t,      spawn,          SHCMD("st -e htop") },
 	{ MODKEY,                       XK_m,      spawn,          SHCMD("st -c ncmpcpp -e ncmpcpp") },
     /* useful keybinds */
+    { MODKEY|ShiftMask,             XK_r,      spawn,          SHCMD("dmenurecord") },
 	{ MODKEY,                       XK_x,      spawn,          SHCMD("xkill") },
 	{ MODKEY,                       XK_p,      spawn,          SHCMD("maim $HOME/pics/screenshots/$(date +%d-%m-%G-%T).png && screenshotnotify") },
 	{ MODKEY|ShiftMask,             XK_p,      spawn,          SHCMD("sleep 0.3 && maim -s $HOME/pics/screenshots/$(date +%d-%m-%G-%T).png && screenshotnotify") },
 	{ MODKEY|ControlMask,           XK_p,      spawn,          SHCMD("cd $HOME/pics/screenshots && nsxiv $(/bin/ls -t | head -n1)") },
 	{ MODKEY|ShiftMask,             XK_h,      spawn,          SHCMD("colorpicknotify") },
 	{ MODKEY|ControlMask,           XK_x,      spawn,          SHCMD("kill -USR1 $(pidof st)") },
-	{ MODKEY|ShiftMask,             XK_d,      spawn,          SHCMD("dunsttoggle") },
+	/* { MODKEY|ShiftMask,             XK_d,      spawn,          SHCMD("[ $(dunstctl is-paused) ] && (dunstctl set-paused false && notify-send -a Notifications \"Disabled\") || (dunstctl set-paused true && notify-send -a Notifications \"Enabled\")") }, */
+	{ MODKEY|ShiftMask,             XK_d,      spawn,          SHCMD("dunstctl set-paused toggle") },
 	{ MODKEY|ShiftMask,             XK_c,      spawn,          SHCMD("[ ! $(pgrep compfy) ] && (notify-send -r 555 -a Picom Enabled && compfy) || (notify-send -r 555 -a Picom Disabled && pkill compfy)") },
 	{ MODKEY,                       XK_Escape, spawn,          SHCMD("[ ! $(pgrep skippy-xd) ] && skippy-xd") },
     /* keyboard */
-	{ Mod1Mask|ShiftMask,           XK_f,      spawn,          SHCMD("setxkbmap fr # && pkill -RTMIN+5 hydrablocks") },
-	{ Mod1Mask|ShiftMask,           XK_e,      spawn,          SHCMD("setxkbmap us # && pkill -RTMIN+5 hydrablocks") },
+	{ Mod1Mask|ShiftMask,           XK_f,      spawn,          SHCMD("setxkbmap fr && pkill -RTMIN+5 hydrablocks") },
+	{ Mod1Mask|ShiftMask,           XK_e,      spawn,          SHCMD("setxkbmap us && pkill -RTMIN+5 hydrablocks") },
     /* fn keys */
     { NULL,          XF86XK_MonBrightnessDown, spawn,          SHCMD("brightnessctl s 10-%% && pkill -RTMIN+9 hydrablocks && notify-send -r 555 -a Brightness \"$(printf \"%.0f\\n\" \"$(brightnessctl g -P)\")\"%") },
     { NULL,          XF86XK_MonBrightnessUp,   spawn,          SHCMD("brightnessctl s 10+%% 1 && pkill -RTMIN+9 hydrablocks && notify-send -r 555 -a Brightness \"$(printf \"%.0f\\n\" \"$(brightnessctl g -P)\")\"%") },
