@@ -360,7 +360,7 @@ static const char autostartblocksh[] = "autostart_blocking.sh";
 static const char autostartsh[] = "autostart.sh";
 static const char broken[] = "broken";
 static const char hydradir[] = "hydra";
-static const char localshare[] = "$HOME/.local/share";
+static const char localshare[] = ".local/share";
 static char stext[1024];
 static int hydrablockssig;
 static int statusw;
