@@ -196,6 +196,8 @@ static const char *termcmd[]  = { "st", NULL };
 
 #include <X11/XF86keysym.h>
 
+#include "selfrestart.c"
+
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_d,      spawn,          {.v = dmenucmd } },
@@ -207,7 +209,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_t,      spawn,          SHCMD("st -e htop") },
 	{ MODKEY,                       XK_m,      spawn,          SHCMD("st -c ncmpcpp -e ncmpcpp") },
     /* useful keybinds */
-    { MODKEY|ShiftMask,             XK_r,      spawn,          SHCMD("dmenurecord") },
+    { MODKEY,                       XK_r,      spawn,          SHCMD("dmenurecord") },
 	{ MODKEY,                       XK_x,      spawn,          SHCMD("xkill") },
 	{ MODKEY,                       XK_p,      spawn,          SHCMD("maim $HOME/pics/screenshots/$(date +%d-%m-%G-%T).png && screenshotnotify") },
 	{ MODKEY|ShiftMask,             XK_p,      spawn,          SHCMD("sleep 0.3 && maim -s $HOME/pics/screenshots/$(date +%d-%m-%G-%T).png && screenshotnotify") },
@@ -239,7 +241,7 @@ static Key keys[] = {
 	{ Mod1Mask|ControlMask,         XK_k,      spawn,          SHCMD("mpc volume +2") },
 	{ Mod1Mask|ControlMask,         XK_space,  spawn,          SHCMD("mpc toggle") },
     /* rio */
-	{ MODKEY,                       XK_r,      rioresize,      {0} },
+	{ MODKEY|ControlMask,           XK_r,      rioresize,      {0} },
     /* dwm stuff */
 	{ MODKEY|ShiftMask,             XK_u,      togglebar,      {0} },
 	{ MODKEY,                       XK_s,      togglesticky,   {0} },
@@ -292,6 +294,7 @@ static Key keys[] = {
 	TAGKEYS(                        XK_5,					   4)
 	TAGKEYS(                        XK_6,					   5)
 	TAGKEYS(                        XK_7,					   6)
+    { MODKEY|ShiftMask,             XK_r,      self_restart,   {0} },
 	{ MODKEY|ShiftMask,             XK_e,      spawn,          SHCMD("powermenu")},
 };
 
