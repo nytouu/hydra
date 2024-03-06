@@ -3143,6 +3143,8 @@ togglefloating(const Arg *arg)
 {
 	if (!selmon->sel)
 		return;
+	if (!selmon->lt[selmon->sellt]->arrange)
+	        return;
 	if (selmon->sel->isfullscreen) /* no support for fullscreen windows */
 		return;
 	selmon->sel->isfloating = !selmon->sel->isfloating || selmon->sel->isfixed;
