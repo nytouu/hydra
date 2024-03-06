@@ -597,7 +597,7 @@ buttonpress(XEvent *e)
 			click = ClkTagBar;
 			arg.ui = 1 << i;
 		} else if (ev->x > selmon->ww - TEXTW(stext) - getsystraywidth()) {
-			x = selmon->ww - statusw - sp * 2;
+			x = selmon->ww - statusw - sp * 2 - getsystraywidth() * 2;
 			click = ClkStatusText;
 
 			char *text, *s, ch;
@@ -1350,7 +1350,7 @@ drawbar(Monitor *m)
 				drw_polygon(drw, x + boxs - w - 14, m->sel->isfloating ? boxs * 2 + boxw : boxs, stickyiconbb.x, stickyiconbb.y, boxw, boxw * stickyiconbb.y / stickyiconbb.x, stickyicon, LENGTH(stickyicon), Nonconvex, m->sel->tags & m->tagset[m->seltags]);
 		} else {
 			drw_setscheme(drw, scheme[single ? SchemeAlt : SchemeInfo]);
-			drw_rect(drw, x, 0, w - stw, bh, 1, 1);
+			drw_rect(drw, x, 0, w, bh, 1, 1);
 			drw_setscheme(drw, scheme[single ? SchemeAlt : SchemeInfo]);
 			drw_rect(drw, (x + w + tsize) - 1 + stw, 0, (m->ww / 2) - (tsize / 2) - tw - 2 * sp - stw * 2, bh, 1, 1);
 		}
