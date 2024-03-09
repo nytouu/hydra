@@ -2,7 +2,7 @@
 
 /* appearance */
 static const unsigned int refreshrate = 144;
-static const unsigned int borderpx  = 1;        /* border pixel of windows */
+static const unsigned int borderpx  = 2;        /* border pixel of windows */
 static const unsigned int snap      = 16;       /* snap pixel */
 static const int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
 static const unsigned int gappih    = 12;       /* horiz inner gap between windows */
@@ -35,8 +35,8 @@ static const int riodraw_matchpid   = 1;        /* 0 or 1, indicates whether to 
 static const int riodraw_spawnasync = 0;        /* 0 spawns after successful sel, 1 spawn during selection */
 static const char *fonts[]          = {
     "Torus Pro:size=11:style=Regular", 
-    "nonicons:size=13",
-    "Symbols Nerd Font Mono:size=13:style=Regular", 
+    "nonicons:size=11",
+    "Symbols Nerd Font Mono:size=11:style=Regular", 
     "Siji:size=14"
 };
 static const char dmenufont[]       = "SF Mono:size=12:style=Medium";
@@ -149,6 +149,7 @@ static const Rule rules[] = {
 	{ "Blueberry.py",   NULL,           NULL,           0,            1,           0,         0,          0,            -1 },
 	{ "Nitrogen",       NULL,    	    NULL,           0,            1,           0,         0,          0,            -1 },
 	{ "Galculator",     NULL,    	    NULL,           0,            1,           0,         0,          0,            -1 },
+	{ "Maya-2024",      NULL,    	    "Maya-2024",    0,            1,           0,         0,          0,            -1 },
 	{ "Connman-gtk",    NULL,           NULL,           0,            1,           0,         0,          0,            -1 },
 	{ "Engrampa",       NULL,           NULL,           0,            1,           0,         0,          0,            -1 },
 	{ "File-roller",    NULL,           NULL,           0,            1,           0,         0,          0,            -1 },
@@ -219,7 +220,6 @@ static Key keys[] = {
 	/* { MODKEY|ShiftMask,             XK_d,      spawn,          SHCMD("[ $(dunstctl is-paused) ] && (dunstctl set-paused false && notify-send -a Notifications \"Disabled\") || (dunstctl set-paused true && notify-send -a Notifications \"Enabled\")") }, */
 	{ MODKEY|ShiftMask,             XK_d,      spawn,          SHCMD("dunstctl set-paused toggle") },
 	{ MODKEY|ShiftMask,             XK_c,      spawn,          SHCMD("[ ! $(pgrep compfy) ] && (notify-send -r 555 -a Picom Enabled && compfy) || (notify-send -r 555 -a Picom Disabled && pkill compfy)") },
-	{ MODKEY,                       XK_Escape, spawn,          SHCMD("[ ! $(pgrep skippy-xd) ] && skippy-xd --expose") },
 	{ Mod1Mask,                     XK_Tab,    spawn,          SHCMD("skippy-xd --switch --next") },
 	{ Mod1Mask|ShiftMask,           XK_Tab,    spawn,          SHCMD("skippy-xd --switch --prev") },
     /* keyboard */
