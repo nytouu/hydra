@@ -2,7 +2,7 @@
 
 /* appearance */
 #define ICONSIZE 16   /* icon size */
-#define ICONSPACING 5 /* space between icon and title */
+#define ICONSPACING 10 /* space between icon and title */
 static const unsigned int refreshrate = 144;
 static const unsigned int borderpx  = 2;        /* border pixel of windows */
 static const unsigned int snap      = 16;       /* snap pixel */

@@ -1347,9 +1347,11 @@ drawbar(Monitor *m)
 
 	if ((w = (m->ww / 2) - x - stw - (tsize / 2))  > bh) {
 		if (m->sel && showtitle) {
-			x = drw_text(drw, x, 0, w, bh, lrpad / 2 + (m->sel->icon ? m->sel->icw + ICONSPACING : 0), m->sel->name, 0);			drw_setscheme(drw, scheme[single ? SchemeAlt : SchemeInfo]);
-			if (m->sel->icon) drw_pic(drw, x + lrpad / 2, (bh - m->sel->ich) / 2, m->sel->icw, m->sel->ich, m->sel->icon);
-			drw_rect(drw, x + tsize + stw, 0, (m->ww / 2) - (tsize / 2) - tw - 2 * sp - stw * 2, bh, 1, 1);
+			drw_text(drw, x, 0, w, bh, (m->sel->icon ? m->sel->icw + ICONSPACING : 0), m->sel->name, 0);
+            drw_setscheme(drw, scheme[single ? SchemeAlt : SchemeInfo]);
+			if (m->sel->icon)
+                drw_pic(drw, x, (bh - m->sel->ich) / 2, m->sel->icw, m->sel->ich, m->sel->icon);
+			drw_rect(drw, x + tsize + stw, 0, (m->ww / 2) - (tsize / 2) - tw - 2 * sp - stw * 2 - (m->sel->icon ? m->sel->icw + ICONSPACING : 0), bh, 1, 1);
 			if (m->sel->isfloating)
 				drw_rect(drw, x + boxs - w - 14, boxs, boxw, boxw, m->sel->isfixed, 0);
 			if (m->sel->issticky)
