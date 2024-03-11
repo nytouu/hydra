@@ -314,7 +314,8 @@ static Button buttons[] = {
     /* placemouse : 0=tiled pos rel to m cur 1=tiled pos rel to win center 2=m cur warps to win center */
 	{ ClkClientWin,         MODKEY,         Button1,        moveorplace,    {.i = 0} },
 	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
-	{ ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
+	{ ClkClientWin,         MODKEY,         Button3,        resizeorfacts,  {0} },
+	{ ClkClientWin,       MODKEY|ShiftMask, Button3,        resizemouse,    {0} },
 	{ ClkClientWin,         MODKEY|ShiftMask, Button1,      dragmfact,      {0} },
 	{ ClkClientWin,         MODKEY|ShiftMask, Button3,      dragcfact,      {0} },
 	{ ClkTagBar,            0,              Button1,        view,           {0} },

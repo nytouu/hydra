@@ -92,7 +92,7 @@
 
 /* enums */
 enum { Manager, Xembed, XembedInfo, XLast }; /* Xembed atoms */
-enum { CurNormal, CurResize, CurMove, CurResizeHorzArrow, CurResizeVertArrow, CurLast }; /* cursor */
+enum { CurNormal, CurResize, CurMove, CurResizeHorzArrow, CurResizeVertArrow, CurDragFact, CurLast }; /* cursor */
 enum { SchemeNorm, SchemeSel, SchemeUrg, SchemeInfo,
        SchemeTag, SchemeTag1, SchemeTag2, SchemeTag3, SchemeTag4,
        SchemeTag5, SchemeTag6, SchemeTag7, SchemeButton, SchemeAlt, SchemeAlt1,
@@ -235,6 +235,7 @@ static void destroynotify(XEvent *e);
 static void detach(Client *c);
 static void detachstack(Client *c);
 static Monitor *dirtomon(int dir);
+static void dragfact(const Arg *arg);
 static void dragcfact(const Arg *arg);
 static void dragmfact(const Arg *arg);
 static void drawbar(Monitor *m);
@@ -278,6 +279,7 @@ static void replaceclient(Client *old, Client *new);
 static void resize(Client *c, int x, int y, int w, int h, int interact);
 static void resizeclient(Client *c, int x, int y, int w, int h);
 static void resizemouse(const Arg *arg);
+static void resizeorfacts(const Arg *arg);
 static void removesystrayicon(Client *i);
 static void resizerequest(XEvent *e);
 static void resourceload(XrmDatabase db, char *name, enum resource_type rtype, void *dst);
@@ -976,6 +978,76 @@ dirtomon(int dir)
 		for (m = mons; m->next != selmon; m = m->next);
 	return m;
 }
+
+void
+dragfact(const Arg *arg)
+{
+	unsigned int n;
+	int px, py; // pointer coordinates
+	int dist_x, dist_y;
+	int horizontal = 0; // layout configuration
+	float mfact, cfact, cf, cw, ch, mw, mh;
+	Client *c;
+	Monitor *m = selmon;
+	XEvent ev;
+	Time lasttime = 0;
+
+	for (n = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), n++);
+	if (!(c = m->sel) || !n || !m->lt[m->sellt]->arrange)
+		return;
+
+	/* Add custom handling for horizontal layouts here, e.g. */
+	// if (m->lt[m->sellt]->arrange == bstack)
+	// 	horizontal = 1;
+
+	if (XGrabPointer(dpy, root, False, MOUSEMASK, GrabModeAsync, GrabModeAsync,
+		None, cursor[CurResize]->cursor, CurrentTime) != GrabSuccess)
+		return;
+
+	if (!getrootptr(&px, &py))
+		return;
+
+	cf = c->cfact;
+	ch = c->h;
+	cw = c->w;
+	mw = m->ww * m->mfact;
+	mh = m->wh * m->mfact;
+
+	do {
+		XMaskEvent(dpy, MOUSEMASK|ExposureMask|SubstructureRedirectMask, &ev);
+		switch (ev.type) {
+		case ConfigureRequest:
+		case Expose:
+		case MapRequest:
+			handler[ev.type](&ev);
+			break;
+		case MotionNotify:
+			if ((ev.xmotion.time - lasttime) <= (1000 / 40))
+				continue;
+			lasttime = ev.xmotion.time;
+
+			dist_x = ev.xmotion.x - px;
+			dist_y = ev.xmotion.y - py;
+
+			if (horizontal) {
+				cfact = (float) cf * (cw + dist_x) / cw;
+				mfact = (float) (mh + dist_y) / m->wh;
+			} else {
+				cfact = (float) cf * (ch - dist_y) / ch;
+				mfact = (float) (mw + dist_x) / m->ww;
+			}
+
+			c->cfact = MAX(0.25, MIN(4.0, cfact));
+			m->mfact = MAX(0.05, MIN(0.95, mfact));
+			arrangemon(m);
+			break;
+		}
+	} while (ev.type != ButtonRelease);
+
+	XUngrabPointer(dpy, CurrentTime);
+	while (XCheckMaskEvent(dpy, EnterWindowMask, &ev));
+}
+
 
 void
 dragcfact(const Arg *arg)
@@ -2452,6 +2524,20 @@ resizemouse(const Arg *arg)
 }
 
 void
+resizeorfacts(const Arg *arg)
+{
+	Monitor *m = selmon;
+
+	if (!m->sel)
+		return;
+
+	if (!m->lt[m->sellt]->arrange || m->sel->isfloating)
+		resizemouse(arg);
+	else
+		dragfact(arg);
+}
+
+void
 resourceload(XrmDatabase db, char *name, enum resource_type rtype, void *dst)
 {
 	char *sdst = NULL;
@@ -2977,6 +3063,7 @@ setup(void)
 	cursor[CurMove] = drw_cur_create(drw, XC_fleur);
 	cursor[CurResizeHorzArrow] = drw_cur_create(drw, XC_sb_h_double_arrow);
 	cursor[CurResizeVertArrow] = drw_cur_create(drw, XC_sb_v_double_arrow);
+	cursor[CurDragFact] = drw_cur_create(drw, XC_rightbutton);
 	/* init appearance */
 	scheme = ecalloc(LENGTH(colors) + 1, sizeof(Clr *));
 	scheme[LENGTH(colors)] = drw_scm_create(drw, colors[0], alphas[1], 3);
