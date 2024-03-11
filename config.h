@@ -55,7 +55,7 @@ static char border[]          = "#ffffff";
 static char buttoncolor[]     = "#7aa2f7";
 static const unsigned int baralpha  = OPAQUE; // 0xe5 - 0xf2 = 0.95
 static const unsigned int borderalpha = OPAQUE;
-static const char buttonbar[]       = "  ";
+static const char buttonbar[]       = " ";
 static const char *colors[][3]      = {
 	/*               	fg          bg          border   */
 	[SchemeNorm]      = { white,    darkgray,   black   },
