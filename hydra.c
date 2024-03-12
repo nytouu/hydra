@@ -1426,7 +1426,7 @@ drawbar(Monitor *m)
             drw_setscheme(drw, scheme[single ? SchemeAlt : SchemeInfo]);
 			if (m->sel->icon)
                 drw_pic(drw, x, (bh - m->sel->ich) / 2, m->sel->icw, m->sel->ich, m->sel->icon);
-			drw_rect(drw, x + tsize + stw, 0, (m->ww / 2) - (tsize / 2) - tw - 2 * sp - stw * 2 - (m->sel->icon ? m->sel->icw + ICONSPACING : 0), bh, 1, 1);
+			drw_rect(drw, x + tsize + stw, 0, (m->ww / 2) - (tsize / 2) - tw - 2 * sp - stw * 2 - (m->sel->icon ? m->sel->icw + ICONSPACING : 0) * 2, bh, 1, 1);
 			if (m->sel->isfloating)
 				drw_rect(drw, x + boxs - w - 14, boxs, boxw, boxw, m->sel->isfixed, 0);
 			if (m->sel->issticky)
