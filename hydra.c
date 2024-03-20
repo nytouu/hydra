@@ -1420,17 +1420,18 @@ drawbar(Monitor *m)
 	drw_setscheme(drw, scheme[single ? SchemeAlt : SchemeInfo]);
 	x = drw_text(drw, x, 0, w, bh, lrpad / 2, m->ltsymbol, 0);
 
+    unsigned int icw = 0;
 	if ((w = (m->ww / 2) - x - stw - (tsize / 2))  > bh) {
 		if (m->sel && showtitle) {
-			drw_text(drw, x, 0, w, bh, (m->sel->icon ? m->sel->icw + ICONSPACING : 0), m->sel->name, 0);
+			icw += drw_text(drw, x, 0, w, bh, (m->sel->icon ? m->sel->icw + ICONSPACING : 0), m->sel->name, 0) - x;
             drw_setscheme(drw, scheme[single ? SchemeAlt : SchemeInfo]);
 			if (m->sel->icon)
                 drw_pic(drw, x, (bh - m->sel->ich) / 2, m->sel->icw, m->sel->ich, m->sel->icon);
-			drw_rect(drw, x + tsize + stw, 0, (m->ww / 2) - (tsize / 2) - tw - 2 * sp - stw * 2 - (m->sel->icon ? m->sel->icw + ICONSPACING : 0) * 2, bh, 1, 1);
+			drw_rect(drw, x + tsize + stw + icw, 0, (m->ww / 2) - (tsize / 2) - tw - sp * 2 - stw * 2, bh, 1, 1);
 			if (m->sel->isfloating)
-				drw_rect(drw, x + boxs - w - 14, boxs, boxw, boxw, m->sel->isfixed, 0);
+				drw_rect(drw, x + boxs - w + icw, boxs, boxw, boxw, m->sel->isfixed, 0);
 			if (m->sel->issticky)
-				drw_polygon(drw, x + boxs - w - 14, m->sel->isfloating ? boxs * 2 + boxw : boxs, stickyiconbb.x, stickyiconbb.y, boxw, boxw * stickyiconbb.y / stickyiconbb.x, stickyicon, LENGTH(stickyicon), Nonconvex, m->sel->tags & m->tagset[m->seltags]);
+				drw_polygon(drw, x + boxs - w + icw, m->sel->isfloating ? boxs * 2 + boxw : boxs, stickyiconbb.x, stickyiconbb.y, boxw, boxw * stickyiconbb.y / stickyiconbb.x, stickyicon, LENGTH(stickyicon), Nonconvex, m->sel->tags & m->tagset[m->seltags]);
 		} else {
 			drw_setscheme(drw, scheme[single ? SchemeAlt : SchemeInfo]);
 			drw_rect(drw, x, 0, w, bh, 1, 1);
