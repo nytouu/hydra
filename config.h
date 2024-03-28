@@ -25,7 +25,7 @@ static const int sidepad            = 0;        /* horizontal padding of bar */
 static const int statuspad          = 12;
 static const int nmaxmaster         = 3;        /* maximum number of clients allowed in master area */
 static const int user_bh            = 38;       /* 0 means that dwm will calculate bar height, >= 1 means dwm will user_bh as bar height */
-static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
+static const unsigned int systraypinning = 2;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
 static const unsigned int systrayspacing = 4;   /* systray spacing */
 static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
 static const int showsystray             = 1;   /* 0 means no systray */
@@ -152,6 +152,7 @@ static const Rule rules[] = {
 	{ "Nitrogen",       NULL,    	    NULL,           0,            1,           0,         0,          0,            -1 },
 	{ "Galculator",     NULL,    	    NULL,           0,            1,           0,         0,          0,            -1 },
 	{ "Maya-2024",      NULL,    	    "Maya-2024",    0,            1,           0,         0,          0,            -1 },
+	{ "Maya-2024",      NULL,    "Attribute Editor",    0,            1,           0,         0,          0,            -1 },
 	{ "Connman-gtk",    NULL,           NULL,           0,            1,           0,         0,          0,            -1 },
 	{ "Engrampa",       NULL,           NULL,           0,            1,           0,         0,          0,            -1 },
 	{ "File-roller",    NULL,           NULL,           0,            1,           0,         0,          0,            -1 },
@@ -195,7 +196,7 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 /* static const char *dmenucmd[] = { "dmenu_run", NULL }; */
 static const char *dmenucmd[] = { "rofi", "-show", "drun", NULL };
-static const char *termcmd[]  = { "st", NULL };
+static const char *termcmd[] = {"tabbed", "-c", "-r", "2", "st", "-w", "''", NULL};
 
 #include <X11/XF86keysym.h>
 
@@ -214,9 +215,9 @@ static Key keys[] = {
     /* useful keybinds */
     { MODKEY,                       XK_r,      spawn,          SHCMD("dmenurecord") },
 	{ MODKEY,                       XK_x,      spawn,          SHCMD("xkill") },
-	{ MODKEY,                       XK_p,      spawn,          SHCMD("maim $HOME/pics/screenshots/$(date +%d-%m-%G-%T).png && screenshotnotify") },
-	{ MODKEY|ShiftMask,             XK_p,      spawn,          SHCMD("sleep 0.3 && maim -s $HOME/pics/screenshots/$(date +%d-%m-%G-%T).png && screenshotnotify") },
-	{ MODKEY|ControlMask,           XK_p,      spawn,          SHCMD("cd $HOME/pics/screenshots && nsxiv $(/bin/ls -t | head -n1)") },
+	{ MODKEY,                       XK_p,      spawn,          SHCMD("maim $HOME/Pictures/Screenshots/$(date +%d-%m-%G-%T).png && screenshotnotify") },
+	{ MODKEY|ShiftMask,             XK_p,      spawn,          SHCMD("sleep 0.3 && maim -s $HOME/Pictures/Screenshots/$(date +%d-%m-%G-%T).png && screenshotnotify") },
+	{ MODKEY|ControlMask,           XK_p,      spawn,          SHCMD("cd $HOME/Pictures/Screenshots && sxiv $(/bin/ls -t | head -n1)") },
 	{ MODKEY|ShiftMask,             XK_h,      spawn,          SHCMD("colorpicknotify") },
 	{ MODKEY|ControlMask,           XK_x,      spawn,          SHCMD("kill -USR1 $(pidof st)") },
 	/* { MODKEY|ShiftMask,             XK_d,      spawn,          SHCMD("[ $(dunstctl is-paused) ] && (dunstctl set-paused false && notify-send -a Notifications \"Disabled\") || (dunstctl set-paused true && notify-send -a Notifications \"Enabled\")") }, */
