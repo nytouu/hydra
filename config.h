@@ -4,7 +4,7 @@
 #define ICONSIZE 16   /* icon size */
 #define ICONSPACING 10 /* space between icon and title */
 static const unsigned int refreshrate = 144;
-static const unsigned int borderpx  = 2;        /* border pixel of windows */
+static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const unsigned int snap      = 16;       /* snap pixel */
 static const int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
 static const unsigned int gappih    = 12;       /* horiz inner gap between windows */
@@ -25,7 +25,7 @@ static const int sidepad            = 0;        /* horizontal padding of bar */
 static const int statuspad          = 12;
 static const int nmaxmaster         = 3;        /* maximum number of clients allowed in master area */
 static const int user_bh            = 38;       /* 0 means that dwm will calculate bar height, >= 1 means dwm will user_bh as bar height */
-static const unsigned int systraypinning = 2;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
+static const unsigned int systraypinning = 1;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
 static const unsigned int systrayspacing = 4;   /* systray spacing */
 static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
 static const int showsystray             = 1;   /* 0 means no systray */
@@ -72,7 +72,7 @@ static const char *colors[][3]      = {
 	[SchemeTag5]      = { blue,     darkgray,   black   },
 	[SchemeTag6]      = { lightblue,darkgray,   black   },
 	[SchemeTag7]      = { yellow,	darkgray,   black   },
-	[SchemeButton]    = { darkgray,	buttoncolor,black   },
+	[SchemeButton]    = { buttoncolor, darkgray,black   },
 	[SchemeAlt]       = { white,	darkgray,   black   },
 	[SchemeAlt1] 	  = { green, 	darkgray,   black   },
 	[SchemeAlt2] 	  = { purple, 	darkgray,   black   },
@@ -123,6 +123,9 @@ ResourcePref resources[] = {
 };
 static const XPoint stickyicon[]    = { {0,0}, {4,0}, {4,8}, {2,6}, {0,8}, {0,0} }; /* represents the icon as an array of vertices */
 static const XPoint stickyiconbb    = {4,8};	/* defines the bottom right corner of the polygon's bounding box (speeds up scaling) */
+
+/* staticstatus */
+static const int statmonval = 0;
 
 /* tagging */
 static const char *tags[] = { "", "","", "󰈹", "󰊖", "󰙯", ""};
