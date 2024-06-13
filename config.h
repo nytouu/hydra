@@ -12,8 +12,8 @@ static const unsigned int gappiv    = 12;       /* vert inner gap between window
 static const unsigned int gappoh    = 24;       /* horiz outer gap between windows and screen edge */
 static const unsigned int gappov    = 24;       /* vert outer gap between windows and screen edge */
 static const unsigned int panel[]   = {0, 0, 0, 0};//positions: 0-top panel, 1-bottom panel, 2-left panel, 3-right panel
-static const int smartgaps          = 1;        /* 1 means no outer gap when there is only one window, behaves weirdly with barpadding */
-static const int smartborders       = 1;        /* 1 means no border when there is only one window (unless floating) */
+static       unsigned int smartgaps          = 0;        /* 1 means no outer gap when there is only one window, behaves weirdly with barpadding */
+static       unsigned int smartborders       = 0;        /* 1 means no border when there is only one window (unless floating) */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int showtitle          = 1;        /* 0 means no title */
 static const int topbar             = 1;        /* 0 means bottom bar */
@@ -36,7 +36,7 @@ static const int riodraw_borders    = 0;        /* 0 or 1, indicates whether the
 static const int riodraw_matchpid   = 1;        /* 0 or 1, indicates whether to match the PID of the client that was spawned with riospawn */
 static const int riodraw_spawnasync = 0;        /* 0 spawns after successful sel, 1 spawn during selection */
 static const char *fonts[]          = {
-    "Torus Pro:size=11:style=Regular", 
+    "SF Pro Display:size=11:style=Regular:autohint=true", 
     "nonicons:size=11",
     "Symbols Nerd Font Mono:size=11:style=Regular", 
     "Siji:size=14"
@@ -139,6 +139,7 @@ static const Rule rules[] = {
 	 */
 	/* class            instance        title           tags mask     isfloating   isterminal noswallow   isfullscreen  monitor */
 	{ "discord",        NULL,           NULL,           1<<5,         0,           0,         0,          0,            -1 },
+	{ "vesktop",        NULL,           NULL,           1<<5,         0,           0,         0,          0,            -1 },
 	{ "LibreWolf",      NULL,           NULL,           1<<3,         0,           0,         1,          0,            -1 },
 	{ "firefox",        NULL,           NULL,           1<<3,         0,           0,         1,          0,            -1 },
 	{ "Deno",           NULL,       "Peek preview",     0,            0,           0,         1,          0,            -1 },
@@ -163,6 +164,7 @@ static const Rule rules[] = {
 	{ "pulsemixer", 	NULL,    	    NULL,           0,            1,           0,         0,          0,            -1 },
 	{ "calcurse", 	    NULL,    	    NULL,           0,            1,           0,         0,          0,            -1 },
 	{ "ncmpcpp", 	    NULL,    	    NULL,           0,            1,           0,         0,          0,            -1 },
+    { NULL,             "Godot_Engine", NULL,           0,            0,           0,         1,          0,            -1 },
 	{ "st",             NULL,           NULL,           0,            0,           1,         0,          0,            -1 },
 	{ NULL,             NULL,           "Event Tester", 0,            0,           0,         1,          0,            -1 }, /* xev */
 };
@@ -199,7 +201,7 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 /* static const char *dmenucmd[] = { "dmenu_run", NULL }; */
 static const char *dmenucmd[] = { "rofi", "-show", "drun", NULL };
-static const char *termcmd[] = {"tabbed", "-c", "-r", "2", "st", "-w", "''", NULL};
+static const char *termcmd[] = {"tabbed", "-c", "-k", "-b", "-r", "2", "st", "-w", "''", NULL};
 
 #include <X11/XF86keysym.h>
 
@@ -214,13 +216,13 @@ static Key keys[] = {
 	{ MODKEY,                       XK_n,      spawn,          SHCMD("thunar") },
 	{ MODKEY|ShiftMask,             XK_n,      spawn,          SHCMD("st -e lf") },
 	{ MODKEY,                       XK_t,      spawn,          SHCMD("st -e htop") },
-	{ MODKEY,                       XK_m,      spawn,          SHCMD("st -c ncmpcpp -e ncmpcpp") },
+	{ MODKEY|ShiftMask,             XK_m,      spawn,          SHCMD("st -c ncmpcpp -e ncmpcpp") },
     /* useful keybinds */
     { MODKEY,                       XK_r,      spawn,          SHCMD("dmenurecord") },
 	{ MODKEY,                       XK_x,      spawn,          SHCMD("xkill") },
-	{ MODKEY,                       XK_p,      spawn,          SHCMD("maim $HOME/Pictures/Screenshots/$(date +%d-%m-%G-%T).png && screenshotnotify") },
-	{ MODKEY|ShiftMask,             XK_p,      spawn,          SHCMD("sleep 0.3 && maim -s $HOME/Pictures/Screenshots/$(date +%d-%m-%G-%T).png && screenshotnotify") },
-	{ MODKEY|ControlMask,           XK_p,      spawn,          SHCMD("cd $HOME/Pictures/Screenshots && sxiv $(/bin/ls -t | head -n1)") },
+	{ MODKEY,                       XK_p,      spawn,          SHCMD("maim $HOME/pics/screenshots/$(date +%d-%m-%G-%T).png && screenshotnotify") },
+	{ MODKEY|ShiftMask,             XK_p,      spawn,          SHCMD("sleep 0.3 && maim -s $HOME/pics/screenshots/$(date +%d-%m-%G-%T).png && screenshotnotify") },
+	{ MODKEY|ControlMask,           XK_p,      spawn,          SHCMD("cd $HOME/pics/screenshots && sxiv $(/bin/ls -t | head -n1)") },
 	{ MODKEY|ShiftMask,             XK_h,      spawn,          SHCMD("colorpicknotify") },
 	{ MODKEY|ControlMask,           XK_x,      spawn,          SHCMD("kill -USR1 $(pidof st)") },
 	/* { MODKEY|ShiftMask,             XK_d,      spawn,          SHCMD("[ $(dunstctl is-paused) ] && (dunstctl set-paused false && notify-send -a Notifications \"Disabled\") || (dunstctl set-paused true && notify-send -a Notifications \"Enabled\")") }, */
@@ -232,14 +234,14 @@ static Key keys[] = {
 	{ Mod1Mask|ShiftMask,           XK_f,      spawn,          SHCMD("setxkbmap fr # && pkill -RTMIN+5 hydrablocks") },
 	{ Mod1Mask|ShiftMask,           XK_e,      spawn,          SHCMD("setxkbmap us # && pkill -RTMIN+5 hydrablocks") },
     /* fn keys */
-    { NULL,          XF86XK_MonBrightnessDown, spawn,          SHCMD("brightnessctl s 10-%% && pkill -RTMIN+9 hydrablocks && notify-send -r 555 -a Brightness \"$(printf \"%.0f\\n\" \"$(brightnessctl g -P)\")\"%") },
-    { NULL,          XF86XK_MonBrightnessUp,   spawn,          SHCMD("brightnessctl s 10+%% 1 && pkill -RTMIN+9 hydrablocks && notify-send -r 555 -a Brightness \"$(printf \"%.0f\\n\" \"$(brightnessctl g -P)\")\"%") },
-    { NULL,          XF86XK_AudioMute,         spawn,          SHCMD("pamixer -t && pkill -RTMIN+4 hydrablocks && notify-send -r 555 -a Volume $( [ $(pamixer --get-mute) = \"true\" ] && (echo Muted) || (echo Unmuted) )") },
-    { NULL,          XF86XK_AudioRaiseVolume,  spawn,          SHCMD("pamixer -i 1 && pkill -RTMIN+4 hydrablocks && notify-send -r 555 -a Volume \"$(pamixer --get-volume)\"%") },
-    { NULL,          XF86XK_AudioLowerVolume,  spawn,          SHCMD("pamixer -d 1 && pkill -RTMIN+4 hydrablocks && notify-send -r 555 -a Volume \"$(pamixer --get-volume)\"%") },
-    { NULL,          XF86XK_AudioPrev,         spawn,          SHCMD("mpc prev && songnotify") },
-    { NULL,          XF86XK_AudioNext,         spawn,          SHCMD("mpc next && songnotify") },
-    { NULL,          XF86XK_AudioPlay,         spawn,          SHCMD("mpc toggle") },
+    { (unsigned int)NULL,          XF86XK_MonBrightnessDown, spawn,          SHCMD("brightnessctl s 10-%% && pkill -RTMIN+9 hydrablocks && notify-send -r 555 -a Brightness \"$(printf \"%.0f\\n\" \"$(brightnessctl g -P)\")\"%") },
+    { (unsigned int)NULL,          XF86XK_MonBrightnessUp,   spawn,          SHCMD("brightnessctl s 10+%% 1 && pkill -RTMIN+9 hydrablocks && notify-send -r 555 -a Brightness \"$(printf \"%.0f\\n\" \"$(brightnessctl g -P)\")\"%") },
+    { (unsigned int)NULL,          XF86XK_AudioMute,         spawn,          SHCMD("pamixer -t && pkill -RTMIN+4 hydrablocks && notify-send -r 555 -a Volume $( [ $(pamixer --get-mute) = \"true\" ] && (echo Muted) || (echo Unmuted) )") },
+    { (unsigned int)NULL,          XF86XK_AudioRaiseVolume,  spawn,          SHCMD("pamixer -i 1 && pkill -RTMIN+4 hydrablocks && notify-send -r 555 -a Volume \"$(pamixer --get-volume)\"%") },
+    { (unsigned int)NULL,          XF86XK_AudioLowerVolume,  spawn,          SHCMD("pamixer -d 1 && pkill -RTMIN+4 hydrablocks && notify-send -r 555 -a Volume \"$(pamixer --get-volume)\"%") },
+    { (unsigned int)NULL,          XF86XK_AudioPrev,         spawn,          SHCMD("mpc prev && songnotify") },
+    { (unsigned int)NULL,          XF86XK_AudioNext,         spawn,          SHCMD("mpc next && songnotify") },
+    { (unsigned int)NULL,          XF86XK_AudioPlay,         spawn,          SHCMD("mpc toggle") },
     /* mpc */
 	{ Mod1Mask|ControlMask,         XK_h,      spawn,          SHCMD("mpc prev") },
 	{ Mod1Mask|ControlMask,         XK_l,      spawn,          SHCMD("mpc next") },
@@ -279,6 +281,8 @@ static Key keys[] = {
     /* TODO need to find a way to reset both mfact and cfact */
     { MODKEY|ShiftMask,             XK_f,      setmfact,       {.f =  0.50} },
 	{ MODKEY|ShiftMask,             XK_f,      setcfact,       {.f =  0.00} },
+    /* maxmize when gaps */
+    { MODKEY,             			XK_m,      togglesmart,    {0} },
 	/* gaps */
 	{ MODKEY,             			XK_g,      togglegaps,     {0} },
 	{ MODKEY|ShiftMask,    			XK_g,      defaultgaps,    {0} },

@@ -321,6 +321,7 @@ static void togglefloating(const Arg *arg);
 static void togglefullscr(const Arg *arg);
 static void togglesticky(const Arg *arg);
 static void toggletag(const Arg *arg);
+static void togglesmart(const Arg *arg);
 static void toggleview(const Arg *arg);
 static void freeicon(Client *c);
 static void unfocus(Client *c, int setfocus);
@@ -2858,7 +2859,7 @@ setcurrentdesktop(void){
 }
 void setdesktopnames(void){
 	XTextProperty text;
-	Xutf8TextListToTextProperty(dpy, tags, TAGSLENGTH, XUTF8StringStyle, &text);
+	Xutf8TextListToTextProperty(dpy, (char**)tags, TAGSLENGTH, XUTF8StringStyle, &text);
 	XSetTextProperty(dpy, root, &text, netatom[NetDesktopNames]);
 }
 
@@ -3358,6 +3359,16 @@ toggletag(const Arg *arg)
 		arrange(selmon);
 	}
 	updatecurrentdesktop();
+}
+
+void
+togglesmart(const Arg *arg)
+{
+	if (smartborders == smartgaps) {
+		smartborders = !smartborders;
+		smartgaps = !smartgaps;
+		togglegaps(0);
+	}
 }
 
 void
