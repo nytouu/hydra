@@ -1379,7 +1379,6 @@ drawbar(Monitor *m)
 	}
 
 	for (c = m->clients; c; c = c->next) {
-
 		if (((nexttiled(c->mon->clients) == c && !nexttiled(c->next))
 			|| &monocle == c->mon->lt[c->mon->sellt]->arrange)
 			&& !c->isfullscreen && !c->isfloating
@@ -1395,7 +1394,14 @@ drawbar(Monitor *m)
 		tsize += TEXTW(tags[i]);
 	}
 
-	x = (m->ww - tsize) / 2;
+	x = 0;
+    w = blw = TEXTW(buttonbar);
+    drw_setscheme(drw, scheme[SchemeButton]);
+    x = drw_text(drw, x, 0, w - 2, bh, (lrpad / 2) + 1, buttonbar, 0);
+	w = blw = TEXTW(m->ltsymbol);
+	drw_setscheme(drw, scheme[single ? SchemeAlt : SchemeInfo]);
+	x = drw_text(drw, x, 0, w, bh, lrpad / 2, m->ltsymbol, 0);
+
 	for (i = 0; i < LENGTH(tags); i++) {
 		w = TEXTW(tags[i]);
 		drw_setscheme(drw, scheme[occ & 1 << i ? (rainbowtags ? (single ? altschemes[i] : tagschemes[i]) : SchemeSel) : (m->tagset[m->seltags] & 1 << i && !linepx ? (single ? SchemeAlt : SchemeNorm) : urg & 1 << i ? SchemeUrg : (single ? SchemeAlt : SchemeNorm))]);
@@ -1410,18 +1416,11 @@ drawbar(Monitor *m)
 		}
 		x += w;
 	}
-	x = 0;
-    w = blw = TEXTW(buttonbar);
-    drw_setscheme(drw, scheme[SchemeButton]);
-    x = drw_text(drw, x, 0, w - 2, bh, (lrpad / 2) + 1, buttonbar, 0);
-	w = blw = TEXTW(m->ltsymbol);
-	drw_setscheme(drw, scheme[single ? SchemeAlt : SchemeInfo]);
-	x = drw_text(drw, x, 0, w, bh, lrpad / 2, m->ltsymbol, 0);
 
     unsigned int icw = 0;
-	if ((w = (m->ww / 2) - x - stw - (tsize / 2))  > bh) {
+	if ((w = x - stw - (tsize / 2)) > bh) {
 		if (m->sel && showtitle) {
-			icw += drw_text(drw, x, 0, w, bh, (m->sel->icon ? m->sel->icw + ICONSPACING : 0), m->sel->name, 0) - x;
+			icw += drw_text(drw, x, 0, w, bh, (m->sel->icon ? m->sel->icw + ICONSPACING : 0), m->sel->name, 0);
             drw_setscheme(drw, scheme[single ? SchemeAlt : SchemeInfo]);
 			if (m->sel->icon)
                 drw_pic(drw, x, (bh - m->sel->ich) / 2, m->sel->icw, m->sel->ich, m->sel->icon);
