@@ -592,7 +592,7 @@ buttonpress(XEvent *e)
 			tsize += TEXTW(tags[i]);
 		}
 
-		x = (m->ww - tsize) / 2;
+        x = TEXTW(buttonbar) + TEXTW(m->ltsymbol);
 		i = 0;
 		do
             x += TEXTW(tags[i]);
@@ -602,7 +602,7 @@ buttonpress(XEvent *e)
 			click = ClkLtSymbol;
         if (ev->x < TEXTW(buttonbar))
             click = ClkButton;
-        else if (i < LENGTH(tags) && ev->x >= (m->ww - tsize) / 2) {
+        else if (i < LENGTH(tags)) {
 			click = ClkTagBar;
 			arg.ui = 1 << i;
 		} else if (ev->x > selmon->ww - TEXTW(stext) - getsystraywidth()) {
@@ -817,7 +817,7 @@ configurenotify(XEvent *e)
 				for (c = m->clients; c; c = c->next)
 					if (c->isfullscreen)
 						resizeclient(c, m->mx, m->my, m->mw, m->mh);
-				XMoveResizeWindow(dpy, m->barwin, m->wx + sp, m->by + vp, m->ww -  2 * sp, bh);
+				XMoveResizeWindow(dpy, m->barwin, m->wx + sp, m->by + vp, m->ww - 2 * sp, bh);
 			}
 			focus(NULL);
 			arrange(NULL);
@@ -1364,13 +1364,14 @@ drawbar(Monitor *m)
 	int boxs = drw->fonts->h / 9;
 	int boxw = drw->fonts->h / 6 + 2;
 	unsigned int i, occ = 0, urg = 0;
+    unsigned int icw, is = 0;
 	int single = 0;
 	Client *c;
 
 	if (showsystray && m == systraytomon(m)) {
 		stw = getsystraywidth();
 		drw_setscheme(drw, scheme[SchemeNorm]);
-		drw_rect(drw, m->ww - stw, 0, stw, bh, 1, 1);
+		drw_rect(drw, m->ww - stw - 2 * sp, 0, stw, bh, 1, 1);
 	}
 
 	/* draw status first so it can be overdrawn by tags later */
@@ -1390,6 +1391,7 @@ drawbar(Monitor *m)
 		if (c->isurgent)
 			urg |= c->tags;
 	}
+
 	for (i = 0; i < LENGTH(tags); i++) {
 		tsize += TEXTW(tags[i]);
 	}
@@ -1417,23 +1419,21 @@ drawbar(Monitor *m)
 		x += w;
 	}
 
-    unsigned int icw = 0;
-	if ((w = x - stw - (tsize / 2)) > bh) {
+	if ((w = m->ww - tw - x - 2 * sp - (tsize / 2)) > bh) {
 		if (m->sel && showtitle) {
-			icw += drw_text(drw, x, 0, w, bh, (m->sel->icon ? m->sel->icw + ICONSPACING : 0), m->sel->name, 0);
+            is = (m->sel->icon ? m->sel->icw + ICONSPACING : 0);
             drw_setscheme(drw, scheme[single ? SchemeAlt : SchemeInfo]);
+			icw += drw_text(drw, x, 0, w - 2 * sp - stw, bh, is, m->sel->name, 0);
 			if (m->sel->icon)
                 drw_pic(drw, x, (bh - m->sel->ich) / 2, m->sel->icw, m->sel->ich, m->sel->icon);
-			drw_rect(drw, x + tsize + stw + icw, 0, (m->ww / 2) - (tsize / 2) - tw - sp * 2 - stw * 2, bh, 1, 1);
+			drw_rect(drw, x + tsize + stw + icw, 0, (m->ww / 2) - (tsize / 2) - tw - sp - stw, bh, 1, 1);
 			if (m->sel->isfloating)
-				drw_rect(drw, x + boxs - w + icw, boxs, boxw, boxw, m->sel->isfixed, 0);
+				drw_rect(drw, boxs - w + icw + is * 2, boxs, boxw, boxw, m->sel->isfixed, 0);
 			if (m->sel->issticky)
-				drw_polygon(drw, x + boxs - w + icw, m->sel->isfloating ? boxs * 2 + boxw : boxs, stickyiconbb.x, stickyiconbb.y, boxw, boxw * stickyiconbb.y / stickyiconbb.x, stickyicon, LENGTH(stickyicon), Nonconvex, m->sel->tags & m->tagset[m->seltags]);
+				drw_polygon(drw, boxs - w + icw + is * 2, m->sel->isfloating ? boxs * 2 + boxw : boxs, stickyiconbb.x, stickyiconbb.y, boxw, boxw * stickyiconbb.y / stickyiconbb.x, stickyicon, LENGTH(stickyicon), Nonconvex, m->sel->tags & m->tagset[m->seltags]);
 		} else {
 			drw_setscheme(drw, scheme[single ? SchemeAlt : SchemeInfo]);
-			drw_rect(drw, x, 0, w, bh, 1, 1);
-			drw_setscheme(drw, scheme[single ? SchemeAlt : SchemeInfo]);
-			drw_rect(drw, (x + w + tsize) - 1 + stw, 0, (m->ww / 2) - (tsize / 2) - tw - 2 * sp - stw * 2, bh, 1, 1);
+			drw_rect(drw, x, 0, w - stw, bh, 1, 1);
 		}
 	}
 	drw_map(drw, m->barwin, 0, 0, m->ww, bh);
@@ -3288,15 +3288,9 @@ togglebar(const Arg *arg)
 		if (!selmon->showbar)
 			wc.y = -bh;
 		else if (selmon->showbar) {
-			#if BARPADDING_PATCH
 			wc.y = vp;
 			if (!selmon->topbar)
 				wc.y = selmon->mh - bh + vp;
-			#else
-			wc.y = 0;
-			if (!selmon->topbar)
-				wc.y = selmon->mh - bh;
-			#endif // BARPADDING_PATCH
 		}
 		XConfigureWindow(dpy, systray->win, CWY, &wc);
 	}
@@ -3689,10 +3683,8 @@ updatesystray(int updatebar)
 	Monitor *m = systraytomon(NULL);
 	unsigned int x = m->mx + m->mw;
 	unsigned int w = 1, xpad = 0, ypad = 0;
-	#if BARPADDING_PATCH
 	xpad = sp;
 	ypad = vp;
-	#endif // BARPADDING_PATCH
 
 	if (!showsystray)
 		return;

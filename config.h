@@ -1,16 +1,16 @@
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
-#define ICONSIZE 16   /* icon size */
+#define ICONSIZE 18   /* icon size */
 #define ICONSPACING 10 /* space between icon and title */
 static const unsigned int refreshrate = 144;
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const unsigned int snap      = 16;       /* snap pixel */
 static const int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
-static const unsigned int gappih    = 12;       /* horiz inner gap between windows */
-static const unsigned int gappiv    = 12;       /* vert inner gap between windows */
-static const unsigned int gappoh    = 24;       /* horiz outer gap between windows and screen edge */
-static const unsigned int gappov    = 24;       /* vert outer gap between windows and screen edge */
+static const unsigned int gappih    = 16;       /* horiz inner gap between windows */
+static const unsigned int gappiv    = 16;       /* vert inner gap between windows */
+static const unsigned int gappoh    = 28;       /* horiz outer gap between windows and screen edge */
+static const unsigned int gappov    = 28;       /* vert outer gap between windows and screen edge */
 static const unsigned int panel[]   = {0, 0, 0, 0};//positions: 0-top panel, 1-bottom panel, 2-left panel, 3-right panel
 static       unsigned int smartgaps          = 0;        /* 1 means no outer gap when there is only one window, behaves weirdly with barpadding */
 static       unsigned int smartborders       = 0;        /* 1 means no border when there is only one window (unless floating) */
@@ -18,8 +18,8 @@ static const int showbar            = 1;        /* 0 means no bar */
 static const int showtitle          = 1;        /* 0 means no title */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const int viewontag          = 0;        /* Switch view on tag switch */
-static       int linepx             = 2;        /* 0 means no underline */
-static const int rainbowtags    	= 1;        /* 1 means rainbow tags */
+static       int linepx             = 1;        /* 0 means no underline */
+static const int rainbowtags  	    = 1;        /* 1 means rainbow tags */
 static const int vertpad            = 0;        /* vertical padding of bar */
 static const int sidepad            = 0;        /* horizontal padding of bar */
 static const int statuspad          = 12;
@@ -55,9 +55,9 @@ static char lightblue[]       = "#7dcfff";
 static char white[]           = "#c0caf5";
 static char border[]          = "#ffffff";
 static char buttoncolor[]     = "#7aa2f7";
-static const unsigned int baralpha  = OPAQUE; // 0xe5 - 0xf2 = 0.95
+static const unsigned int baralpha  = 0xe5; // 0xe5 - 0xf2 = 0.95
 static const unsigned int borderalpha = OPAQUE;
-static const char buttonbar[]       = " ";
+static const char buttonbar[]       = "󰘳 ";
 static const char *colors[][3]      = {
 	/*               	fg          bg          border   */
 	[SchemeNorm]      = { white,    darkgray,   black   },
@@ -201,7 +201,7 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 /* static const char *dmenucmd[] = { "dmenu_run", NULL }; */
 static const char *dmenucmd[] = { "rofi", "-show", "drun", NULL };
-static const char *termcmd[] = {"tabbed", "-c", "-k", "-b", "-r", "2", "st", "-w", "''", NULL};
+static const char *termcmd[] = { "st", "-e", "tmux", NULL };
 
 #include <X11/XF86keysym.h>
 
